@@ -16,6 +16,10 @@ To promote their event WTWY enlists a street team that is places at entrances to
 
 The organization asked for help in using MTA subway data to help optimize the placement of their street teams. The goal is to optimize not only the number of attendees but those that will be most likely to contribute to their cause.
 
+# Data Analysis
+![Data Analysis]({{ site.url }}/images/coding-computer-data-depth-of-field-577585.jpg)
+
+*Photo by Kevin Ku from Pexels
 
 HTML defines a long list of available inline tags, a complete list of which can be found on the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTML/Element).
 
