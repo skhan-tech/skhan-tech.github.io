@@ -11,7 +11,7 @@ The following blog post will describe a project that was assigned by the Metis D
 
 
 # Problem Statement
-WomenTechWomenYes (WTWY) is a non-profit organization whose mission is to promote the participation of women in the technology sector. This group holds an annual fundraising gala in order to raise awareness and receive donations to promote their cause. The group uses uses a street team for outreach and promotion of their gala event.
+WomenTechWomenYes (WTWY) is a non-profit organization whose mission is to promote the participation of women in the technology sector. This group holds an annual fundraising gala in order to raise awareness and receive donations to promote their cause. The group uses a street team for outreach and promotion of their gala event.
 
 > WomenTechWomenYes (WTWY) has an annual gala at the beginning of the summer each year. As we are new and inclusive organization, we try to do double duty with the gala both to fill our event space with individuals passionate about increasing the participation of women in technology, and to concurrently build awareness and reach.
 
@@ -24,13 +24,13 @@ The organization asked for help in using MTA subway data to help optimize the pl
 
 *Photo by Kevin Ku from Pexels
 
-The first step in this data analysis was to identify an appropriate dataset. The New York City MTA (Metropolitan Transit Authority) has made ten years worth of turnstile data available on their mta.info website. This data provides details on over 400 stations across the MTA and PATH systems along with indiviudal turnstiles, counter and booth information. The data collected is counter-based meaning the data collected from each turnstile increments up every time a new rider swipes. The counters seems to have an arbitrary reset after a certain counter limit is reached. 
+The first step in this data analysis was to identify an appropriate dataset. The New York City MTA (Metropolitan Transit Authority) has made ten years' worth of turnstile data available on their mta.info website. This data provides details on over 400 stations across the MTA and PATH systems along with individual turnstiles, counter and booth information. The data is counter-based meaning the data collected from each turnstile increments up every time a new rider swipes. The counters seems to have an arbitrary reset after a certain counter limit is reached. 
 
 More information on the MTA dataset can be found here: [MTA Turnstile Dataset](http://web.mta.info/developers/turnstile.html)
 
 # Exploratory Data Analysis
 
-Once the data was identified, i had to do some basic analysis to get a better sense of what the data represents. I pulled down data for all of 2019 for this analysis. Each row within this datset represented a unique station, unit, turnstile, date and time combination along with an entry and exit counter reading. There were over 10M entries in this dataset.
+Once the data was identified, i had to do some basic analysis to get a better sense of what the data represents. I pulled down data for all of 2019 for this analysis. Each row within this dataset represented a unique station, unit, turnstile, date and time combination along with an entry and exit counter reading. There were over 10M entries in this dataset.
 
 ![MTA Data Sample]({{ site.url }}/images/MTA_Data_Sample.png)
 
@@ -40,28 +40,28 @@ The first thing i had to do to get a sense of where the street team should be de
 
 *x-axis is in 10's of millions*
 
-**Reccomendation #1**
+**Recomendation #1**
 The street team should be deployed to the top 20 stations by volume in NYC.
 
-By far the busiest subway station in NYC is 34th St - Penn. Station. This subway station receives almost 30% more traffic than the second busiest subway station. I wanted to look at wheter there were any seasonality effects for this subways station. The plot below shows a daily view of ridership for all of 2019. You will notice that subway ridership peaks during the spring and fall months but the changes over the rest of the year is negligible.
+By far the busiest subway station in NYC is 34th St - Penn. Station. This subway station receives almost 30% more traffic than the second busiest subway station. I wanted to look at whether there were any seasonality effects for this subways station. The plot below shows a daily view of ridership for all of 2019. You will notice that subway ridership peaks during the spring and fall months but the changes over the rest of the year is negligible.
 
 ![Daily View]({{ site.url }}/images/34_ST-PENN_STA-Daily_Agg_Volume.png)
 
-**Reccomendation #2**
+**Recomendation #2**
 The street team can be deployed any time of year as seasonality is not a major factor. Most of the street team should be deployed to the 34th Street station since it handles 30% more volume than the second busiest station.
 
 I then needed to look at the best days of the week to deploy the street team. I had a hunch that subway ridership would decrease on the weekend and increase during the work week. The image below proves this intuition. We see an ebb and flow to the ridership where peak traffic occurs between Tuesday and Thursday and wanes on Saturday and Sunday.
 
 ![Daily Turnstile View]({{ site.url }}/images/34_ST-PENN_STA-June_Agg_Volume.png)
 
-**Reccomendation #3**
+**Recomendation #3**
 Deploy street team resources during the work week specifically from Tuesday through Thursday.
 
 The last question is whether there is a certain time of day that is ideal for reaching a bigger audience. After taking a closer look at the data we do see that there is a marked increase in traffic during specific times of the day. The peak hours seem to be between 6-10AM and 2-6PM. The image below shows this visually.
 
 ![Daily Turnstile View]({{ site.url }}/images/34_ST-PENN_STA-June_10_Agg_Volume.png)
 
-**Recommendation #3**
+**Recommendation #4**
 Deploy the street team during peak rush hour times of 6-10AM and 2-6PM.
 
 # Conclusion & Follow-Up
