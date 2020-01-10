@@ -71,4 +71,5 @@ Analyzing the MTA data allowed me to arrive at some early conclusions about how 
 
 For future consideration I would need to look at the following to enhance this analysis:
   * *Social Media / GPS Data* - Include data from social media data providers which provide uniqie mobile devices travelling through a specific subway station. This will allow us to better target the female demographic that this group is interested in.
-  * E
+  * *Tech Hubs* - Find locations within NYC where there are tech hubs that would attract more of the demographic that this group is interested in.
+  * *Demographic/Income Data* - Use US Census data to determine whether there are higher pockets of female demographics in the NYC area and also add in income data to improve likelihood of donations.
