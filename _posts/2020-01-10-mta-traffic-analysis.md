@@ -40,6 +40,20 @@ The first thing i had to do to get a sense of where the street team should be de
 
 ![Top 20 Stations]({{ site.url }}/images/TopTwentyStations-2019-Agg.png)
 
+*x-axis is in 10's of millions*
+
+**Reccomendation #1**
+The street team should be deployed to the top 20 stations by volume in NYC.
+
+By far the busiest subway station in NYC is 34th St - Penn. Station. This subway station receives almost 30% more traffic than the second busiest subway station. I wanted to look at wheter there were any seasonality effects for this subways station. The plot below shows a daily view of ridership for all of 2019. You will notice that subway ridership peaks during the spring and fall months but the increase over the rest of the year is negligible.
+
+![Daily View]({{ site.url }}/images/34_ST-PENN_STA-Daily_Agg_Volume.png)
+
+**Reccomendation #2**
+The street team can be deployed any time of year as seasonality is not a factor. Most of the street team should be deployed to the 34th Street station since it handles 30% more volume than the second busiest station.
+
+
+
 - **To bold text**, use `<strong>`.
 - *To italicize text*, use `<em>`.
 - Abbreviations, like <abbr title="HyperText Markup Langage">HTML</abbr> should use `<abbr>`, with an optional `title` attribute for the full phrase.
