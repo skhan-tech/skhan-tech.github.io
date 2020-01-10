@@ -48,7 +48,7 @@ By far the busiest subway station in NYC is 34th St - Penn. Station. This subway
 ![Daily View]({{ site.url }}/images/34_ST-PENN_STA-Daily_Agg_Volume.png)
 
 **Reccomendation #2**
-The street team can be deployed any time of year as seasonality is not a factor. Most of the street team should be deployed to the 34th Street station since it handles 30% more volume than the second busiest station.
+The street team can be deployed any time of year as seasonality is not a major factor. Most of the street team should be deployed to the 34th Street station since it handles 30% more volume than the second busiest station.
 
 I then needed to look at the best days of the week to deploy the street team. I had a hunch that subway ridership would decrease on the weekend and increase during the work week. The image below proves this intuition. We see an ebb and flow to the ridership where peak traffic occurs between Tuesday and Thursday and wanes on Saturday and Sunday.
 
@@ -65,7 +65,7 @@ The last question is whether there is a certain time of day that is ideal for re
 Deploy the street team during peak rush hour times of 6-10AM and 2-6PM.
 
 # Conclusion & Follow-Up
-Analyzing the MTA data allowed me to arrive at some early conclusions about how best to deploy the WTWY street team resources. We have four specific recommendations that should put the organization on a good trajecotry to maximize donations.
+Analyzing the MTA data allowed me to arrive at some early conclusions about how best to deploy the WTWY street team resources. We have four specific recommendations that should put the organization on a good trajectory to maximize donations.
 
 For future consideration I would need to look at the following to enhance this analysis:
   * *Social Media / GPS Data* - Include data from social media data providers which provide uniqie mobile devices travelling through a specific subway station. This will allow us to better target the female demographic that this group is interested in.
