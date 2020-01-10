@@ -19,7 +19,7 @@ To promote their event WTWY enlists a street team that is places at entrances to
 
 The organization asked for help in using MTA subway data to help optimize the placement of their street teams. The goal is to optimize not only the number of attendees but those that will be most likely to contribute to their cause.
 
-# Data Analysis
+# Data Selection
 ![Data Analysis]({{ site.url }}/images/coding-computer-data-depth-of-field-577585.jpg)
 
 *Photo by Kevin Ku from Pexels
@@ -29,6 +29,12 @@ The first step in this data analysis was to identify an appropriate dataset. The
 More information the MTA dataset can be found here: [MTA Turnstile Dataset](http://web.mta.info/developers/turnstile.html)
 
 HTML defines a long list of available inline tags, a complete list of which can be found on the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTML/Element).
+
+# Exploratory Data Analysis
+
+Once the data was identified, i had to do some basic analysis to get a better sense of what the data represents. I pulled down data for all of 2019 for this analysis. Each row within this datset represented a unique station, unit, turnstile, date and time combination along with an entry and exit counter reading.
+
+![MTA Data Sample]({{ site.url }}/images/MTA_Data_Sample.jpg)
 
 - **To bold text**, use `<strong>`.
 - *To italicize text*, use `<em>`.
