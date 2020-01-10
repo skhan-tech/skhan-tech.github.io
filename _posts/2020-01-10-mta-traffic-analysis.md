@@ -2,7 +2,7 @@
 The following blog post will describe a project that was assigned by the Metis Data Science Bootcamp. 
 01/10/2020
 
-![](/images/photography-of-people-at-train-station-1311544%20.jpg "Commuters")
+![]({{ site.url }}/images/photography-of-people-at-train-station-1311544.jpg)
 
 *Photo by mentatdgt from Pexels*
 
