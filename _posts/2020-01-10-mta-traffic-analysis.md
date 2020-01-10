@@ -26,7 +26,7 @@ The organization asked for help in using MTA subway data to help optimize the pl
 
 The first step in this data analysis was to identify an appropriate dataset. The New York City MTA (Metropolitan Transit Authority) has made ten years worth of turnstile counter data available on their mta.info website. This data provides details on over 400+ stations across the MTA and PATH systems along with indiviudal turnstiles, counter and booth information. The data collected is counter based meaning the data collected from each turnstile inrements up every time a new rider swipes. The counters seems to have an arbitrary reset after a certain counter limit is reached. 
 
-More information the MTA dataset can be found here: [MTA Turnstile Dataset] (http://web.mta.info/developers/turnstile.html)
+More information the MTA dataset can be found here: [MTA Turnstile Dataset](http://web.mta.info/developers/turnstile.html)
 
 HTML defines a long list of available inline tags, a complete list of which can be found on the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTML/Element).
 
