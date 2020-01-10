@@ -2,7 +2,7 @@
 The following blog post will describe a project that was assigned by the Metis Data Science Bootcamp. 
 01/10/2020
 
-![](https://github.com/skhan-tech/skhan-tech.github.io/blob/master/images/photography-of-people-at-train-station-1311544%20.jpg "Commuters")
+![](/images/photography-of-people-at-train-station-1311544%20.jpg "Commuters")
 
 *Photo by mentatdgt from Pexels*
 
