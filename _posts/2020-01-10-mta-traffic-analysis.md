@@ -24,11 +24,9 @@ The organization asked for help in using MTA subway data to help optimize the pl
 
 *Photo by Kevin Ku from Pexels
 
-The first step in this data analysis was to identify an appropriate dataset. The New York City MTA (Metropolitan Transit Authority) has made ten years worth of turnstile counter data available on their mta.info website. This data provides details on over 400 stations across the MTA and PATH systems along with indiviudal turnstiles, counter and booth information. The data collected is counter based meaning the data collected from each turnstile inrements up every time a new rider swipes. The counters seems to have an arbitrary reset after a certain counter limit is reached. 
+The first step in this data analysis was to identify an appropriate dataset. The New York City MTA (Metropolitan Transit Authority) has made ten years worth of turnstile data available on their mta.info website. This data provides details on over 400 stations across the MTA and PATH systems along with indiviudal turnstiles, counter and booth information. The data collected is counter-based meaning the data collected from each turnstile increments up every time a new rider swipes. The counters seems to have an arbitrary reset after a certain counter limit is reached. 
 
-More information the MTA dataset can be found here: [MTA Turnstile Dataset](http://web.mta.info/developers/turnstile.html)
-
-HTML defines a long list of available inline tags, a complete list of which can be found on the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTML/Element).
+More information on the MTA dataset can be found here: [MTA Turnstile Dataset](http://web.mta.info/developers/turnstile.html)
 
 # Exploratory Data Analysis
 
@@ -45,7 +43,7 @@ The first thing i had to do to get a sense of where the street team should be de
 **Reccomendation #1**
 The street team should be deployed to the top 20 stations by volume in NYC.
 
-By far the busiest subway station in NYC is 34th St - Penn. Station. This subway station receives almost 30% more traffic than the second busiest subway station. I wanted to look at wheter there were any seasonality effects for this subways station. The plot below shows a daily view of ridership for all of 2019. You will notice that subway ridership peaks during the spring and fall months but the increase over the rest of the year is negligible.
+By far the busiest subway station in NYC is 34th St - Penn. Station. This subway station receives almost 30% more traffic than the second busiest subway station. I wanted to look at wheter there were any seasonality effects for this subways station. The plot below shows a daily view of ridership for all of 2019. You will notice that subway ridership peaks during the spring and fall months but the changes over the rest of the year is negligible.
 
 ![Daily View]({{ site.url }}/images/34_ST-PENN_STA-Daily_Agg_Volume.png)
 
