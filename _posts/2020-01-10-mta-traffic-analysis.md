@@ -34,7 +34,7 @@ HTML defines a long list of available inline tags, a complete list of which can 
 
 Once the data was identified, i had to do some basic analysis to get a better sense of what the data represents. I pulled down data for all of 2019 for this analysis. Each row within this datset represented a unique station, unit, turnstile, date and time combination along with an entry and exit counter reading.
 
-![MTA Data Sample]({{ site.url }}/images/MTA_Data_Sample.jpg)
+![MTA Data Sample]({{ site.url }}/images/MTA_Data_Sample.png)
 
 - **To bold text**, use `<strong>`.
 - *To italicize text*, use `<em>`.
