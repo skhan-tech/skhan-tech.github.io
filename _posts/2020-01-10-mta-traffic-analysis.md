@@ -1,6 +1,9 @@
 ## NYC Subway Traffic Analysis for Street Team Deployment
+
+*By: Saleem Khan - 01/10/2020*
+
 The following blog post will describe a project that was assigned by the Metis Data Science Bootcamp. 
-By: Saleem Khan - 01/10/2020 
+
 
 ![Commuters]({{ site.url }}/images/photography-of-people-at-train-station-1311544.jpg)
 
@@ -20,6 +23,10 @@ The organization asked for help in using MTA subway data to help optimize the pl
 ![Data Analysis]({{ site.url }}/images/coding-computer-data-depth-of-field-577585.jpg)
 
 *Photo by Kevin Ku from Pexels
+
+The first step in this data analysis was to identify an appropriate dataset. The New York City MTA (Metropolitan Transit Authority) has made ten years worth of turnstile counter data available on their mta.info website. This data provides details on over 400+ stations across the MTA and PATH systems along with indiviudal turnstiles, counter and booth information. The data collected is counter based meaning the data collected from each turnstile inrements up every time a new rider swipes. The counters seems to have an arbitrary reset after a certain counter limit is reached. 
+
+More information the MTA dataset can be found here: [MTA Turnstile Dataset] (http://web.mta.info/developers/turnstile.html)
 
 HTML defines a long list of available inline tags, a complete list of which can be found on the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTML/Element).
 
