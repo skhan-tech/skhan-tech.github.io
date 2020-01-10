@@ -1,6 +1,6 @@
 ## NYC Subway Traffic Analysis for Street Team Deployment
 
-*By: Saleem Khan - 01/10/2020*
+*By: Saleem Khan*
 
 The following blog post will describe a project that was assigned by the Metis Data Science Bootcamp. 
 
