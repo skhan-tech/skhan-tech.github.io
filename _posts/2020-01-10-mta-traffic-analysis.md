@@ -11,13 +11,13 @@ The following blog post will describe a project that was assigned by the Metis D
 
 
 # Problem Statement
-WomenTechWomenYes (WTWY) is a non-profit organization whose mission is the promote the participation of women in the technology sector. This group holds an annual fundraising gala in order to raise awareness and receive donations to promote their cause. The group uses uses a street team for outreach and promotion of their gala event.
+WomenTechWomenYes (WTWY) is a non-profit organization whose mission is to promote the participation of women in the technology sector. This group holds an annual fundraising gala in order to raise awareness and receive donations to promote their cause. The group uses uses a street team for outreach and promotion of their gala event.
 
 > WomenTechWomenYes (WTWY) has an annual gala at the beginning of the summer each year. As we are new and inclusive organization, we try to do double duty with the gala both to fill our event space with individuals passionate about increasing the participation of women in technology, and to concurrently build awareness and reach.
 
-To promote their event WTWY enlists a street team that is places at entrances to New York City subway stations. The street team is responsible for collecting e-mail addresses and those who sign up receive free tickets to the gala event.
+To promote their event WTWY enlists a street team that is placed at entrances to New York City subway stations. The street team is responsible for collecting e-mail addresses and those who sign up receive free tickets to the gala event.
 
-The organization asked for help in using MTA subway data to help optimize the placement of their street teams. The goal is to optimize not only the number of attendees but those that will be most likely to contribute to their cause.
+The organization asked for help in using MTA subway data to help optimize the placement of their street teams. The goal is to optimize not only the number of attendees but those that will most likely to contribute to their cause.
 
 # Data Selection
 ![Data Analysis]({{ site.url }}/images/coding-computer-data-depth-of-field-577585.jpg)
