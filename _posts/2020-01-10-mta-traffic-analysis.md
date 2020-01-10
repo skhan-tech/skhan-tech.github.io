@@ -24,7 +24,7 @@ The organization asked for help in using MTA subway data to help optimize the pl
 
 *Photo by Kevin Ku from Pexels
 
-The first step in this data analysis was to identify an appropriate dataset. The New York City MTA (Metropolitan Transit Authority) has made ten years worth of turnstile counter data available on their mta.info website. This data provides details on over 400+ stations across the MTA and PATH systems along with indiviudal turnstiles, counter and booth information. The data collected is counter based meaning the data collected from each turnstile inrements up every time a new rider swipes. The counters seems to have an arbitrary reset after a certain counter limit is reached. 
+The first step in this data analysis was to identify an appropriate dataset. The New York City MTA (Metropolitan Transit Authority) has made ten years worth of turnstile counter data available on their mta.info website. This data provides details on over 400 stations across the MTA and PATH systems along with indiviudal turnstiles, counter and booth information. The data collected is counter based meaning the data collected from each turnstile inrements up every time a new rider swipes. The counters seems to have an arbitrary reset after a certain counter limit is reached. 
 
 More information the MTA dataset can be found here: [MTA Turnstile Dataset](http://web.mta.info/developers/turnstile.html)
 
@@ -32,9 +32,13 @@ HTML defines a long list of available inline tags, a complete list of which can 
 
 # Exploratory Data Analysis
 
-Once the data was identified, i had to do some basic analysis to get a better sense of what the data represents. I pulled down data for all of 2019 for this analysis. Each row within this datset represented a unique station, unit, turnstile, date and time combination along with an entry and exit counter reading.
+Once the data was identified, i had to do some basic analysis to get a better sense of what the data represents. I pulled down data for all of 2019 for this analysis. Each row within this datset represented a unique station, unit, turnstile, date and time combination along with an entry and exit counter reading. There were over 10M entries in this dataset.
 
 ![MTA Data Sample]({{ site.url }}/images/MTA_Data_Sample.png)
+
+The first thing i had to do to get a sense of where the street team should be deployed is to look at the yearly aggregate counts for all unique subway station entries. The graph below represents the yearly entry totals for the top 20 subway stations.
+
+![Top 20 Stations]({{ site.url }}/images/TopTwentyStations-2019-Agg.png)
 
 - **To bold text**, use `<strong>`.
 - *To italicize text*, use `<em>`.
