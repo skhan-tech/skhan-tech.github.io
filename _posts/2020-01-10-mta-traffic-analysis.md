@@ -2,9 +2,6 @@
 
 *By: Saleem Khan*
 
-The following blog post will describe a project that was assigned by the Metis Data Science Bootcamp. 
-
-
 ![Commuters]({{ site.url }}/images/photography-of-people-at-train-station-1311544.jpg)
 
 *Photo by mentatdgt from Pexels*
