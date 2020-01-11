@@ -3,7 +3,7 @@ permalink:           pretty
 
 # Setup
 title:               Saleem Khan
-tagline:             A Portfolio of Data Science Work
+tagline:             :A Portfolio of Data Science Work
 url:                 http://skhan-tech.github.io
 paginate:            2
 baseurl:             ""
