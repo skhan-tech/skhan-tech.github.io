@@ -1,4 +1,4 @@
-## NYC Subway Traffic Analysis for Street Team Deployment
+## NYC Subway Ridership Analysis
 
 *By: Saleem Khan*
 
