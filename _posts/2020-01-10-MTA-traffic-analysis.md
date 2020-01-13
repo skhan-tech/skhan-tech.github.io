@@ -6,6 +6,7 @@
 
 *Photo by mentatdgt from Pexels*
 
+*Note:* This was a hypothetical client project for the Metis Data Science Bootcamp
 
 # Problem Statement
 WomenTechWomenYes (WTWY) is a non-profit organization whose mission is to promote the participation of women in the technology sector. This group holds an annual fundraising gala in order to raise awareness and receive donations to promote their cause. The group uses a street team for outreach and promotion of their gala event.
