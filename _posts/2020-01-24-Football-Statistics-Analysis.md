@@ -72,7 +72,7 @@ After loading our data in and getting a sense of the shape and summary statistic
 
 One thing to note here is that the offensive and defensive total yards are highly correlated to the passing yards. This makes sense because total yards are a combination of the passing and rushing yards. I may tweak my model later by removing the total yards stat to see if this improves our R<sup>2</sup>. *Note:* R<sup>2</sup> is a measure of the influence our independent variable have on our dependent variable (PointsTotal or OverUnder in this case)
 
-# Initial Machine Learning Model
+# Machine Learning Model
 
 Now that we have a good sense of our dataset and multi-colinearity (i.e. redundancy) within our features we can proceed with creating our first model. I employed a basic train, test and validate along with a K-Fold segmentation.
   + **Train, Validate, Test:** This means that we will split our entire dataset into portions. 40% to train our model, 40% to validate our model and the last 20% to test our model. This is a standard approach to machine learning.
@@ -99,14 +99,14 @@ Ridge scores:  [0.5389148915059347, 0.5389148915059347, 0.5389148915059347, 0.53
 Lasso scores:  [0.5402006830177307, 0.5402006830177307, 0.5402006830177307, 0.5402006830177307, 0.5402006830177307] 
 ```
 
-We can read this as our independent variable (game statistics) explaining about 54% of the variability in our over/under or points total. Remember that we wanted to beat the Las Vegas odds of 52.4%. Looks like we did it but not so fast. We do need to look at another metric, our mean absolute error (MAE) to get a sense how wrong much our model's predicted point totals deviated from the actuals in our test dataset.
+We can read this as our independent variables (game statistics) explaining about 54% of the variability in our over/under or points total. Remember that we wanted to beat the Las Vegas odds of 52.4%. Looks like we did it but not so fast. We do need to look at another metric, our mean absolute error (MAE) to get a sense how much our model's predicted point totals deviated from the actuals in our test dataset.
 
 Here are the mean absolute error calculations for all there models:
 
 ```
-Linea MAE:  [2.927044316714102, 2.927044316714102, 2.927044316714102, 2.927044316714102, 2.927044316714102]
-Ridge MAE:  [3.8878462965670018, 3.8878462965670018, 3.8878462965670018, 3.8878462965670018, 3.8878462965670018]
-Lasso MAE:  [3.877920193274435, 3.877920193274435, 3.877920193274435, 3.877920193274435, 3.877920193274435]
+Linea MAE:  2.927044316714102
+Ridge MAE:  3.8878462965670018
+Lasso MAE:  3.877920193274435
 ```
 
 We can see above that the basic linear regression model had the lowest MAE, meaning its average prediction error was about 3 points from the actual score. This isn't too bad but it's still not enough to beat Vegas. With this error we would be hovering right around the 52.4% odds that Vegas has.
@@ -114,4 +114,21 @@ We can see above that the basic linear regression model had the lowest MAE, mean
 ![LinearReg]({{ site.url }}/images/LinearRegression.png)
 
 # Conclusion & Follow-Up
+In the end i wasn't able to beat Vegas but it was fun going through the process. I was able to collect the data needed, perform some exploratory analysis, do basic feature engineering and run a machine learning model.  The last think we need to do is look at some of the coefficients our model produced in order to see how each feature influenced our overall point totals. 
+
+```
+Off_1stD : 0.02
+Off_TotYd : 1.42
+Off_PassY : 0.05
+Off_RushY : 0.05
+Def_1stD : 0.66
+Def_TotYd : -4.51
+Def_PassY : 0.07
+Def_RushY : 0.07
+```
+
+The list above is telling us that for every 1.42 yards gained (combined passing and rushing) we can 
+
+Also, an additional bit of follow up here would be to look at adding in some additional data to see what would help us create a better model. I've listed out some additional items to look into in the future.
+
 ![FollowUp]({{ site.url }}/images/FollowUp.png)
