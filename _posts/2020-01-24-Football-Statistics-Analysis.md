@@ -117,17 +117,18 @@ We can see above that the basic linear regression model had the lowest MAE, mean
 In the end i wasn't able to beat Vegas but it was fun going through the process. I was able to collect the data needed, perform some exploratory analysis, do basic feature engineering and run a machine learning model.  The last think we need to do is look at some of the coefficients our model produced in order to see how each feature influenced our overall point totals. 
 
 ```
-Off_1stD : 0.02
-Off_TotYd : 1.42
-Off_PassY : 0.05
-Off_RushY : 0.05
-Def_1stD : 0.66
-Def_TotYd : -4.51
-Def_PassY : 0.07
-Def_RushY : 0.07
+Off_1stD : 0.56
+Off_TotYd : 0.04
+Off_PassY : 0.02
+Off_RushY : 0.02
+Def_1stD : 0.59
+Def_TotYd : 0.04
+Def_PassY : 0.02
+Def_RushY : 0.02
+HomeOrAway : -0.72
 ```
 
-The list above is telling us that for every 1.42 yards gained (combined passing and rushing) we can 
+The list above is telling us that for every total yard gained (combined passing and rushing) we can expect our point total to improve by 0.04. Said another way we can expect an addition of 4 total points for every 100 total yards gained by either team.
 
 Also, an additional bit of follow up here would be to look at adding in some additional data to see what would help us create a better model. I've listed out some additional items to look into in the future.
 
