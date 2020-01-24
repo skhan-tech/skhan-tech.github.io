@@ -34,21 +34,21 @@ This sort of analysis can help for more than just betting, there are multiple co
 
 As I started this data analysis I had to find a reliable source for statistics on NFL games. The best provider I could find that also allowed webscraping was the [Pro Football Reference](https://www.pro-football-reference.com/) page. This site has an amazing depth of detail in the statistics they capture for each and every game.
 
-Once i was able to identify a provider my next task was to determine a good way to get the data I needed. I wanted to look at 3 years worth of data for all 32 NFL teams. This would include all 16 regular season games as well as playoffs and Super Bowls. I decided to use the Selenium driver provided by Google (i.e. essentially a stripped down version of Chrome used for webscraping) in order to capture the data on each web page. I then needed to use a Python library called BeautifulSoup in order to pull the specific fields i needed.
+Once I was able to identify a provider my next task was to determine a good way to get the data I needed. I wanted to look at 3 years worth of data for all 32 NFL teams. This would include all 16 regular season games as well as playoffs and Super Bowls. I decided to use the Selenium driver provided by Google (i.e. essentially a stripped down version of Chrome used for webscraping) in order to capture the data on each web page. I then needed to use a Python library called BeautifulSoup in order to pull the specific fields i needed.
 
 ![Dataset1]({{ site.url }}/images/Dataset.png)
 
-After a bit of coding I was able to gather 1600 rows and 27 columns of data which represent each individual game played. Each of the columns will be a potential feature in my machine learning model. The out from my Python dataframe below gives you a sense of the type of data i will be analyzing.
+After a bit of coding I was able to gather 1600 rows and 27 columns of data which represent each individual game played. Each of the columns will be a potential feature in my machine learning model. The output from my Python dataframe below gives you a sense of the type of data i will be analyzing.
 
 ![Dataset]({{ site.url }}/images/Football-Columns.png)
 
 # Exploratory Data Analysis
 
-Once the dataset was scraped and loaded into a Python Pandas dataframe I was then able to do some exploratory analysis to get a better feel for the data. After looking at some of my columns I realized that many of the features would not be helpful in a machine learning model. Items like week, time and even team name are not logically predictive of what the point total will be for a game. I whittled down my initial 27 features down to just 11. I also combined the *Points Scored* and *Points Allowed* fields into a new column called *OverUnder* which is the *y* or the dependent variable in our model that we are trying to predict. The image below gives you general overview of the data that will be going into my model.
+Once the dataset was scraped and loaded into a Python Pandas dataframe I was then able to do some exploratory analysis to get a better feel for the data. After looking at some of my columns I realized that many of the features would not be helpful in a machine learning model. Items like week, time and even team name are not logically predictive of what the point total will be for a game. I whittled down my initial 27 features to just 11. I also combined the *Points Scored* and *Points Allowed* fields into a new column called *OverUnder* which is the *y* or the dependent variable in our model that we are trying to predict. The image below gives you a general overview of the data that will be going into my model.
 
 ![Describe]({{ site.url }}/images/Football-Describe.png)
 
-*Note:* Does something seem odd in the description above? All of the offensive and defensive summary statistics are the same! This is because our dataset capture stats on both teams that played. For instance if the Patriots played the Jets then the defensive stats for the Patriots would be the same as the Offensive stats for the Jets and vice versa. This was actually a good way to see if there were any errors in my data. If any of the basic statistics were note correct here there might have been some error in these summary statistics.
+*Note:* Does something seem odd in the description above? All of the offensive and defensive summary statistics are the same! This is because our dataset capture stats on both teams that played. For instance if the Patriots played the Jets then the defensive stats for the Patriots would be the same as the offensive stats for the Jets and vice versa. This was actually a good way to see if there were any errors in my data. If any of the basic statistics were not correct here there might have been some error in these summary statistics.
 
 Next, let's get a general birds-eye view of our data in order to see how it is shaped. I used a basic matplotlib histogram in order to visualize this data:
 
@@ -70,7 +70,7 @@ After loading our data in and getting a sense of the shape and summary statistic
 
 ![Correlation]({{ site.url }}/images/Correlation_Heatmap.png)
 
-One thing to note here is that the offensive and defensive total yards are highly correlated to the passing yards. This makes sense because total yards are a combination of the passing and rushing yards. I may tweak my model later by removing the total yards stat to see if this improves our R<sup>2</sup>. *Note:* R<sup>2</sup> is a measure of the influence our independent variable have on our dependent variable (PointsTotal or OverUnder in this case)
+One thing to note here is that the offensive and defensive total yards are highly correlated to the passing yards. This makes sense because total yards are a combination of the passing and rushing yards. I may tweak my model later by removing the total yards stat to see if this improves our R<sup>2</sup>. *Note:* R<sup>2</sup> is a measure of the influence our independent variables have on our dependent variable (PointsTotal or OverUnder in this case)
 
 # Machine Learning Model
 
@@ -99,7 +99,7 @@ Ridge scores:  [0.5389148915059347, 0.5389148915059347, 0.5389148915059347, 0.53
 Lasso scores:  [0.5402006830177307, 0.5402006830177307, 0.5402006830177307, 0.5402006830177307, 0.5402006830177307] 
 ```
 
-We can read this as our independent variables (game statistics) explaining about 54% of the variability in our over/under or points total. Remember that we wanted to beat the Las Vegas odds of 52.4%. Looks like we did it but not so fast. We do need to look at another metric, our mean absolute error (MAE) to get a sense how much our model's predicted point totals deviated from the actuals in our test dataset.
+We can read this as our independent variables (game statistics) explaining about 54% of the variability in our over/under or points total. Remember that we wanted to beat the Las Vegas odds of 52.4%. Looks like we did it but not so fast. We do need to look at another metric, our mean absolute error (MAE) to get a sense of how much our model's predicted point totals deviated from the actuals in our test dataset.
 
 Here are the mean absolute error calculations for all three models:
 
@@ -114,7 +114,7 @@ We can see above that the basic linear regression model had the lowest MAE, mean
 ![LinearReg]({{ site.url }}/images/LinearRegression.png)
 
 # Conclusion & Follow-Up
-In the end I wasn't able to beat Vegas but it was fun going through the process. I was able to collect the data needed, perform some exploratory analysis, do basic feature engineering and run a machine learning model.  The last think we need to do is look at some of the coefficients our model produced in order to see how each feature influenced our overall point totals. 
+In the end I wasn't able to beat Vegas but it was fun going through the process. I was able to collect the data needed, perform some exploratory analysis, do basic feature engineering and run a machine learning model.  The last thing we need to do is look at some of the coefficients our model produced in order to see how each feature influenced our overall point totals. 
 
 ```
 Off_1stD : 0.56
@@ -130,6 +130,6 @@ HomeOrAway : -0.72
 
 The list above is telling us that for every total yard gained (combined passing and rushing) we can expect our point total to improve by 0.04. Said another way we can expect an addition of 4 total points for every 100 total yards gained by either team.
 
-Also, an additional bit of follow up here would be to look at adding in some additional data to see what would help us create a better model. I've listed out some additional items to look into in the future.
+Also, an additional bit of follow up here would be to look at adding in some more data to see what would help us create a better model. I've listed out some additional items to look into in the future.
 
 ![FollowUp]({{ site.url }}/images/FollowUp.png)
