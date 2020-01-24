@@ -36,6 +36,8 @@ As I started this data analysis I had to find a reliable source for statistics o
 
 Once i was able to identify a provider my next task was to determine a good way to get the data I needed. I wanted to look at 3 years worth of data for all 32 NFL teams. This would include all 16 regular season games as well as playoffs and Super Bowls. I decided to use the Selenium driver provided by Google (i.e. essentially a stripped down version of Chrome used for webscraping) in order to capture the data on each web page. I then needed to use a Python library called BeautifulSoup in order to pull the specific fields i needed.
 
+![Dataset1]({{ site.url }}/images/Dataset.png)
+
 After a bit of coding I was able to gather 1600 rows and 27 columns of data which represent each individiual game played. Each of the columns will be a potential feature in my machine learning model. The out from my Python dataframe below gives you a sense of the type of data i will be analyzing.
 
 ![Dataset]({{ site.url }}/images/Football-Columns.png)
@@ -68,18 +70,48 @@ After loading our data in and getting a sense of the shape and summary statistic
 
 ![Correlation]({{ site.url }}/images/Correlation_Heatmap.png)
 
-One thing to note here is that the offensive and defensive total yards are highly correlated to the passing yards. This makes sense because total yards are a combination of the passing and rushing yards. I may tweak my model later by removing the total yards stat to see if this improves our R<sup>2</sup>.
+One thing to note here is that the offensive and defensive total yards are highly correlated to the passing yards. This makes sense because total yards are a combination of the passing and rushing yards. I may tweak my model later by removing the total yards stat to see if this improves our R<sup>2</sup>. *Note:* R<sup>2</sup> is a measure of the influence our independent variable have on our dependent variable (PointsTotal or OverUnder in this case)
 
 # Initial Machine Learning Model
 
-Now that we have a good sense of our dataset and multi-colinearity (i.e. redundancy) within our features we can proceed with creating our first model. I employed a basic train,test and validate alond with a K-Fold segmentation.
+Now that we have a good sense of our dataset and multi-colinearity (i.e. redundancy) within our features we can proceed with creating our first model. I employed a basic train, test and validate along with a K-Fold segmentation.
   + **Train, Validate, Test:** This means that we will split our entire dataset into portions. 40% to train our model, 40% to validate our model and the last 20% to test our model. This is a standard approach to machine learning.
   + **K-Fold:** This is an approach where we iterate through our entire dataset at randomized intervals in order to run a new random chunk of our data through our model. This is a great way to see whether our model performs consistently across different groupings of our data.
 
-# Conclusion & Follow-Up
-Analyzing the MTA data allowed me to arrive at some early conclusions about how best to deploy the WTWY street team resources. We have four specific recommendations that should put the organization on a good trajectory to maximize donations.
+I decided to try out three different models using the K-fold technique. I worked with basic *linear regression*, *ridge regression* and *lasso regression*. Python makes it very easy to quickly run these sorts of models. Often it only takes a few lines of code as seen below.
 
-For future consideration I would need to look at the following to enhance this analysis:
-  * *Social Media / GPS Data* - Include data from social media data providers which provide uniqie mobile devices travelling through a specific subway station. This will allow us to better target the female demographic that this group is interested in.
-  * *Tech Hubs* - Find locations within NYC where there are tech hubs that would attract more of the demographic that this group is interested in.
-  * *Demographic/Income Data* - Use US Census data to determine whether there are higher pockets of female demographics in the NYC area and also add in income data to improve likelihood of donations.
+``` python
+    #Linear Regression
+    lm = LinearRegression()
+    
+    #Ridge Regression - The alpha value is a hyperparameter that needs to be optimized for best fit.
+    lm_ridge = Ridge(alpha=1)
+    
+    #Lasso Regression
+    lm_lasso = Lasso(alpha=0.1)
+```
+
+After running my data through these models i received very similar results for the R<sup>2</sup> metric:
+
+```
+Linea scores:  [0.5389065856889645, 0.5389065856889645, 0.5389065856889645, 0.5389065856889645, 0.5389065856889645]
+Ridge scores:  [0.5389148915059347, 0.5389148915059347, 0.5389148915059347, 0.5389148915059347, 0.5389148915059347]
+Lasso scores:  [0.5402006830177307, 0.5402006830177307, 0.5402006830177307, 0.5402006830177307, 0.5402006830177307] 
+```
+
+We can read this as our independent variable (game statistics) explaining about 54% of the variability in our over/under or points total. Remember that we wanted to beat the Las Vegas odds of 52.4%. Looks like we did it but not so fast. We do need to look at another metric, our mean absolute error (MAE) to get a sense how wrong much our model's predicted point totals deviated from the actuals in our test dataset.
+
+Here are the mean absolute error calculations for all there models:
+
+```
+Linea MAE:  [2.927044316714102, 2.927044316714102, 2.927044316714102, 2.927044316714102, 2.927044316714102]
+Ridge MAE:  [3.8878462965670018, 3.8878462965670018, 3.8878462965670018, 3.8878462965670018, 3.8878462965670018]
+Lasso MAE:  [3.877920193274435, 3.877920193274435, 3.877920193274435, 3.877920193274435, 3.877920193274435]
+```
+
+We can see above that the basic linear regression model had the lowest MAE, meaning its average prediction error was about 3 points from the actual score. This isn't too bad but it's still not enough to beat Vegas. With this error we would be hovering right around the 52.4% odds that Vegas has.
+
+![LinearReg]({{ site.url }}/images/LinearRegression.png)
+
+# Conclusion & Follow-Up
+![FollowUp]({{ site.url }}/images/FollowUp.png)
