@@ -14,6 +14,8 @@ The objective of this exercise is to determine which team statistics have the gr
 
 ![BettingLines]({{ site.url }}/images/betting-lines.png)
 
+<sub><sup>NFL Betting Lines</sup></sub>
+
 Las Vegas needs to be correct on their betting lines at least 52.4% of the time in order to break even. Therefore any model I  come up with will need to beat these odds in order to be profitable. I will be focusing on the Over/Under betting line above since this is probably the easiest number to predict. 
 
 This sort of analysis can help for more than just betting, there are multiple consituents that can benefit from this sort of analysis:
@@ -23,7 +25,7 @@ This sort of analysis can help for more than just betting, there are multiple co
 
 
 # Data Selection & Web Scraping
-![Data Analysis]({{ site.url }}/images/Football-Columns.png)
+![Data Analysis]({{ site.url }}/images/computer-code.png)
 
 <sub><sup>Photo by Markus Spiske temporausch.com from Pexels</sup></sub>
 
@@ -31,21 +33,15 @@ As I started this data analysis I had to find a reliable source for statistics o
 
 Once i was able to identify a provider my next task was to determine a good way to get the data I needed. I wanted to look at 3 years worth of data for all 32 NFL teams. This would include all 16 regular season games as well as playoffs and Super Bowls. I decided to use the Selenium driver provided by Google (i.e. essentially a stripped down version of Chrome used for webscraping) in order to capture the data on each web page. I then needed to use a Python library called BeautifulSoup in order to pull the specific fields i needed.
 
-After a bit of coding i was able to gather 1600 rows and 27 columns of data of data which represent each individiual game played. Each of the columns will be a potential feature in my machine learning model
+After a bit of coding i was able to gather 1600 rows and 27 columns of data of data which represent each individiual game played. Each of the columns will be a potential feature in my machine learning model. The out from my Python dataframe below gives you a sense of the type of data i will be analyzing.
 
-![Dataset]({{ site.url }}/images/betting-lines.png)
+![Dataset]({{ site.url }}/images/Football-Columns.png)
 
 # Exploratory Data Analysis
 
-Once the data was identified, i had to do some basic analysis to get a better sense of what the data represents. I pulled down data for all of 2019 for this analysis. Each row within this dataset represented a unique station, unit, turnstile, date and time combination along with an entry and exit counter reading. There were over 10M entries in this dataset.
+Once the dataset was scraped and loaded into a Python Pandas dataframe i was then able to do some explorartory analysis to get a better feel for the data. After looking at some of my columns i realized that many of the columns would not be helpful in a machine learning model. Items like week, time and even team name are not logically predictive of what the point total will be for a game. I whittled down my initial 27 features down to just 11. I also combined the *Points Scored* and *Points Allowed* fields into a new column called *OverUnder* which is the *y* or the dependent variable in our model that we are trying to predict. The data below gives you general overview of the data that will be going into my model.
 
-![MTA Data Sample]({{ site.url }}/images/MTA_Data_Sample.png)
-
-The first thing i had to do to get a sense of where the street team should be deployed is to look at the yearly aggregate counts for all unique subway station entries. The graph below represents the yearly entry totals for the top 20 subway stations.
-
-![Top 20 Stations]({{ site.url }}/images/TopTwentyStations-2019-Agg.png)
-
-*x-axis is in 10's of millions*
+![Describe]({{ site.url }}/images/Football-Describe.png)
 
 **Recomendation #1**
 The street team should be deployed to the top 20 stations by volume in NYC.
