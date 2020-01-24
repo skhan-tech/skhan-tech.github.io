@@ -4,7 +4,7 @@
 
 ![Players]({{ site.url }}/images/football-players.jpg)
 
-Photo by Joe Calomeni from Pexels
+<sub><sup>Photo by Joe Calomeni from Pexels</sup></sub>
 
 # Background
 With the NFL conference championships now complete i thought it would be timely to take a closer look at some football statistics ahead of the Super Bowl. I'm not a huge football fan but analyzing this data is a great way to get a better feel for the game and the statistics that drive it.
@@ -14,23 +14,18 @@ The objective of this exercise is to determine which team statistics have the gr
 
 ![BettingLines]({{ site.url }}/images/betting-lines.png)
 
-Las Vegas needs to be correct on their betting lines at least 52.4% of the time in order to break even. The lowest odds they would take are *11:10*. We will be focusing on the Over/Under piece above since this is probably the easiest number to predict. 
+Las Vegas needs to be correct on their betting lines at least 52.4% of the time in order to break even. Therefore any model i come up with will need to beat these odds in order to be profitable. I will be focusing on the Over/Under betting line above since this is probably the easiest number to predict. 
 
-This sort of analysis can help multiple consituents including:
-+ NFL Teams: By analyzing point totals for the entire league and 
+This sort of analysis can help for more than just betting, there are multiple consituents that can benefit from this sort of analysis:
++ NFL Teams: By analyzing point totals for the entire league and comparing their individual point totals teams can better  adjust their player roster to improve scoring.
++ NFL Players: Players can get a better sense of how best to tackle (pun intended) their oppoents in the coming weeks.
++ Fans: Fans can get better enjoy the game and have hours of commentary by knowing where their favorite teams excel or need improvement.
 
-will create a baseline across all NFL teams which can then be used to determine how an individual team compares to this baseline. This analysis would help a team determine which parts of their on-field roster may need a boost to produce a higher score which should ultimately lead to more wins. 
-
-> WomenTechWomenYes (WTWY) has an annual gala at the beginning of the summer each year. As we are new and inclusive organization, we try to do double duty with the gala both to fill our event space with individuals passionate about increasing the participation of women in technology, and to concurrently build awareness and reach.
-
-To promote their event WTWY enlists a street team that is placed at entrances to New York City subway stations. The street team is responsible for collecting e-mail addresses and those who sign up receive free tickets to the gala event.
-
-The organization asked for help in using MTA subway data to help optimize the placement of their street teams. The goal is to optimize not only the number of attendees but those that will most likely to contribute to their cause.
 
 # Data Selection
-![Data Analysis]({{ site.url }}/images/coding-computer-data-depth-of-field-577585.jpg)
+![Data Analysis]({{ site.url }}/images/computer-code.jpg)
 
-*Photo by Kevin Ku from Pexels
+<sub><sup>Photo by Markus Spiske temporausch.com from Pexels</sup></sub>
 
 The first step in this data analysis was to identify an appropriate dataset. The New York City MTA (Metropolitan Transit Authority) has made ten years' worth of turnstile data available on their mta.info website. This data provides details on over 400 stations across the MTA and PATH systems along with individual turnstiles, counter and booth information. The data is counter-based meaning the data collected from each turnstile increments up every time a new rider swipes. The counters seems to have an arbitrary reset after a certain counter limit is reached. 
 
