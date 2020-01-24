@@ -58,7 +58,7 @@ plt.savefig('charts/histogram.png')
 plt.show()
 ```
 
-![Histogram]({{ site.url }}/images/histogram.png)
+![Histogram]({{ site.url }}/images/histogram_web.png)
 
 Our data looks normally distributed overall so we won't need to do much feature engineering. 
 
