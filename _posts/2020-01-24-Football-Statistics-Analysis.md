@@ -50,15 +50,15 @@ Once the dataset was scraped and loaded into a Python Pandas dataframe I was the
 
 Next, let's get a general birds-eye view of our data in order to see how it is shaped. I used a basic matplotlib histogram in order to visualize this data:
 
-'''python
+```python
 #let's get a visual of our dataset
 small_df.hist(figsize = (20, 20), layout=(6, 3), bins = 'auto')
 plt.tight_layout()
 plt.savefig('charts/histogram.png')
 plt.show()
-'''
+```
 
-![Histogram]({{ site.url }}/images/histogram.png.png)
+![Histogram]({{ site.url }}/images/histogram.png)
 
 # Conclusion & Follow-Up
 Analyzing the MTA data allowed me to arrive at some early conclusions about how best to deploy the WTWY street team resources. We have four specific recommendations that should put the organization on a good trajectory to maximize donations.
