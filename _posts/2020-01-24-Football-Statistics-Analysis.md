@@ -52,13 +52,21 @@ Next, let's get a general birds-eye view of our data in order to see how it is s
 
 ```python
 #let's get a visual of our dataset
-small_df.hist(figsize = (20, 20), layout=(6, 3), bins = 'auto')
+df.hist(figsize = (20, 20), layout=(6, 3), bins = 'auto')
 plt.tight_layout()
 plt.savefig('charts/histogram.png')
 plt.show()
 ```
 
 ![Histogram]({{ site.url }}/images/histogram.png)
+
+Our data looks normally distributed overall so we won't need to do much feature engineering. 
+
+# Initial Correlation Review
+
+After loading our data in and getting a sense of the shape and summary statistics i now need to look at how how the datasets correlates with the OverUnder statistic we are trying to predict. The heatmap below shows that offense and defense statistics have a medium correlation to the point total. The values seem to 
+
+![Correlation]({{ site.url }}/images/Correlation_Heatmap.png)
 
 # Conclusion & Follow-Up
 Analyzing the MTA data allowed me to arrive at some early conclusions about how best to deploy the WTWY street team resources. We have four specific recommendations that should put the organization on a good trajectory to maximize donations.
