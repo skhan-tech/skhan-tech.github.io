@@ -60,30 +60,6 @@ plt.show()
 
 ![Histogram]({{ site.url }}/images/histogram.png.png)
 
-**Recomendation #1**
-The street team should be deployed to the top 20 stations by volume in NYC.
-
-By far the busiest subway station in NYC is 34th St - Penn. Station. This subway station receives almost 30% more traffic than the second busiest subway station. I wanted to look at whether there were any seasonality effects for this subways station. The plot below shows a daily view of ridership for all of 2019. You will notice that subway ridership peaks during the spring and fall months but the changes over the rest of the year is negligible.
-
-![Daily View]({{ site.url }}/images/34_ST-PENN_STA-Daily_Agg_Volume.png)
-
-**Recomendation #2**
-The street team can be deployed any time of year as seasonality is not a major factor. Most of the street team should be deployed to the 34th Street station since it handles 30% more volume than the second busiest station.
-
-I then needed to look at the best days of the week to deploy the street team. I had a hunch that subway ridership would decrease on the weekend and increase during the work week. The image below proves this intuition. We see an ebb and flow to the ridership where peak traffic occurs between Tuesday and Thursday and wanes on Saturday and Sunday.
-
-![Daily Turnstile View]({{ site.url }}/images/34_ST-PENN_STA-June_Agg_Volume.png)
-
-**Recomendation #3**
-Deploy street team resources during the work week specifically from Tuesday through Thursday.
-
-The last question is whether there is a certain time of day that is ideal for reaching a bigger audience. After taking a closer look at the data we do see that there is a marked increase in traffic during specific times of the day. The peak hours seem to be between 6-10AM and 2-6PM. The image below shows this visually.
-
-![Daily Turnstile View]({{ site.url }}/images/34_ST-PENN_STA-June_10_Agg_Volume.png)
-
-**Recommendation #4**
-Deploy the street team during peak rush hour times of 6-10AM and 2-6PM.
-
 # Conclusion & Follow-Up
 Analyzing the MTA data allowed me to arrive at some early conclusions about how best to deploy the WTWY street team resources. We have four specific recommendations that should put the organization on a good trajectory to maximize donations.
 
