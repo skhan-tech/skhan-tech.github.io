@@ -10,9 +10,11 @@ Photo by Joe Calomeni from Pexels
 With the NFL conference championships now complete i thought it would be timely to take a closer look at some football statistics ahead of the Super Bowl. I'm not a huge football fan but analyzing this data is a great way to get a better feel for the game and the statistics that drive it.
 
 # Problem Statement
-The objective of this exercise is to determine which team statistics have the greatest impact on the amount of total points scored during an NFL Game. This problem statement is very specific becasue I want to be able to compare my modeled output to the Las Vegas Over/Under betting line.
+The objective of this exercise is to determine which team statistics have the greatest impact on the amount of total points scored during an NFL Game. This problem statement is very specific becasue I want to be able to compare my modeled output to the Las Vegas Over/Under betting line (see below).
 
 ![BettingLines]({{ site.url }}/images/betting-lines.png)
+
+Las Vegas needs to be correct on their betting lines at least 52.4% of the time in order to break even. The lowest odds they would take are *11:10*. We will be focusing on the Over/Under piece above since this is probably the easiest number to predict. 
 
 This sort of analysis can help multiple consituents including:
 + NFL Teams: By analyzing point totals for the entire league and 
