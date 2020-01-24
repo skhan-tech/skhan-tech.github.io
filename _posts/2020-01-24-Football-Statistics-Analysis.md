@@ -12,7 +12,7 @@ With the NFL conference championships now complete I thought it would be timely 
 # Problem Statement
 The objective of this exercise is to determine which team statistics have the greatest impact on the amount of total points scored during an NFL Game. This problem statement is very specific because I want to be able to compare my modeled output to the Las Vegas Over/Under betting line (see below). I am merely using this as a comparison benchmark for the machine learning  model i will produce. 
 
-*Note: I have no delusions of being a professional sports gambler!* ;-) 
+*Note: I have no aspirations of becoming a professional sports gambler!* ;-) 
 
 ![BettingLines]({{ site.url }}/images/betting-lines.png)
 
