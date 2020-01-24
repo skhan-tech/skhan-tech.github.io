@@ -10,7 +10,9 @@
 With the NFL conference championships now complete i thought it would be timely to take a closer look at some football statistics ahead of the Super Bowl. I'm not a huge football fan but analyzing this data is a great way to get a better feel for the game and the statistics that drive it.
 
 # Problem Statement
-The objective of this exercise is to determine which team statistics have the greatest impact on the amount of total points scored during an NFL Game. This problem statement is very specific becasue I want to be able to compare my modeled output to the Las Vegas Over/Under betting line (see below). I am merely using this as a benchmark to compare my model to. *Note: I have no delusions of being a sports gambler!* ;-) 
+The objective of this exercise is to determine which team statistics have the greatest impact on the amount of total points scored during an NFL Game. This problem statement is very specific becasue I want to be able to compare my modeled output to the Las Vegas Over/Under betting line (see below). I am merely using this as a benchmark to compare my model to. 
+
+*Note: I have no delusions of being a professional sports gambler!* ;-) 
 
 ![BettingLines]({{ site.url }}/images/betting-lines.png)
 
@@ -44,7 +46,19 @@ Once the dataset was scraped and loaded into a Python Pandas dataframe I was the
 
 ![Describe]({{ site.url }}/images/Football-Describe.png)
 
-*Note:* Does something seem odd in the descrition above? All of the offensive and defensive statistics are the same! This is becasue our dataset capture stats on both teams that played. For instance if the Patriots played the Jets then the Defensive stats for the Patriots would be the same as the Offensive stats for the Jets and vice versa. This was actually a good way to see if there were any errors in my data. If any of the basic statistics were note correct here there might have been some error in our data.
+*Note:* Does something seem odd in the descrition above? All of the offensive and defensive summary statistics are the same! This is becasue our dataset capture stats on both teams that played. For instance if the Patriots played the Jets then the defensive stats for the Patriots would be the same as the Offensive stats for the Jets and vice versa. This was actually a good way to see if there were any errors in my data. If any of the basic statistics were note correct here there might have been some error in these summary statistics.
+
+Next, let's get a general birds-eye view of our data in order to see how it is shaped. I used a basic matplotlib histogram in order to visualize this data:
+
+'''python
+#let's get a visual of our dataset
+small_df.hist(figsize = (20, 20), layout=(6, 3), bins = 'auto')
+plt.tight_layout()
+plt.savefig('charts/histogram.png')
+plt.show()
+'''
+
+![Histogram]({{ site.url }}/images/histogram.png.png)
 
 **Recomendation #1**
 The street team should be deployed to the top 20 stations by volume in NYC.
