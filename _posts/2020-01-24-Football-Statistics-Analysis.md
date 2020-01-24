@@ -25,7 +25,8 @@ This sort of analysis can help for more than just betting, there are multiple co
 
 
 # Data Selection & Web Scraping
-![Data Analysis]({{ site.url }}/images/computer-code.png)
+
+![DataAnalysis]({{ site.url }}/images/computer_code.jpg)
 
 <sub><sup>Photo by Markus Spiske temporausch.com from Pexels</sup></sub>
 
