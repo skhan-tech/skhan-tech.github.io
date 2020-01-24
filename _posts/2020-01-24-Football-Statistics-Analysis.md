@@ -21,9 +21,9 @@ The objective of this exercise is to determine which team statistics have the gr
 Las Vegas needs to be correct on their betting lines at least 52.4% of the time in order to break even. Therefore any model I  come up with will need to beat these odds in order to be profitable. I will be focusing on the Over/Under betting line above since this is probably the easiest number to predict. 
 
 This sort of analysis can help for more than just betting, there are multiple consituents that can benefit from this sort of analysis:
-**+ NFL Teams:** By analyzing point totals for the entire league and comparing their individual point totals, teams can better  adjust their player roster to improve scoring.
-**+ NFL Players:** Players can get a better sense of how best to tackle (pun intended) their oppoents in the coming weeks.
-**+ Fans:** Fans can better enjoy the game and have hours of commentary by knowing where their favorite teams excel or need improvement.
+  + **NFL Teams:** By analyzing point totals for the entire league and comparing their individual point totals, teams can better  adjust their player roster to improve scoring.
+  + **NFL Players:** Players can get a better sense of how best to tackle (pun intended) their oppoents in the coming weeks.
+  + **Fans:** Fans can better enjoy the game and have hours of commentary by knowing where their favorite teams excel or need improvement.
 
 
 # Data Selection & Web Scraping
@@ -73,8 +73,8 @@ One thing to note here is that the offensive and defensive total yards are highl
 # Initial Machine Learning Model
 
 Now that we have a good sense of our dataset and multi-colinearity (i.e. redundancy) within our features we can proceed with creating our first model. I employed a basic train,test and validate alond with a K-Fold segmentation.
-**+Train, Validate, Test:** This means that we will split our entire dataset into portions. 40% to train our model, 40% to validate our model and the last 20% to test our model. This is a standard approach to machine learning.
-**+K-Fold:** This is an approach where we iterate through our entire dataset at randomized intervals in order to run a new random chunk of our data through our model. This is a great way to see whether our model performs consistently across different groupings of our data.
+  + **Train, Validate, Test:** This means that we will split our entire dataset into portions. 40% to train our model, 40% to validate our model and the last 20% to test our model. This is a standard approach to machine learning.
+  + **K-Fold:** This is an approach where we iterate through our entire dataset at randomized intervals in order to run a new random chunk of our data through our model. This is a great way to see whether our model performs consistently across different groupings of our data.
 
 # Conclusion & Follow-Up
 Analyzing the MTA data allowed me to arrive at some early conclusions about how best to deploy the WTWY street team resources. We have four specific recommendations that should put the organization on a good trajectory to maximize donations.
