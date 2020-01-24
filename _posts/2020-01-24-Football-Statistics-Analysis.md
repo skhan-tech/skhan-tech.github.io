@@ -1,4 +1,4 @@
-## Predicting Footbal Game Point Totals
+## Predicting Footbal Game Point Totals Using Machine Learning
 
 *By: Saleem Khan*
 
@@ -14,22 +14,26 @@ The objective of this exercise is to determine which team statistics have the gr
 
 ![BettingLines]({{ site.url }}/images/betting-lines.png)
 
-Las Vegas needs to be correct on their betting lines at least 52.4% of the time in order to break even. Therefore any model i come up with will need to beat these odds in order to be profitable. I will be focusing on the Over/Under betting line above since this is probably the easiest number to predict. 
+Las Vegas needs to be correct on their betting lines at least 52.4% of the time in order to break even. Therefore any model I  come up with will need to beat these odds in order to be profitable. I will be focusing on the Over/Under betting line above since this is probably the easiest number to predict. 
 
 This sort of analysis can help for more than just betting, there are multiple consituents that can benefit from this sort of analysis:
-+ NFL Teams: By analyzing point totals for the entire league and comparing their individual point totals teams can better  adjust their player roster to improve scoring.
++ NFL Teams: By analyzing point totals for the entire league and comparing their individual point totals, teams can better  adjust their player roster to improve scoring.
 + NFL Players: Players can get a better sense of how best to tackle (pun intended) their oppoents in the coming weeks.
-+ Fans: Fans can get better enjoy the game and have hours of commentary by knowing where their favorite teams excel or need improvement.
++ Fans: Fans can better enjoy the game and have hours of commentary by knowing where their favorite teams excel or need improvement.
 
 
-# Data Selection
-![Data Analysis]({{ site.url }}/images/computer-code.jpg)
+# Data Selection & Web Scraping
+![Data Analysis]({{ site.url }}/images/Football-Columns.png)
 
 <sub><sup>Photo by Markus Spiske temporausch.com from Pexels</sup></sub>
 
-The first step in this data analysis was to identify an appropriate dataset. The New York City MTA (Metropolitan Transit Authority) has made ten years' worth of turnstile data available on their mta.info website. This data provides details on over 400 stations across the MTA and PATH systems along with individual turnstiles, counter and booth information. The data is counter-based meaning the data collected from each turnstile increments up every time a new rider swipes. The counters seems to have an arbitrary reset after a certain counter limit is reached. 
+As I started this data analysis I had to find a reliable source for statistics on NFL games. The best provider I could find that also allowed webscraping was the [Pro Football Reference](https://www.pro-football-reference.com/) page. This site has an amazing depth of detail in the statistics they capture for each and every game.
 
-More information on the MTA dataset can be found here: [MTA Turnstile Dataset](http://web.mta.info/developers/turnstile.html)
+Once i was able to identify a provider my next task was to determine a good way to get the data I needed. I wanted to look at 3 years worth of data for all 32 NFL teams. This would include all 16 regular season games as well as playoffs and Super Bowls. I decided to use the Selenium driver provided by Google (i.e. essentially a stripped down version of Chrome used for webscraping) in order to capture the data on each web page. I then needed to use a Python library called BeautifulSoup in order to pull the specific fields i needed.
+
+After a bit of coding i was able to gather 1600 rows and 27 columns of data of data which represent each individiual game played. Each of the columns will be a potential feature in my machine learning model
+
+![Dataset]({{ site.url }}/images/betting-lines.png)
 
 # Exploratory Data Analysis
 
