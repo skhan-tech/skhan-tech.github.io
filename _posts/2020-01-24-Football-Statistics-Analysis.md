@@ -70,7 +70,7 @@ After loading our data in and getting a sense of the shape and summary statistic
 
 ![Correlation]({{ site.url }}/images/Correlation_Heatmap.png)
 
-One thing to note here is that the offensive and defensive total yards are highly correlated to the passing yards. This makes sense because total yards are a combination of the passing and rushing yards. I may tweak my model later by removing the total yards stat to see if this improves our R<sup>2</sup>. *Note:* R<sup>2</sup> is a measure of the influence our independent variables have on our dependent variable (PointsTotal or OverUnder in this case)
+One thing to note here is that the offensive and defensive total yards are highly correlated to passing yards. This makes sense because total yards are a combination of passing and rushing yards. This is an example of multicolinearity which can introduce statistical noise in my model. I may tweak my model later by removing the total yards stat to see if this improves our R<sup>2</sup>. *Note:* R<sup>2</sup> is a measure of the influence our independent variables have on our dependent variable (PointsTotal or OverUnder in this case)
 
 # Machine Learning Model
 
