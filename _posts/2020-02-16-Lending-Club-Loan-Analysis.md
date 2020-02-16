@@ -1,4 +1,4 @@
-## Five Secrets Hidden within Lending Club Loan Data
+## Four Secrets Hidden within Lending Club Loan Data
 
 *By: Saleem Khan*
 
@@ -6,8 +6,20 @@
 
 <sub><sup>Photo by Alexander Mils from Pexels</sup></sub>
 
+# Key Takeaways
+  + **7.41%**
+    The percent of overall bad loans within the Lending Club portfolio in 2018.
+  + **22.89%** 
+    The actual percent of bad loans when removing "current" loans which have not fully paid out yet.
+  + **Small Businesses** 
+    Tend to default the most when examining the most frequent borrowers.
+  + **Machine Learning**
+    Can be used to create a portfolio which beats the average total return for randomly chosen loans.
+
 # Background
-With the NFL conference championships now complete I thought it would be timely to take a closer look at some football statistics ahead of the Super Bowl. I'm not a huge football fan but analyzing this data is a great way to get a better feel for the game and the statistics that drive it.
+Founded in 2006, Lending Club is the world's largest peer-to-peer lender. They disrupted the personal lending market by allowing retail investors to lend capital to individuals wanting to borrow. The Lending Club loan pool has grown steadily since its founding. In the last 3 years the platform originated nearly $18B in new loans.
 
 # Problem Statement
-The objective of this exercise is to determine which team statistics have the greatest impact on the amount of total points scored during an NFL Game. This problem statement is very specific because I want to be able to compare my modeled output to the Las Vegas Over/Under betting line (see below). I am merely using this as a comparison benchmark for the machine learning  model i will produce. 
+  + **What is the default rate for Lending Club loans?**
+  + **Who tends to defaults the most?**
+  + **Is it possible to use a classification model to determine, with high accuracy, whether a loan will default?**
