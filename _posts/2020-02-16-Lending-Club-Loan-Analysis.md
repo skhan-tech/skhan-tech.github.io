@@ -36,7 +36,7 @@ After downloading the dataset one of the first things you notice is how verbose 
 
 A majority of the loans within the 2018 dataset are "current". Lending Club distinguishes between seven distinct loan statuses. However, for my goal of generating a machine learning model there are really only two statuses that I care about: whether a loan turned out to be a good loan (i.e. fully paid) or a bad loan (i.e. default or charged off). These two states will be my dependant variable (i.e. the output i'm trying to predict) in my machine learning model. One thing to note here also is that I am not including any loans that are late or in a grace period. As you can see from the chart above these statuses don't occur very often and would not be statistically relevant since we would not have outcomes that can be included in our dependent variable.
 
-**What is the Overall Default Rate for Lending Club Loans?**
+**What is the overall default rate for Lending Club loans?**
 
 This is a bit of a perspective-based question. It really depends on whether you only want to look at loans where there is an outcome (e.g. a binary answer of wheter the loan defaulted or not) or whether you wanted to look at the entire Lending Club portfolio en masse. The table below shows the overall statistics.
 
@@ -65,7 +65,7 @@ Our default rate almost triples when we remove current loans. The next logical v
 | F     | 23.87%  |
 | G     | 28.02%  |
  
-**Who tends to default the most and what are these loans used for?**
+**Who tends to default the most?**
 
 There is a wealth of information in the Lending Club data however personally identifiable information (PII) is not available. In lieu, Lending Club provides distinct job titles as reported by the borrowers within the platform. When doing a basic search  of the most commonly occuring job titles, we find the following:
 
@@ -87,3 +87,9 @@ There is a wealth of information in the Lending Club data however personally ide
 However, when we look at the top 10 job titles by defaulters we see some of the statistics paint a slighlty different picture. We see below that the top defaulters are managers and owners. After browsing some these loans and looking at the loan purpose and description it looks like owners and mangers are most likely indivuduals running small businesses. These borrowers account for almost 60% more defaults than the next most frequent profession.
 
 ![JobsByDefault]({{ site.url }}/images/charts/top_jobs_by_default.png)
+
+# Machine Learning 
+
+Now we will examine whether we can create a generalized machine learning model that is able to predict whether a loan will default or not. In order to conduct this analysis we first need to look at a correlation heatmap in order to get a sense of how much our independent variables (or features) impact our dependent variable. As mentioned earlier our dependent variabe is a flag which will denote whether a loan defaulted or not and our independent variables will be the 150 columns we received from Lending Club.
+
+![JobsByDefault]({{ site.url }}/images/charts/Correlation_Heatmap.png)
