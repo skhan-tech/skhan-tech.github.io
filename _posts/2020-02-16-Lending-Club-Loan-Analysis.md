@@ -28,6 +28,6 @@ Founded in 2006, Lending Club is the world's largest peer-to-peer lender. They d
     I wanted to use a classification model to determine whether we can beat the average total return for a randomly selected pool of loans. 
     
 # Exploratory Data Analysis
-Lending Club is quite unique in that it offers all members access to loan data going back to their inception. If you visit the [Lending Club Statistics] (https://www.lendingclub.com/statistics/additional-statistics?) page you will be able to download data and statistics going back to 2007. However, for the purpose of this excercise I decided to look at the past three years worth of data. 
+Lending Club is quite unique in that it offers all members access to loan data going back to their inception. If you visit the [Lending Club Statistics](https://www.lendingclub.com/statistics/additional-statistics?) page you will be able to download data and statistics going back to 2007. However, for the purpose of this excercise I decided to look at the past three years worth of data. 
 
 After downloading the dataset one of the first things you notice is how verbose it is. There are nearly 155 unique columns of information ranging from the basics (e.g. loan amount, debt-to-income and interest rate) through to detailed attributes such as the number of derogatory public records and tax liens. This makes the dataset increbily rich and full of potential predictive power.
