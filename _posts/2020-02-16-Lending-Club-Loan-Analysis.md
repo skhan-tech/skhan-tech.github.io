@@ -32,7 +32,7 @@ Lending Club is quite unique in that it offers all members access to loan data g
 
 After downloading the dataset one of the first things you notice is how verbose it is. There are nearly 150 unique columns of information ranging from the basics (e.g. loan amount, debt-to-income and interest rate) through to detailed attributes such as the number of derogatory public records and tax liens. This makes the dataset increbily rich and full of potential predictive power. 
 
-![LoansByStatus]({{ site.url }}/charts/loans_by_loan_status.png)
+![LoansByStatus]({{ site.url }}/images/charts/loans_by_loan_status.png)
 
 A majority of the loans within the 2018 dataset are "current". Lending Club distinguishes between seven distinct loan statuses. However, for my goal of generating a machine learning model there are really only two statuses that I care about: whether a loan turned out to be a good loan (i.e. fully paid) or a bad loan (i.e. default or charged off). These two states will be my dependant variable (i.e. the output i'm trying to predict) in my machine learning model. One thing to note here also is that I am not including any loans that are late or in a grace period. As you can see from the chart above these statuses don't occur very often and would not be statistically relevant since we would not have outcomes that can be included in our dependent variable.
 
