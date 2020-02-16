@@ -65,3 +65,20 @@ Our default rate almost triples when we remove current loans. The next logical v
 | F     | 23.87%  |
 | G     | 28.02%  |
  
+**Who tends to default the most and what are these loans used for?**
+
+There is a wealth of information in the Lending Club data however personally identifiable information (PII) is not available. In lieu, Lending Club provides distinct job titles as reported by the borrowers within the platform. When doing a basic search  of the most commonly occuring job titles, we find the following:
+
+|Job Title        | Frequency|
+|-----------------|----------|
+|Teacher          | 9982     |
+|Manager          | 9547     |
+|Registered Nurse | 8125     |
+|Owner            | 7426     |
+|Driver           | 5421     |
+|Supervisor       | 3799     |
+|Sales            | 3683     |
+|Office Manager   | 3017     |
+|Truck Driver     | 2905     |
+|Project Manager  | 2780     |
+
