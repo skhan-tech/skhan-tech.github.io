@@ -82,6 +82,8 @@ There is a wealth of information in the Lending Club data however personally ide
 |Truck Driver     | 2905     |
 |Project Manager  | 2780     |
 
+![JobsByDefault]({{ site.url }}/images/charts/top_recurring_jobs.png)
+
 However, when we look at the top 10 job titles by defaulters we see some of the statistics paint a slighlty different picture. We see below that the top defaulters are managers and owners. After browsing some these loans and looking at the loan purpose and description it looks like owners and mangers are most likely indivuduals running small businesses. These borrowers account for almost 60% more defaults than the next most frequent profession.
 
 ![JobsByDefault]({{ site.url }}/images/charts/top_jobs_by_default.png)
