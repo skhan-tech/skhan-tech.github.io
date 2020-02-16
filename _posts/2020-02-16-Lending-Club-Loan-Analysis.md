@@ -38,9 +38,30 @@ A majority of the loans within the 2018 dataset are "current". Lending Club dist
 
 **What is the Overall Default Rate for Lending Club Loans?**
 
-This is a bit of a perspective-based question. It really depends on whether you only want to look at loans where there is an outcome (e.g. a binary answer of wheter the loan defaulted or not) or whether you wanted to look at the entire Lending Club portfolio en masse. 
+This is a bit of a perspective-based question. It really depends on whether you only want to look at loans where there is an outcome (e.g. a binary answer of wheter the loan defaulted or not) or whether you wanted to look at the entire Lending Club portfolio en masse. The table below shows the overall statistics.
 
-| Overal      | Count       | Percent |
+| Overall     | Count       | Percent |
 | ----------- | ----------- |---------|
 | Good Loans  | 458,551     |92.59%   |
 | Bad Loans   | 36,691      |7.41%    |
+
+However, if we change the perspective here are remove all current a late note (i.e. loans where we have not outcome yet) then we get a very different picture:
+
+
+| Ex. Current | Count       | Percent |
+| ----------- | ----------- |---------|
+| Good Loans  | 123,603     |77.11%   |
+| Bad Loans   | 36,691      |22.89%   |
+
+Our default rate almost triples when we remove current loans. The next logical view is to look at the data from the perspective of risk ratings. Lending club assigns a letter grade to each loan as part of an upfront due-diligence process where a borrower's ability to repay is analyzed. Lending Club collects everything from FICO scores through to revolving credit amounts. They assign letter grades in the range from A-G (A being the highest grade). Here is the occurence of defaults by letter grade:
+
+| Grade | Default Rate |
+| ----- |---------|
+| A     | 2.37%   |
+| B     | 5.6%    |
+| C     | 9.28%   |
+| D     | 13.63%  |
+| E     | 18.84%  |
+| F     | 23.87%  |
+| G     | 28.02%  |
+ 
