@@ -124,7 +124,7 @@ All of the models I analyzed had very similar ROC AUC metrics. AUC is short for 
 |Decision Tree        | 0.54     |
 |Logistic Regression  | 0.53     |
 
-An ROC/AUC score of 0.50 is essentially a coin flip so our model right now is barely doing better than a coin flip at predicting whether a loan will be good or now. Let's now start tuning and using some different techniques.
+An ROC/AUC score of 0.50 is essentially a coin flip so our model right now is barely doing better than a coin flip at predicting whether a loan will be good or not. Let's now start tuning and using some different techniques.
 
 **Class Imbalance**
 
