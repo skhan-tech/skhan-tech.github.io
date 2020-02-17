@@ -22,7 +22,7 @@ Founded in 2006, Lending Club is the world's largest peer-to-peer lender. They d
 # Problem Statement
   - **What is the actual default rate for Lending Club loans?**
     I wanted to take a deeper dive into the actual default rates within Lending Club so investors can make a more informed decision about their risks. 
-  - **Who tends to defaults the most?**
+  - **Who tends to default the most?**
     I wanted to see whether risk was pooled within a certain borrower type or loan purpose so we can make sure to have a diversified portfolio.
   - **Is it possible to use a classification model to determine, with high accuracy, whether a loan will default?**
     I wanted to use a classification model to determine whether we can beat the average total return for a randomly selected pool of loans. 
@@ -45,7 +45,7 @@ This is a bit of a perspective-based question. It really depends on whether you 
 | Good Loans  | 458,551     |92.59%   |
 | Bad Loans   | 36,691      |7.41%    |
 
-However, if we change the perspective here are remove all current a late note (i.e. loans where we have not outcome yet) then we get a very different picture:
+However, if we change the perspective here and remove all current or late loans (i.e. loans where we have not outcome yet) then we get a very different picture:
 
 
 | Ex. Current | Count       | Percent |
@@ -53,7 +53,7 @@ However, if we change the perspective here are remove all current a late note (i
 | Good Loans  | 123,603     |77.11%   |
 | Bad Loans   | 36,691      |22.89%   |
 
-Our default rate almost triples when we remove current loans. The next logical view is to look at the data from the perspective of risk ratings. Lending club assigns a letter grade to each loan as part of an upfront due-diligence process where a borrower's ability to repay is analyzed. Lending Club collects everything from FICO scores through to revolving credit amounts. They assign letter grades in the range from A-G (A being the highest grade). Here is the occurrence of defaults by letter grade:
+Our default rate almost triples when we remove current loans. The next logical view is to look at the data from the perspective of risk ratings. Lending Club assigns a letter grade to each loan as part of an upfront due-diligence process where a borrower's ability to repay is analyzed. Lending Club collects everything from FICO scores through to revolving credit amounts. They assign letter grades in the range from A-G (A being the highest grade). Here is the occurrence of defaults by letter grade:
 
 | Grade | Default Rate |
 | ----- |---------|
@@ -94,7 +94,7 @@ Now we will examine whether we can create a generalized machine learning model t
 
 ![JobsByDefault]({{ site.url }}/images/charts/Correlation_Heatmap.png)
 
-The chart above is quite difficult to read because of the sheer volume of features we have access to however the big takeaways are that income, loan amount and interest rates are among the top factors that impact our dependent variable (e.g. bad_loan_flag). Let's move ahead with this and take a look at creating some baseline models.
+The chart above is quite difficult to read because of the sheer volume of features we have access to. However, the big takeaways are that income, loan amount and interest rates are among the top factors that impact our dependent variable (e.g. bad_loan_flag). Let's move ahead with this and take a look at creating some baseline models.
 
 **Baseline Model**
 
@@ -111,7 +111,7 @@ I started with creating some baseline models that were not optimized. I looked a
   - Logistic Regression 
     - A form of linear regression that creates an S-shaped curve instead of a straight line in order to classify observations.
 
-When comparing models there are quite a few metrics we can analyze. There is accuracy, precision, recall, F1 and ROC/AUC. Since we have a highly imbalanced class here; that is we have very few occurrences of defaults as opposed to good loans, our best metric will be the ROC/AUC metric. Without getting into too much detail accuracy, precision and recall are not great metrics for imbalanced classes because a high number of false positives (predicted good loans that were actually bad) is not a good thing for us because we are trying to optimize for higher returns in our portfolio.
+When comparing models there are quite a few metrics we can analyze. There is accuracy, precision, recall, F1 and ROC/AUC. Since we have a highly imbalanced class here -- that is, we have very few occurrences of defaults as opposed to good loans -- our best metric will be the ROC/AUC metric. Without getting into too much detail: accuracy, precision and recall are not great metrics for imbalanced classes. A high number of false positives (predicted good loans that were actually bad) is an undesirable outcome, because we are trying to optimize for higher returns in our portfolio.
 
 All of the models I analyzed had very similar ROC AUC metrics. AUC is short for the area-under-the-curve and is a plot of comparison between our true positive and false positive rates.
 
@@ -153,6 +153,18 @@ I created a Monte Carlo simulation that visualizes my returns using this approac
 ![JobsByDefault]({{ site.url }}/images/charts/modeled_portfolio.png)
 
 # Conclusion
+So what were the main features that influenced our outcome variable the most? There should be no surprise here but the top features and their relative weights are below:
+
+|Feature Variable| Weight   |
+|----------------|----------|
+|Interest Rate   | 0.49     |
+|Annual Income   | 0.19     |
+|Loan Amount     | 0.15     |
+|FICO Score      | 0.12     |
+|Debt-to-income  | 0.03     |
+
+Interest rates seems to have a huge impact on whether a loan will default or not. Lending Club interest rates can range from 5% for A-graded borrowers all the way up to a whopping 30% for an F-Graded borrow. (I did a quick query to look at average default rates by interest rate buckets and here were the results: 
+
 The one thing that I'm learning about creating models is that it's never easy but the second, more important learning, is that domain knowledge and knowing your data is key. If I had not pivoted to looking at the non-investment grade loans I don't think I would have been able to find any alpha in this data.
 
 As a follow up for future work here, I will be looking to apply some ensembling techniques (essentially stringing models together to get better predictive power) as well as potentially looking at a much larger sample of the Lending Club data to see if we can find some predictive lift in the investment-grade pool of loans.
