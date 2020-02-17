@@ -93,3 +93,20 @@ However, when we look at the top 10 job titles by defaulters we see some of the 
 Now we will examine whether we can create a generalized machine learning model that is able to predict whether a loan will default or not. In order to conduct this analysis we first need to look at a correlation heatmap in order to get a sense of how much our independent variables (or features) impact our dependent variable. As mentioned earlier our dependent variabe is a flag which will denote whether a loan defaulted or not and our independent variables will be the 150 columns we received from Lending Club.
 
 ![JobsByDefault]({{ site.url }}/images/charts/Correlation_Heatmap.png)
+
+The chart above is quite difficult to read because of the sheer volume of features we have access to however the big takeways are that income, loan amount and interest rates are among the top factors that impact our dependent variable (e.g. bad_loan_flag). Let's move ahead with this and take a look at creating some baseline models.
+
+I started with creating some baseline models that were not optimized. I looked at the following:
+
+  - Random Forest
+    - A decision tree based algorithm that examines the relative weights of a series of decision models to predict an outcome.
+  - Gaussian Naive Bayes
+    - A basic probabilisic approach to logistic regression.
+  - KNN (K Nearest Neighbors)
+    - An approach which looks to cluster outcomes based on Euclidean distance.
+  - Decision Tree
+    - A simpler version of Random Forest
+  - Logistic Regression 
+    - A 
+
+
