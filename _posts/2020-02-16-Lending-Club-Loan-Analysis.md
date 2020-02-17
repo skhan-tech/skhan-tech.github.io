@@ -153,4 +153,6 @@ I create a Monte Carlo simulation that visualizes my returns using this approach
 ![JobsByDefault]({{ site.url }}/images/charts/modeled_portfolio.png)
 
 # Conclusion
-The one thing that I'm learning about creating models is that it's never easy but the second thing that has been the more important learning is that domain knowledge and knowing your data is key. If I had not pivoted to looking at the non-investment grade loans I don't think i would have been able to find any alpha in this data. 
+The one thing that I'm learning about creating models is that it's never easy but the second, more important learning, is that domain knowledge and knowing your data is key. If I had not pivoted to looking at the non-investment grade loans I don't think I would have been able to find any alpha in this data.
+
+As a follow up for future work here, I will be looking to apply some ensembling techniques (essentially stringing models together to get better predictive power) as well as potentially looking at a much larger sample of the Lending Club data to see if we can find some predictive lift in the investment-grade pool of loans.
