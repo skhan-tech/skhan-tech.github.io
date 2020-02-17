@@ -163,7 +163,18 @@ So what were the main features that influenced our outcome variable the most? Th
 |FICO Score      | 0.12     |
 |Debt-to-income  | 0.03     |
 
-Interest rates seems to have a huge impact on whether a loan will default or not. Lending Club interest rates can range from 5% for A-graded borrowers all the way up to a whopping 30% for an F-Graded borrow. (I did a quick query to look at average default rates by interest rate buckets and here were the results: 
+Interest rates seem to have a huge impact on whether a loan will default or not. Lending Club interest rates can range from 7% for A-graded borrowers all the way up to a whopping 30% for an F-graded borrower. To put that in perspective, a 30% interest rate on a 3 year loan of $10,000 amounts to a $5,282 in interest payments. That's more than 50% of original loan amount! I did a quick query to look at average interest rates by letter grade and here were the results:
+
+| Grade | Average Int. Rate |
+|----|----------|
+|A   | 7.06%    |
+|B   | 10.86%   |
+|C   | 14.68%   |
+|D   | 19.50%   |
+|E   | 25.22%   |
+|F   | 29.48%   |
+|G   | 30.81%   |
+
 
 My big learning from this exercise is that creating models is never easy but more importantly I learned that domain knowledge and knowing your data is key. If I had not pivoted to looking at the non-investment grade loans I don't think I would have been able to find any alpha in this data.
 
