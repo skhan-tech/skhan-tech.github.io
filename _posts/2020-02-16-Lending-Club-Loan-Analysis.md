@@ -58,10 +58,10 @@ Our default rate almost triples when we remove current loans. The next logical v
 | Grade | Default Rate |
 | ----- |---------|
 | A     | 2.37%   |
-| B     | 5.6%    |
+| B     | 5.64%    |
 | C     | 9.28%   |
 | D     | 13.63%  |
-| E     | 18.84%  |
+| E     | 17.84%  |
 | F     | 23.87%  |
 | G     | 28.02%  |
  
@@ -163,18 +163,21 @@ So what were the main features that influenced our outcome variable the most? Th
 |FICO Score      | 0.12     |
 |Debt-to-income  | 0.03     |
 
-Interest rates seem to have a huge impact on whether a loan will default or not. Lending Club interest rates can range from 7% for A-graded borrowers all the way up to a whopping 30% for an F-graded borrower. To put that in perspective, a 30% interest rate on a 3 year loan of $10,000 amounts to a $5,282 in interest payments. That's more than 50% of original loan amount! I did a quick query to look at average interest rates by letter grade and here were the results:
+Interest rates seem to have a huge impact on whether a loan will default or not. I did a quick query to look at average interest rates by letter grade and the corresponding default rates, here were the results:
 
-| Grade | Average Int. Rate |
-|----|----------|
-|A   | 7.06%    |
-|B   | 10.86%   |
-|C   | 14.68%   |
-|D   | 19.50%   |
-|E   | 25.22%   |
-|F   | 29.48%   |
-|G   | 30.81%   |
+| Grade | Average Int. Rate | Default Rate |
+|-------|-------------------|--------------|
+|A   | 7.06%    | 2.37%  |
+|B   | 10.86%   | 5.64%  |
+|C   | 14.68%   | 9.28%  |
+|D   | 19.50%   | 13.63% |
+|E   | 25.22%   | 17.84% |
+|F   | 29.48%   | 23.87% |
+|G   | 30.81%   | 28.02% |
 
+Lending Club interest rates can range from 7% for A-graded borrowers all the way up to a whopping 30% for an F-graded borrower. To put that in perspective, a 30% interest rate on a 3 year loan of $10,000 amounts to $5,282 in interest payments. That's more than 50% of the original loan amount! It's no wonder that these poorly graded loans not only carry a high interest rate but also have a 30% chance of defaulting.
+
+**Final Thoughts**
 
 My big learning from this exercise is that creating models is never easy but more importantly I learned that domain knowledge and knowing your data is key. If I had not pivoted to looking at the non-investment grade loans I don't think I would have been able to find any alpha in this data.
 
