@@ -96,6 +96,8 @@ Now we will examine whether we can create a generalized machine learning model t
 
 The chart above is quite difficult to read because of the sheer volume of features we have access to however the big takeways are that income, loan amount and interest rates are among the top factors that impact our dependent variable (e.g. bad_loan_flag). Let's move ahead with this and take a look at creating some baseline models.
 
+**Baseline Model**
+
 I started with creating some baseline models that were not optimized. I looked at the following:
 
   - Random Forest
@@ -107,6 +109,48 @@ I started with creating some baseline models that were not optimized. I looked a
   - Decision Tree
     - A simpler version of Random Forest
   - Logistic Regression 
-    - A 
+    - A form of linear regression that creates an S-shaped curve instead of a straight line in order to classify observations.
+
+When comparing models there are quite a few metrics we can analyze. There is accuracy, precision, recall, F1 and ROC/AUC. Since we have a highly imbalanced class here; that is we have very few occurences of defaults as opposed to good loans, our best metric will be the ROC/AUC metric. Without getting into too much detail accuracy, precision and recall are not great metrics for imbalanced classes because a high amount of false positives (predicted good loans that were actually bad) is not a good thing for us becasue we are trying to optimize for higher returns in our portfolio.
+
+All of the models I analyzed had very similar ROC AUC metrics. AUC is short for the area-under-the-curve and is a plot of comparison between our true positive and false positive rates.
 
 
+|Classification Model | ROC/AUC  |
+|---------------------|----------|
+|Random Forest        | 0.54     |
+|Gaussian Naive Bayes | 0.54     |
+|KNN                  | 0.53     |
+|Decision Tree        | 0.54     |
+|Logistic Regression  | 0.53     |
+
+An ROC/AUC score of 0.50 is essentially a coin flip so our model right now is barely doing better than a coin flip at predicting whether a loan will be good or now. Let's now start tuning and using some different techniques.
+
+**Class Imbalance**
+
+I then use a technique called random oversampling in order to balance my classes. I went from an imbalnce of 3.37 : 1 (good loans to bad loans) to a 1:1 ratio using this technique. Random oversampling just randomly recreates members of the minority class to balance out classes. There are other techniques that i tried as well called random undersampling, ADASYN and SMOTE. Random undersampling as the name implies is the opposite of oversamplinf and ADASYN and SMOTE essentially create synthetic entries (i.e. made up observations) to mimic the minority class. Once i applied the class balancing techniques, here were my ROC/AUC scores:
+
+|Classification Model | ROC/AUC  |
+|---------------------|----------|
+|Random Forest        | 0.54     |
+|Gaussian Naive Bayes | 0.63     |
+|KNN                  | 0.56     |
+|Decision Tree        | 0.54     |
+|Logistic Regression  | 0.64     |
+
+Interestingly most of my scores didn't change with the exception of GNB and Logistic Regression. I'm not 100% sure why those scores seemed to do better but when i tested these models with a Monte Carlo simulation which simulates a loan portfolio, these models were performing only as well as a random guess so they don't seem to have much predictive power.
+
+I then tried to optimize the Random Forest appraoch with a random search optimization. This approach tries to go through random hyperparameter selection until it finds an ideal number of decision trees for our forest. After trying this approach and settling on six decision trees I still had an ROC/AUC of 0.54; barely better than a coin flip.
+
+**Time to Pivot**
+
+As frustrating as it was going through the above and not coming out with a highly predictive model i then decided to reframe the problem a bit. I mentioned earlier that there are investment grade and non-investment grade loans in this portfolio. I had a hunch that the investment grade loans were somehow diluting the predictive power within this dataset becasue the default rates were so low for A, B and C rated loans. I decided to take a closer look at just the non-investment or junk loans to see if I could find any alpha here. Long story short; i did!
+
+Once I removed the investment grade loans and went through the same process above to train a model to this new dataset I  started seeing much better metrics. The hero model (or winner) in this second pass was a random forest algorithm which had great scores across the board and an ROC/AUC of 0.75 (way better than a coin flip).
+
+I create a Monte Carlo simulation that visualizes my returns using this approach. The chart below is a visual representation of two loan portfolios. The red respresents 100 simulations (or iterations) of a randomly chosen portfolio of 100 loans. The dotted red line represent the mean total return for this portfolio. Notice that the return is actually a -0.25, meaning the average portfolio would actually lose money. The blue bars represent loans that were selected using my Random Forest model. You'll notice that we yielded a net positive mean total return of nearly 4% on this portfolio. This is almost 6.5% improvement over a randomly chosen portfolio!
+
+![JobsByDefault]({{ site.url }}/images/charts/modeled_portfolio.png)
+
+# Conclusion
+The one thing that I'm learning about creating models is that it's never easy but the second thing that has been the more important learning is that domain knowledge and knowing your data is key. If I had not pivoted to looking at the non-investment grade loans I don't think i would have been able to find any alpha in this data. 
