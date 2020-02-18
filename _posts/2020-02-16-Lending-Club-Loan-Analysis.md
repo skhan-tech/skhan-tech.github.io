@@ -1,6 +1,6 @@
 ## Maximizing Investment Returns using Machine Learning
 
-*By: Saleem Khan*
+*By: Saleem Khan* 
 
 ![Loans]({{ site.url }}/images/banknotes.jpg)
 
