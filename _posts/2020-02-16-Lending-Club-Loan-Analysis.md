@@ -144,7 +144,7 @@ I then tried to optimize the Random Forest approach with a random search optimiz
 
 **Time to Pivot**
 
-As frustrating as it was going through the above and not coming out with a highly predictive model I then decided to reframe the problem a bit. I mentioned earlier that there are investment grade and non-investment grade loans in this portfolio. I had a hunch that the investment grade loans were somehow diluting the predictive power within this dataset because the default rates were so low for A, B and C rated loans. I decided to take a closer look at just the non-investment or junk loans to see if I could find any alpha here. Long story short; I did!
+As frustrating as it was going through the above and not coming out with a highly predictive model I decided to push ahead and  reframe the problem a bit. I mentioned earlier that there are investment grade and non-investment grade loans in this portfolio. I had a hunch that the investment grade loans were somehow diluting the predictive power within this dataset because the default rates were so low for A, B and C rated loans. I decided to take a closer look at just the non-investment or junk loans to see if I could find any alpha here. Long story short; I did!
 
 Once I removed the investment grade loans and went through the same process above to train a model to this new dataset I  started seeing much better metrics. The hero model (or winner) in this second pass was a random forest algorithm which had great scores across the board and an ROC/AUC of 0.75 (way better than a coin flip).
 
