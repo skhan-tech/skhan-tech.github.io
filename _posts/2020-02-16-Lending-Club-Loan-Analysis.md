@@ -128,7 +128,7 @@ An ROC/AUC score of 0.50 is essentially a coin flip so our model right now is ba
 
 **Class Imbalance**
 
-I then use a technique called random oversampling in order to balance my classes. I went from an imbalance of 3.37 : 1 (good loans to bad loans) to a 1:1 ratio using this technique. Random oversampling just randomly recreates members of the minority class to balance out classes. There are other techniques that I tried as well called random undersampling, ADASYN and SMOTE. Random undersampling as the name implies is the opposite of oversampling and ADASYN and SMOTE essentially create synthetic entries (i.e. made up observations) to mimic the minority class. Once I applied the class balancing techniques, here were my ROC/AUC scores:
+Since I have a large imbalance in my target variable I decided to use a technique called random oversampling in order to balance my classes. I went from an imbalance of 3.37 : 1 (good loans to bad loans) to a 1:1 ratio using this technique. Random oversampling just randomly recreates members of the minority class to balance out classes. There are other techniques that I tried as well called random undersampling, ADASYN and SMOTE. Random undersampling as the name implies is the opposite of oversampling and ADASYN and SMOTE essentially create synthetic entries (i.e. made up observations) to mimic the minority class. Once I applied the class balancing techniques, here were my ROC/AUC scores:
 
 |Classification Model | ROC/AUC  |
 |---------------------|----------|
