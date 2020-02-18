@@ -1,4 +1,4 @@
-## Using Machine Learning to Create a Better Loan Selection Criteria
+## Maximizing Investment Returns using Machine Learning
 
 *By: Saleem Khan*
 
@@ -148,7 +148,7 @@ As frustrating as it was going through the above and not coming out with a highl
 
 Once I removed the investment grade loans and went through the same process above to train a model to this new dataset I  started seeing much better metrics. The hero model (or winner) in this second pass was a random forest algorithm which had great scores across the board and an ROC/AUC of 0.75 (way better than a coin flip).
 
-I created a Monte Carlo simulation that visualizes my returns using this approach. The chart below is a visual representation of two loan portfolios. The red represents 100 simulations (or iterations) of a randomly chosen portfolio of 100 loans. The dotted red line represents the mean total return for this portfolio. Notice that the return is actually a -0.25, meaning the average random portfolio would return 25% less than the principal. The blue bars represent loans that were selected using my Random Forest model. You'll notice that we yielded a positive mean total return of nearly 0.4 (or 40% above the principal) on this portfolio. This is almost a 60% improvement in total returns over a randomly chosen portfolio!
+I created a Monte Carlo simulation that visualizes my returns using this approach. The chart below is a visual representation of two loan portfolios. The red represents 100 simulations (or iterations) of a randomly chosen portfolio of 100 loans. The dotted red line represents the mean total return for this portfolio. Notice that the return is actually a -0.25, meaning the average random portfolio would return 25% less than the principal. The blue bars represent loans that were selected using my Random Forest model. You'll notice that we yielded a positive mean total return of nearly 0.35 (or 35% above the principal) on this portfolio. This is almost a 60% improvement in total returns over a randomly chosen portfolio!
 
 ![JobsByDefault]({{ site.url }}/images/charts/modeled_portfolio.png)
 
