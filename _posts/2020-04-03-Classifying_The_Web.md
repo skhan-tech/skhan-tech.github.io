@@ -1,1 +1,183 @@
+## Big Data & Machine Learning for B2B Marketers
 
+*By: Saleem Khan* 
+
+![Marketers]({{ site.url }}/images/top-view-photo-of-people.jpg)
+
+# Key Takeaways
+  - **25.1%**  
+    - The approximate percentage of websites that can be classified as business or e-commerce related on the open web.
+  - **650 Million** 
+    - Based on 2.6 Billion web pages collected in February of 2020 by a web archive called Common Crawl, 650 Million web pages are potential businesses that B2B marketers could market to.
+  - **11 to 1** 
+    - Based on the above analysis, for every 11 people in the world there is one business.
+
+# Background
+In this excercise I will be examining the use of web archive data to produce valuable insights and data assets for B2B marketers. Specifically, knowing whether a website is a business or not is a very important first step. I will be walking through the steps required to produce a dataset that can put data scientists on a path to extracting this valuable information for their marketing teams. 
+
+# Problem Statement
+  - **Is it possible to use data from the web to identify businesses?**
+    I wanted to develop a machine learning model that can look at the raw text of a web page and determine whether it is a business or not. 
+   
+# Goal
+The ultimate goal here is to use a classifier to produce a curated list of business websites that can then be further categorized based on keywords. These further categorizations will, for instance, classify a business as being a pizza parlor of a flower shop. This sort of information is key in targeted B2B marketing. A final goal would be to pull all relevant contact information such as e-mail  phone and address.
+    
+# Approach
+The approach I will be taking here is threefold:
+
+1. **Dataset** 
+![Common_Crawl]({{ site.url }}/images/charts/common-crawl.png)
+Common Crawl (http://www.commoncrawl.org) is an open dataset of archive data from the web. This data is refreshed monthly 
+
+![LoansByStatus]({{ site.url }}/images/charts/loans_by_loan_status.png)
+
+A majority of the loans within the 2018 dataset are "current". Lending Club distinguishes between seven distinct loan statuses. However, for my goal of generating a machine learning model there are really only two statuses that I care about: whether a loan turned out to be a good loan (i.e. fully paid) or a bad loan (i.e. default or charged off). These two states will be my dependent variable (i.e. the output I'm trying to predict) in my machine learning model. One thing to note here also is that I am not including any loans that are late or in a grace period. As you can see from the chart above these statuses don't occur very often and would not be statistically relevant since we would not have outcomes that can be included in our dependent variable.
+
+**What is the overall default rate for Lending Club loans?**
+
+This is a bit of a perspective-based question. It really depends on whether you only want to look at loans where there is an outcome (e.g. a binary answer of whether the loan defaulted or not) or whether you wanted to look at the entire Lending Club portfolio en masse. The table below shows the overall statistics.
+
+| Overall     | Count       | Percent |
+| ----------- | ----------- |---------|
+| Good Loans  | 458,551     |92.59%   |
+| Bad Loans   | 36,691      |7.41%    |
+
+However, if we change the perspective here and remove all current or late loans (i.e. loans where we have not outcome yet) then we get a very different picture:
+
+
+| Ex. Current | Count       | Percent |
+| ----------- | ----------- |---------|
+| Good Loans  | 123,603     |77.11%   |
+| Bad Loans   | 36,691      |22.89%   |
+
+Our default rate almost triples when we remove current loans. The next logical view is to look at the data from the perspective of risk ratings. Lending Club assigns a letter grade to each loan as part of an upfront due-diligence process where a borrower's ability to repay is analyzed. Lending Club collects everything from FICO scores through to revolving credit amounts. They assign letter grades in the range from A-G (A being the highest grade). Here is the occurrence of defaults by letter grade:
+
+| Grade | Default Rate |
+| ----- |---------|
+| A     | 2.37%   |
+| B     | 5.64%    |
+| C     | 9.28%   |
+| D     | 13.63%  |
+| E     | 17.84%  |
+| F     | 23.87%  |
+| G     | 28.02%  |
+ 
+**Who tends to default the most?**
+
+There is a wealth of information in the Lending Club data however personally identifiable information (PII) is not available. In lieu, Lending Club provides distinct job titles as reported by the borrowers within the platform. When doing a basic search  of the most commonly occurring job titles, we find the following:
+
+|Job Title        | Frequency|
+|-----------------|----------|
+|Teacher          | 9982     |
+|Manager          | 9547     |
+|Registered Nurse | 8125     |
+|Owner            | 7426     |
+|Driver           | 5421     |
+|Supervisor       | 3799     |
+|Sales            | 3683     |
+|Office Manager   | 3017     |
+|Truck Driver     | 2905     |
+|Project Manager  | 2780     |
+
+![JobsByDefault]({{ site.url }}/images/charts/top_recurring_jobs.png)
+
+However, when we look at the top 10 job titles by defaulters we see some of the statistics paint a slightly different picture. We see below that the top defaulters are managers and owners. After browsing some these loans and looking at the loan purpose and description it looks like owners and managers are most likely individuals running small businesses. These borrowers account for almost 2x more defaults than the next most frequent profession.
+
+![JobsByDefault]({{ site.url }}/images/charts/top_jobs_by_default.png)
+
+# Machine Learning 
+
+Now we will examine whether we can create a generalized machine learning model that is able to predict whether a loan will default or not. In order to conduct this analysis, we first need to look at a correlation heatmap in order to get a sense of how much our independent variables (or features) impact our dependent variable. As mentioned earlier our dependent variable is a flag which will denote whether a loan defaulted or not and our independent variables will be the 150 columns we received from Lending Club.
+
+![JobsByDefault]({{ site.url }}/images/charts/Correlation_Heatmap.png)
+
+The chart above is quite difficult to read because of the sheer volume of features we have access to. However, the big takeaways are that income, loan amount and interest rates are among the top factors that impact our dependent variable (e.g. bad_loan_flag). Let's move ahead with this and take a look at creating some baseline models.
+
+**Baseline Model**
+
+I started with creating some baseline models that were not optimized. I looked at the following:
+
+  - Random Forest
+    - A decision tree based algorithm that examines the relative weights of a series of decision models to predict an outcome.
+  - Gaussian Naive Bayes
+    - A basic probabalistic approach to logistic regression.
+  - KNN (K Nearest Neighbors)
+    - An approach which looks to cluster outcomes based on Euclidean distance.
+  - Decision Tree
+    - A simpler version of Random Forest
+  - Logistic Regression 
+    - A form of linear regression that creates an S-shaped curve instead of a straight line in order to classify observations.
+
+When comparing models there are quite a few metrics we can analyze. There is accuracy, precision, recall, F1 and ROC/AUC. Since we have a highly imbalanced class here -- that is, we have very few occurrences of defaults as opposed to good loans -- our best metric will be the ROC/AUC metric. Without getting into too much detail: accuracy, precision and recall are not great metrics for imbalanced classes. A high number of false positives (predicted good loans that were actually bad) is an undesirable outcome, because we are trying to optimize for higher returns in our portfolio.
+
+All of the models I analyzed had very similar ROC AUC metrics. AUC is short for the area-under-the-curve and is a plot of comparison between our true positive and false positive rates.
+
+
+|Classification Model | ROC/AUC  |
+|---------------------|----------|
+|Random Forest        | 0.54     |
+|Gaussian Naive Bayes | 0.54     |
+|KNN                  | 0.53     |
+|Decision Tree        | 0.54     |
+|Logistic Regression  | 0.53     |
+
+An ROC/AUC score of 0.50 is essentially a coin flip so our model right now is barely doing better than a coin flip at predicting whether a loan will be good or not. Let's now start tuning and using some different techniques.
+
+**Class Imbalance**
+
+Since I have a large imbalance in my target variable I decided to use a technique called random oversampling in order to balance my classes. I went from an imbalance of 3.37 : 1 (good loans to bad loans) to a 1:1 ratio using this technique. Random oversampling just randomly recreates members of the minority class to balance out classes. There are other techniques that I tried as well called random undersampling, ADASYN and SMOTE. Random undersampling as the name implies is the opposite of oversampling and ADASYN and SMOTE essentially create synthetic entries (i.e. made up observations) to mimic the minority class. Once I applied the class balancing techniques, here were my ROC/AUC scores:
+
+|Classification Model | ROC/AUC  |
+|---------------------|----------|
+|Random Forest        | 0.54     |
+|Gaussian Naive Bayes | 0.63     |
+|KNN                  | 0.56     |
+|Decision Tree        | 0.54     |
+|Logistic Regression  | 0.64     |
+
+Interestingly most of my scores didn't change with the exception of GNB and Logistic Regression. I'm not 100% sure why those scores seemed to do better but when I tested these models with a Monte Carlo simulation which simulates a loan portfolio, these models were performing only as well as a random guess so they don't seem to have much predictive power.
+
+I then tried to optimize the Random Forest approach with a random search optimization. This approach tries to go through random hyperparameter selection until it finds an ideal number of decision trees for our forest. After trying this approach and settling on six decision trees I still had an ROC/AUC of 0.54; barely better than a coin flip.
+
+**Time to Pivot**
+
+As frustrating as it was going through the above and not coming out with a highly predictive model I decided to push ahead and  reframe the problem a bit. I mentioned earlier that there are investment grade and non-investment grade loans in this portfolio. I had a hunch that the investment grade loans were somehow diluting the predictive power within this dataset because the default rates were so low for A, B and C rated loans. I decided to take a closer look at just the non-investment or junk loans to see if I could find any alpha here. Long story short; I did!
+
+Once I removed the investment grade loans and went through the same process above to train a model to this new dataset I  started seeing much better metrics. The hero model (or winner) in this second pass was a random forest algorithm which had great scores across the board and an ROC/AUC of 0.75 (way better than a coin flip).
+
+I created a Monte Carlo simulation that visualizes my returns using this approach. The chart below is a visual representation of two loan portfolios. The red represents 100 simulations (or iterations) of a randomly chosen portfolio of 100 loans. The dotted red line represents the mean total return for this portfolio. Notice that the return is actually a -0.25, meaning the average random portfolio would return 25% less than the principal. The blue bars represent loans that were selected using my Random Forest model. You'll notice that we yielded a positive mean total return of nearly 0.35 (or 35% above the principal) on this portfolio. This is almost a 60% improvement in total returns over a randomly chosen portfolio!
+
+![JobsByDefault]({{ site.url }}/images/charts/modeled_portfolio.png)
+
+# Conclusion
+So what were the main features that influenced our outcome variable the most? There should be no surprise here but the top features and their relative weights are below:
+
+|Feature Variable| Weight   |
+|----------------|----------|
+|Interest Rate   | 0.49     |
+|Annual Income   | 0.19     |
+|Loan Amount     | 0.15     |
+|FICO Score      | 0.12     |
+|Debt-to-income  | 0.03     |
+
+Interest rates seem to have a huge impact on whether a loan will default or not. I did a quick query to look at average interest rates by letter grade and the corresponding default rates, here were the results:
+
+| Grade | Average Int. Rate | Default Rate |
+|-------|-------------------|--------------|
+|A   | 7.06%    | 2.37%  |
+|B   | 10.86%   | 5.64%  |
+|C   | 14.68%   | 9.28%  |
+|D   | 19.50%   | 13.63% |
+|E   | 25.22%   | 17.84% |
+|F   | 29.48%   | 23.87% |
+|G   | 30.81%   | 28.02% |
+
+Lending Club interest rates can range from 7% for A-graded borrowers all the way up to a whopping 30% for an F-graded borrower. To put that in perspective, a 30% interest rate on a 3 year loan of $10,000 amounts to $5,282 in interest payments. That's more than 50% of the original loan amount! It's no wonder that these poorly graded loans not only carry a high interest rate but also have a 30% chance of defaulting.
+
+**Final Thoughts**
+
+My big learning from this exercise is that creating models is never easy but more importantly I learned that domain knowledge and knowing your data is key. If I had not pivoted to looking at the non-investment grade loans I don't think I would have been able to find any alpha in this data.
+
+As a follow up for future work here, I will be looking to apply some ensembling techniques (essentially stringing models together to get better predictive power) as well as potentially looking at a much larger sample of the Lending Club data to see if we can find some predictive lift in the investment-grade pool of loans.
+
+**Code** - All python code for this project can be found in my GitHub respository: [GitHub](https://github.com/skhan-tech/LendingClub_LoanAnalysis)
