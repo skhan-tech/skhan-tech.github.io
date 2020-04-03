@@ -26,7 +26,9 @@ The ultimate goal here is to use a classifier to produce a curated list of busin
 The approach I will be taking here is threefold:
 
 1. **Dataset** 
-![Common_Crawl]({{ site.url }}/images/charts/common-crawl.png)
+
+![Common_Crawl]({{ site.url }}/images/common-crawl.png =340x150)
+
 Common Crawl (http://www.commoncrawl.org) is an open dataset of archive data from the web. This data is refreshed monthly 
 
 # Conclusion
