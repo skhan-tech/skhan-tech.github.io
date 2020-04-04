@@ -26,9 +26,24 @@ The ultimate goal here is to use a classifier to produce a curated list of busin
 # Approach
 The approach I will be taking here is threefold:
 
-1. **Dataset: ** <img src="../images/common-crawl.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
+1. **Dataset** 
 
-[Common Crawl](http://www.commoncrawl.org) is an open dataset of archive data from the web. This data is refreshed monthly 
+<img src="../images/common-crawl.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
+
+[Common Crawl](http://www.commoncrawl.org) is an open repository of web crawl data. This data is refreshed monthly with a history that goes back to 2011. Each month contains nearly 260 Terabytes of information. To put this number in perspective, if you were to print out all this monthly information you would have a stack of papers about 16,000 miles tall. That is enough to wrap more than half way around the circumfernce of the Earth. All of the data in CommonCrawl from 2011 to the present day would take you to the moon and back over 6 times!
+
+2. Classification
+
+<img src="../images/scikit_learn.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
+
+
+<img src="../images/spark-logo.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
+<img src="../images/scikit_learn.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
+<img src="../images/amazon-s3.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
+
+
+
+
 
 # Conclusion
 
