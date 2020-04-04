@@ -40,7 +40,7 @@ The approach I will be taking here is threefold:
 
 **3) Big Data Processing**
 
-<table>
+<table border=0>
   <tr>
     <td><img src="../images/post4/spark-logo.png" alt="Spark" title="Spark" width="200" height="75" /></td>
     <td><img src="../images/post4/amazon-emr.png" alt="EMR" title="EMR" width="200" height="75" /></td>
