@@ -117,15 +117,26 @@ Modeling is actually a pretty easy part of this entire excercise. scikit-learn c
 1. **Multinomial Naive Bayes:** This model is a variation on the basic Naive Bayes model which works by classifying our input record by calculating conditional probabilities for word importance using Bayesian inference. The multinomial part of this model simply allows us to have more than just a binomial (i.e. binary) distribution for our classifier. So for instance, I have 20 categories above that need to be classified. This model will allow us to create a model that seperates all 20 categories using conditional probabilities for words.
 2. **Decision Tree Classifier:** Consists of a large number of individual decision trees that operate as an ensemble.
 3. **Random Forest Classifier:** A variation on the Decision Tree algorithm except this approach uses a voting technique to determine which trees are best to use.
-4. **Linear Support Vector Classifier:** a type of supervised machine learning model that can be used for regression as well as classification. For my purposes I will be focused on using SVM to create a multi-class classifier.
+4. **Linear Support Vector Classifier:** a type of supervised machine learning model that can be used for regression as well as classification.
 
 After running these models against my pre-labeled training data and producing a model it was time to use an out-of-sample test dataset that I set aside in order to calculate my model accuray. After analyzing the model accuracy scores the Linear SVC model came out on top. 
 
-Focusing a bit more the Linear SVC model, in this approach each data point is first plotted in n-dimensional space. Since I have a 130,107 dimension vector space (i.e. the number of unique words and TF-IDF values) and can't visualize something this big I will use two categories of random data to explain how this works. The image below is a view of random data plotted in two dimensions. Assume the purple dots represent business terms like sell, price, sale, etc. and the yellow represents terms used in baseball like: strike, batting average and homerun.
+In the Linear SVC approach each data point is first plotted in n-dimensional space. Since I have a 130,107 dimension vector space (i.e. the number of unique words and TF-IDF values) and can't visualize something this big I will use two categories of random data to explain how this works. The image below is a view of random data plotted in two dimensions. Assume the purple dots represent business terms like sell, price, sale, etc. and the yellow represents terms used in baseball like: strike, batting average and homerun.
 
 <img src="../images/post4/svc1.png" alt="WARC" title="WARC" width="400" height="300" />
 
+What Linear SVC attempts to do is draw a line of best fit which seperates categories as being part of one class or the other. This is the core concept of how a Support Vector Machine or in this case a Support Vector Classifier works. The image below is a view of this line being drawn in the familiar y=mx+b form.
+
 <img src="../images/post4/svc2.png" alt="WARC" title="WARC" width="400" height="300" />
+
+After completing this excercise my model produces pretty high accuracy, precision and recall score as seen below:
+
+|           |          |   |   |   |
+|-----------|----------|---|---|---|
+| Accuracy  | 0.803638 |   |   |   |
+| Precision | 0.805141 |   |   |   |
+| Recall    | 0.793232 |   |   |   |
+| F1 Score  | 0.794410 |   |   |   |
 
 # Conclusion
 
