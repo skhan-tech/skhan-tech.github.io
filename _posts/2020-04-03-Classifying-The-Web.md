@@ -85,9 +85,29 @@ Before I get into the Spark job creation I will need to create a model that can 
 4. Model Selection
 
 **Training Data**
+
+*Note the source code for the discussion below can be found in: BusinessClassifier_Modeling.ipynb*
+
 The training data that I will be using will come from the sklearn.fetch_20newsgroups dataset. This dataset is included as part of the scikit-learn library and includes a pre-labeled dataset of raw text that has been classified as being a member of 20 different topics.
 
+The image below shows the pre-labeled topic descriptions and the sklearn topic names. The reason I decided on this dataset to train my model is: 
+
+a. I would need to generate my own pre-labeled data to feed into my model which would be a lengthy task, this dataset is already pre-labeled for me and 
+b. luckily this dataset actually includes e-commerce or business-related text already. The item highlighted in white below *E-Commerce* or *misc.forsale* containts newsgroup comments and articles about businesses. 
+
 <img src="../images/post4/20topics.png" alt="WARC" title="WARC" width="425" height="500" />
+
+The fetch_20newsgroupds data set contains 11,314 documents with 130,107 unique words.
+
+**Natural Language Processing**
+
+The next step is to create count vectors for all the text in my documents. I will be using a technique called TF-IDF (Term Frequency multiplied by Inverse Document Frequency). At a high level this approach tries to determine the importance of a word in a document by assigning a relevance score. Without getting too technical, here's how it works:
+
+a. Term Frequency: the number of times a word appears in a single document divided by the number of words in the document.
+b. Inverse Document Frequency: the log of the 11,314 documents in this corpus divided by the number of documents that contain the word being evaluated.
+
+This will give me a value for each word in each article that ranges from 0 >= to <1. The higher the number the more important a word is to a particular article. This dataset contains the features that I will be passing into my machine learning model in order to determine topic relevance.
+
 
 # Conclusion
 
