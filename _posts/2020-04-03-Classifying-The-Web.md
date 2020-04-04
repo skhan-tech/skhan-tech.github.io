@@ -93,6 +93,7 @@ The training data that I will be using will come from the sklearn.fetch_20newsgr
 The image below shows the pre-labeled topic descriptions and the sklearn topic names. The reason I decided on this dataset to train my model is: 
 
 a. I would need to generate my own pre-labeled data to feed into my model which would be a lengthy task, this dataset is already pre-labeled for me and 
+
 b. luckily this dataset actually includes e-commerce or business-related text already. The item highlighted in white below *E-Commerce* or *misc.forsale* containts newsgroup comments and articles about businesses. 
 
 <img src="../images/post4/20topics.png" alt="WARC" title="WARC" width="425" height="500" />
@@ -103,11 +104,28 @@ The fetch_20newsgroupds data set contains 11,314 documents with 130,107 unique w
 
 The next step is to create count vectors for all the text in my documents. I will be using a technique called TF-IDF (Term Frequency multiplied by Inverse Document Frequency). At a high level this approach tries to determine the importance of a word in a document by assigning a relevance score. Without getting too technical, here's how it works:
 
-a. Term Frequency: the number of times a word appears in a single document divided by the number of words in the document.
-b. Inverse Document Frequency: the log of the 11,314 documents in this corpus divided by the number of documents that contain the word being evaluated.
+a. **Term Frequency:** the number of times a word appears in a single document divided by the number of words in the document.
 
-This will give me a value for each word in each article that ranges from 0 >= to <1. The higher the number the more important a word is to a particular article. This dataset contains the features that I will be passing into my machine learning model in order to determine topic relevance.
+b. **Inverse Document Frequency:** the log of the 11,314 documents in this corpus divided by the number of documents that contain the word being evaluated.
 
+Multiplying these two terms will give me a value for each word in each article that ranges from 0 to <1. The higher the number the more important a word is to a particular article. So for each row of my dataset (i.e. each article) i will have 130,107 features but only a small number will be populated with a TF-IDF score. These scores combined with the unique words are the features that I will be passing into my machine learning model in order to classify an article as being business related or not.
+
+**Modeling**
+
+Modeling is actually a pretty easy part of this entire excercise. scikit-learn contains models that often take just a few lines to run. I analyzed a few different classification models:
+
+1. **Multinomial Naive Bayes:** This model is a variation on the basic Naive Bayes model which works by classifying our input record by calculating conditional probabilities for word importance using Bayesian inference. The multinomial part of this model simply allows us to have more than just a binomial (i.e. binary) distribution for our classifier. So for instance, I have 20 categories above that need to be classified. This model will allow us to create a model that seperates all 20 categories using conditional probabilities for words.
+2. **Decision Tree Classifier:** Consists of a large number of individual decision trees that operate as an ensemble.
+3. **Random Forest Classifier:** A variation on the Decision Tree algorithm except this approach uses a voting technique to determine which trees are best to use.
+4. **Linear Support Vector Classifier:** a type of supervised machine learning model that can be used for regression as well as classification. For my purposes I will be focused on using SVM to create a multi-class classifier.
+
+After running these models against my pre-labeled training data and producing a model it was time to use an out-of-sample test dataset that I set aside in order to calculate my model accuray. After analyzing the model accuracy scores the Linear SVC model came out on top. 
+
+Focusing a bit more the Linear SVC model, in this approach each data point is first plotted in n-dimensional space. Since I have a 130,107 dimension vector space (i.e. the number of unique words and TF-IDF values) and can't visualize something this big I will use two categories of random data to explain how this works. The image below is a view of random data plotted in two dimensions. Assume the purple dots represent business terms like sell, price, sale, etc. and the yellow represents terms used in baseball like: strike, batting average and homerun.
+
+<img src="../images/post4/svc1.png" alt="WARC" title="WARC" width="200" height="150" />
+
+<img src="../images/post4/svc2.png" alt="WARC" title="WARC" width="200" height="150" />
 
 # Conclusion
 
