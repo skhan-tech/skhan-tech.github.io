@@ -44,7 +44,18 @@ The approach I will be taking here is threefold:
 
   The last item here is to run my classification model against a random sample of Common Crawl data. Since this is such a large dataset, I will need to use technology that allows me to parallelize the task and work efficiently to extract the classifications I'm looking for. I will be using [Apache Spark](https://spark.apache.org/) which is a highly efficient data processing tools that uses Directed Acyclic Graphs (DAG) to process data and stores the output in Resilient Distributed Datasets (RDD). I will also be using the Amazon Web Services (AWS) cloud, specifically AWS Elastic Map Reduce (EMR) and AWS Simple-Storage-Solution (S3) in order to run my Spark job and analyze Common Crawl data.
 
-# STEP 1 - Dataset
+# Step 1 - Dataset
+
+Common Crawl crawls the web and freely provides its archived datasets to the public. Web archives consist of petabytes of data collected since 2011. The archived data comes in three distinct file formats:
+
+    1. WARC - this is a web archive file that contains the raw data collected from each web page that was crawled
+    2. WAT - metadata extracted from a WARC file which shows information like the HTTP request, reponse and associated metadata (e.g. server type, IP address & cookie information)
+    3. WET - plain text extracted from the WARC file. This includes the payload of the webpage and some basic metadata like the URI.
+    
+Here is a view of an actual WARC file:
+
+  <img src="../images/post4/WARC_File.png" alt="WARC" title="WARC" width="1126" height="854" />
+
 
 # Conclusion
 
