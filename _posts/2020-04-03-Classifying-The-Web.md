@@ -56,7 +56,7 @@ Here is a view of an actual WARC file:
 
   <img src="../images/post4/WARC_File.png" alt="WARC" title="WARC" width="600" height="450" />
 
-Since I will be focusing my analysis on the latest extract of Common Crawl, which at the time of my analysis was February 2020, I will be using this [link](https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2020-10/wet.paths.gz). This link will download the February 2020 WET plain text extract pointers in Amazon S3. The nice thing here is that I do not need to download any data since AWS hosts Common Crawl data and allows users public read-only access. This wet.paths.gz file contains a gzip listing of paths to the actual crawl data.
+Since I will be focusing my analysis on the latest extract of Common Crawl I will be using this [link](https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2020-10/wet.paths.gz). This link will download the February 2020 WET plain text extract pointers in Amazon S3. The nice thing here is that I do not need to download the full 260 terabytes since AWS hosts Common Crawl data and allows users public read-only access. This wet.paths.gz file contains a gzip listing of paths to the actual crawl data.
 
 **Note:**
 I will share my full source code at the end of this article but one thing to note here is that the Common Crawl pointer files do not include the fully-qualified S3 paths. You will need to modify the downloaded wet.paths.gz file by changing an entry like this:
@@ -71,7 +71,21 @@ to this:
 s3://commoncrawl/crawl-data/CC-MAIN-2019-35/segments/1566027312025.20/wet/CC-MAIN-20190817203056-20190817225056-00000.warc.wet.gz
 `
 
-Notice the addition of *s3://commoncrawl/* before the path. 
+Notice the addition of *s3://commoncrawl/* before the path. An easy way to make this change is to download a text editor like [Sublime Text](https://www.sublimetext.com/) and on a Mac hit Cmd + Option + F in order to do a regular expression find and replace of all entries of 'crawl-data' with 's3://commoncrawl/crawl-data'.
+
+After this my dataset is ready to be processed by my Spark job.
+
+# Step 2 - Classification Model
+
+Before I get into the Spark job creation I will now need to create a high accuracy model that can determine whether a webpage is a business or now. I've broken this taks down into four steps:
+
+1. Training Data
+
+2. Natural Language Processing
+
+3. Modeling
+
+4. Model Selection
 
 # Conclusion
 
