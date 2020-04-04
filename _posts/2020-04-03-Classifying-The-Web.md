@@ -140,8 +140,9 @@ After completing this excercise my model produces pretty high accuracy, precisio
 
 The other way to determine whether my model is accurate or not is to look at the top ten keywords that were associated to each topic. By looking at the table below, specifically the *E-commerce* topic I can see that commerce-related terms like asking, sell, shipping, offer and sale are showing up. This shows that the model is doing a pretty good job selecting relevant terms for each topic.
 
-|Topic      | Keywords                                                                        |
------------------------------------------------------------------------------------------------
+
+| Topic     | Keywords                                                                        |
+------------|---------------------------------------------------------------------------------|
 |Atheism 	| punishment atheist motto deletion bobby islamic atheists islam religion atheism |
 |Graphics 	| polygon pov cview tiff files format images 3d image graphics |
 |Windows  	| win3 risc fonts files drivers driver cica ax file windows |
