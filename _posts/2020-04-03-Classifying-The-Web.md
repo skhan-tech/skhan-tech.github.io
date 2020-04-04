@@ -40,8 +40,14 @@ The approach I will be taking here is threefold:
 
 **3) Big Data Processing**
 
-  <img src="../images/post4/spark-logo.png" alt="Spark" title="Spark" width="200" height="75" /><img src="../images/post4/amazon-emr.png" alt="EMR" title="EMR" width="200" height="75" /><img src="../images/post4/amazon-s3.png" alt="S3" title="S3" width="200" height="75" />
-
+<table>
+  <tr>
+    <td><img src="../images/post4/spark-logo.png" alt="Spark" title="Spark" width="200" height="75" /></td>
+    <td><img src="../images/post4/amazon-emr.png" alt="EMR" title="EMR" width="200" height="75" /></td>
+    <td><img src="../images/post4/amazon-s3.png" alt="S3" title="S3" width="200" height="75" /></td>
+  </tr>
+<table>
+  
   The last item here is to run my classification model against a random sample of Common Crawl data. Since this is such a large dataset, I will need to use technology that allows me to parallelize the task and work efficiently to extract the classifications I'm looking for. I will be using [Apache Spark](https://spark.apache.org/) which is a highly efficient data processing tools that uses Directed Acyclic Graphs (DAG) to process data and stores the output in Resilient Distributed Datasets (RDD). I will also be using the Amazon Web Services (AWS) cloud, specifically AWS Elastic Map Reduce (EMR) and AWS Simple-Storage-Solution (S3) in order to run my Spark job and analyze Common Crawl data.
 
 # Step 1 - Dataset
