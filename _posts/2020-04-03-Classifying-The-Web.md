@@ -149,7 +149,7 @@ The other way to determine whether my model is accurate or not is to look at the
 |IBM  		| bios 486 monitor drive card ide controller bus pc scsi |
 |MAC 		| nubus powerbook duo simms lc se centris quadra apple mac |
 |Windows X	| widgets sun application mit x11r5 xterm widget server motif window |
-|E-Commerce	| new interested asking email 00 condition sell shipping offer sale |
+|**E-Commerce**	| **new interested asking email 00 condition sell shipping offer sale** |
 |Cars		| gt vw auto toyota oil dealer ford engine cars car |
 |Motorcycles| motorcycles dog bmw riding helmet motorcycle ride bikes dod bike |
 |Baseball	| phillies ball cubs pitching stadium hit braves runs year baseball |
