@@ -54,7 +54,7 @@ Common Crawl crawls the web and freely provides its archived datasets to the pub
     
 Here is a view of an actual WARC file:
 
-  <img src="../images/post4/WARC_File.png" alt="WARC" title="WARC" width="1126" height="854" />
+  <img src="../images/post4/WARC_File.png" alt="WARC" title="WARC" width="600" height="350" />
 
 
 # Conclusion
