@@ -2,7 +2,7 @@
 
 *By: Saleem Khan* 
 
-![Marketers]({{ site.url }}/images/top-view-photo-of-people.jpg)
+![Marketers]({{ site.url }}/images/post4/top-view-photo-of-people.jpg)
 
 # Key Takeaways
   - **25.1%**  
@@ -28,21 +28,16 @@ The approach I will be taking here is threefold:
 
 1. **Dataset** 
 
-<img src="../images/common-crawl.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
+<img src="../images/post4/common-crawl.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
 
 [Common Crawl](http://www.commoncrawl.org) is an open repository of web crawl data. This data is refreshed monthly with a history that goes back to 2011. Each month contains nearly 260 Terabytes of information. To put this number in perspective, if you were to print out all this monthly information you would have a stack of papers about 16,000 miles tall. That is enough to wrap more than half way around the circumfernce of the Earth. All of the data in CommonCrawl from 2011 to the present day would take you to the moon and back over 6 times!
 
 2. Classification
 
-<img src="../images/scikit_learn.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
+<img src="../images/post4/scikit_learn.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
 
 
-<img src="../images/spark-logo.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
-<img src="../images/scikit_learn.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
-<img src="../images/amazon-s3.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
-
-
-
+<img src="../images/post4/spark-logo.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" /><img src="../images/post4/scikit_learn.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" /><img src="../images/post4/amazon-s3.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
 
 
 # Conclusion
