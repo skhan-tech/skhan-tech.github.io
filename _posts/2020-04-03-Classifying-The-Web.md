@@ -121,7 +121,7 @@ Modeling is actually a pretty easy part of this entire excercise. scikit-learn c
 
 After running these models against my pre-labeled training data and producing a model it was time to use an out-of-sample test dataset that I set aside in order to calculate my model accuray. After analyzing the model accuracy scores the Linear SVC model came out on top. 
 
-In the Linear SVC approach each data point is first plotted in n-dimensional space. Since I have a 130,107 dimension vector space (i.e. the number of unique words and TF-IDF values) and can't visualize something this big I will use two categories of random data to explain how this works. The image below is a view of random data plotted in two dimensions. Assume the purple dots represent business terms like sell, price, sale, etc. and the yellow represents terms used in baseball like: strike, batting average and homerun.
+In the Linear SVC approach each data point is first plotted in n-dimensional space. Since i have 130k+ words I'll limit the explanation to a . The image below is a view of random data plotted in two dimensions. Assume the purple dots represent business terms like sell, price, sale, etc. and the yellow represents terms used in baseball like: strike, batting average and homerun.
 
 <img src="../images/post4/svc1.png" alt="WARC" title="WARC" width="400" height="300" />
 
@@ -137,6 +137,32 @@ After completing this excercise my model produces pretty high accuracy, precisio
 | Precision | 0.805141 |
 | Recall    | 0.793232 |
 | F1 Score  | 0.794410 |
+
+The other way to determine whether my model is accurate or not is to look at the top ten keywords that were associated to each topic. By looking at the table below, specifically the *E-commerce* topic I can see that commerce-related terms like asking, sell, shipping, offer and sale are showing up. This shows that the model is doing a pretty good job selecting relevant terms for each topic.
+
+|Topic      | Keywords                                                                        |
+-----------------------------------------------------------------------------------------------
+|Atheism 	| punishment atheist motto deletion bobby islamic atheists islam religion atheism |
+|Graphics 	| polygon pov cview tiff files format images 3d image graphics |
+|Windows  	| win3 risc fonts files drivers driver cica ax file windows |
+|IBM  		| bios 486 monitor drive card ide controller bus pc scsi |
+|MAC 		| nubus powerbook duo simms lc se centris quadra apple mac |
+|Windows X	| widgets sun application mit x11r5 xterm widget server motif window |
+|E-Commerce	| new interested asking email 00 condition sell shipping offer sale |
+|Cars		| gt vw auto toyota oil dealer ford engine cars car |
+|Motorcycles| motorcycles dog bmw riding helmet motorcycle ride bikes dod bike |
+|Baseball	| phillies ball cubs pitching stadium hit braves runs year baseball |
+|Hockey		| puck playoffs leafs players play season nhl team game hockey |
+|Crypto		| des crypto security chip keys government nsa encryption clipper key |
+|Electronics| tv current amp output radio ground power voltage electronics circuit |
+|Medicine	| diet cancer food treatment patients pain medical disease doctor msg |
+|Space		| solar lunar earth shuttle spacecraft moon launch orbit nasa space |
+|Religion 	| scripture marriage faith jesus christian christianity christ christians church god |
+|Guns 		| jmd firearm nra batf weapon firearms fbi weapons guns gun |
+|Mideast 	| jewish arabs turkey armenian arab turkish armenians jews israeli israel |
+|Politics 	| jobs men trial gay people president drugs government clinton tax |
+|Religion   | values rosicrucian morality christians god jesus objective kent christian koresh |
+
 
 # Conclusion
 
