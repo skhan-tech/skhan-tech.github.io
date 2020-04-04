@@ -30,7 +30,7 @@ The approach I will be taking here is threefold:
 
 ![Common_Crawl]({{ site.url }}/images/common-crawl.png)
 
-Common Crawl (http://www.commoncrawl.org) is an open dataset of archive data from the web. This data is refreshed monthly 
+[Common Crawl](http://www.commoncrawl.org) is an open dataset of archive data from the web. This data is refreshed monthly 
 
 # Conclusion
 
