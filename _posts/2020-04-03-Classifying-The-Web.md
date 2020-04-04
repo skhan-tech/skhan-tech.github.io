@@ -56,6 +56,22 @@ Here is a view of an actual WARC file:
 
   <img src="../images/post4/WARC_File.png" alt="WARC" title="WARC" width="600" height="450" />
 
+Since I will be focusing my analysis on the latest extract of Common Crawl, which at the time of my analysis was February 2020, I will be using this [link](https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2020-10/wet.paths.gz). This link will download the February 2020 WET plain text extract pointers in Amazon S3. The nice thing here is that I do not need to download any data since AWS hosts Common Crawl data and allows users public read-only access. This wet.paths.gz file contains a gzip listing of paths to the actual crawl data.
+
+**Note:**
+I will share my full source code at the end of this article but one thing to note here is that the Common Crawl pointer files do not include the fully-qualified S3 paths. You will need to modify the downloaded wet.paths.gz file by changing an entry like this:
+
+`
+crawl-data/CC-MAIN-2019-35/segments/1566027312025.20/wet/CC-MAIN-20190817203056-20190817225056-00000.warc.wet.gz
+`
+
+to this:
+
+`
+s3://commoncrawl/crawl-data/CC-MAIN-2019-35/segments/1566027312025.20/wet/CC-MAIN-20190817203056-20190817225056-00000.warc.wet.gz
+`
+
+Notice the addition of *s3://commoncrawl/* before the path. 
 
 # Conclusion
 
