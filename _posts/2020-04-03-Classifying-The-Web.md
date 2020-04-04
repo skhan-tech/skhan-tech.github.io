@@ -26,19 +26,19 @@ The ultimate goal here is to use a classifier to produce a curated list of busin
 # Approach
 The approach I will be taking here is threefold:
 
-1. **Dataset** 
+**1) Dataset** 
 
   <img src="../images/post4/common-crawl.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
 
   [Common Crawl](http://www.commoncrawl.org) is an open repository of web crawl data. This data is refreshed monthly with a history that goes back to 2011. Each month contains nearly 260 Terabytes of information. To put this number in perspective, if you were to print out all this monthly information you would have a stack of papers about 16,000 miles tall. That is enough to wrap more than half way around the circumfernce of the Earth. All of the data in CommonCrawl from 2011 to the present day would take you to the moon and back over 6 times!
 
-2. **Classification**
+**2) Classification**
 
   <img src="../images/post4/scikit_learn.png" alt="scikit" title="scikit" width="200" height="75" />
 
   [scikit-learn](https://scikit-learn.org/) is a simple and powerful library built on Python's numpy and pandas frameworks. This library provides great machine learning capabilites. I will be focused on classification models since my goal will be to determine whether a website is a business or not. The model that I develop here will be created on a subset of my data and will eventually be used on a larger dataset of Common Crawl data.
 
-3. **Big Data**
+**3) Big Data**
 
   <img src="../images/post4/spark-logo.png" alt="Spark" title="Spark" width="200" height="75" /><img src="../images/post4/amazon-emr.png" alt="EMR" title="EMR" width="200" height="75" /><img src="../images/post4/amazon-s3.png" alt="S3" title="S3" width="200" height="75" />
 
