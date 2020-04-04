@@ -6,9 +6,9 @@
 
 # Key Takeaways
   - **25.1%**  
-    - The approximate percentage of websites that can be classified as business or e-commerce related on the open web.
+    - The approximate percentage of websites that can be classified as businesses or e-commerce related on the open web.
   - **650 Million** 
-    - Based on 2.6 Billion web pages collected in February of 2020 by a web archive called Common Crawl, 650 Million web pages are potential businesses that B2B marketers could market to.
+    - The number of web pages that are potential businesses that B2B marketers could market to. This number is based on 2.6 Billion web pages collected in February of 2020 by a web archive called Common Crawl.
   - **11 to 1** 
     - Based on the above analysis, for every 11 people in the world there is one business.
 
@@ -17,17 +17,18 @@ In this excercise I will be examining the use of web archive data to produce val
 
 # Problem Statement
   - **Is it possible to use data from the web to identify businesses?**
+  
     I wanted to develop a machine learning model that can look at the raw text of a web page and determine whether it is a business or not. 
    
 # Goal
-The ultimate goal here is to use a classifier to produce a curated list of business websites that can then be further categorized based on keywords. These further categorizations will, for instance, classify a business as being a pizza parlor of a flower shop. This sort of information is key in targeted B2B marketing. A final goal would be to pull all relevant contact information such as e-mail  phone and address.
-    
+The ultimate goal here is to use a classifier to produce a curated list of business websites that can then be further categorized based on keywords. These further categorizations will, for instance, classify a business as being a pizza parlor, a flower shop or a bank. This sort of information is key in targeted B2B marketing. A final goal would be to pull all relevant contact information such as e-mail  phone and address.
+
 # Approach
 The approach I will be taking here is threefold:
 
 1. **Dataset** 
 
-![Common_Crawl]({{ site.url }}/images/common-crawl.png =340x150)
+![Common_Crawl]({{ site.url }}/images/common-crawl.png)
 
 Common Crawl (http://www.commoncrawl.org) is an open dataset of archive data from the web. This data is refreshed monthly 
 
