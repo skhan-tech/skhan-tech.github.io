@@ -123,9 +123,9 @@ After running these models against my pre-labeled training data and producing a 
 
 Focusing a bit more the Linear SVC model, in this approach each data point is first plotted in n-dimensional space. Since I have a 130,107 dimension vector space (i.e. the number of unique words and TF-IDF values) and can't visualize something this big I will use two categories of random data to explain how this works. The image below is a view of random data plotted in two dimensions. Assume the purple dots represent business terms like sell, price, sale, etc. and the yellow represents terms used in baseball like: strike, batting average and homerun.
 
-<img src="../images/post4/svc1.png" alt="WARC" title="WARC" width="400" height="400" />
+<img src="../images/post4/svc1.png" alt="WARC" title="WARC" width="400" height="300" />
 
-<img src="../images/post4/svc2.png" alt="WARC" title="WARC" width="400" height="400" />
+<img src="../images/post4/svc2.png" alt="WARC" title="WARC" width="400" height="300" />
 
 # Conclusion
 
