@@ -40,7 +40,7 @@ The approach I will be taking here is threefold:
 
 **3) Big Data Processing**
 
-<table border=0>
+<table>
   <tr>
     <td><img src="../images/post4/spark-logo.png" alt="Spark" title="Spark" width="200" height="75" /></td>
     <td><img src="../images/post4/amazon-emr.png" alt="EMR" title="EMR" width="200" height="75" /></td>
@@ -54,9 +54,9 @@ The approach I will be taking here is threefold:
 
 Common Crawl crawls the web and freely provides its archived datasets to the public. Web archives consist of petabytes of data collected since 2011. The archived data comes in three distinct file formats:
 
-    1. WARC - this is a web archive file that contains the raw data collected from each web page that was crawled
-    2. WAT - metadata extracted from a WARC file which shows information like the HTTP request, reponse and associated metadata (e.g. server type, IP address & cookie information)
-    3. WET - plain text extracted from the WARC file. This includes the payload of the webpage and some basic metadata like the URI.
+1. WARC - this is a web archive file that contains the raw data collected from each web page that was crawled
+2. WAT - metadata extracted from a WARC file which shows information like the HTTP request, reponse and associated metadata (e.g. server type, IP address & cookie information)
+3. WET - plain text extracted from the WARC file. This includes the payload of the webpage and some basic metadata like the URI.
     
 Here is a view of an actual WARC file:
 
