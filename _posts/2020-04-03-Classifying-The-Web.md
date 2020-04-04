@@ -71,21 +71,23 @@ to this:
 s3://commoncrawl/crawl-data/CC-MAIN-2019-35/segments/1566027312025.20/wet/CC-MAIN-20190817203056-20190817225056-00000.warc.wet.gz
 `
 
-Notice the addition of *s3://commoncrawl/* before the path. An easy way to make this change is to download a text editor like [Sublime Text](https://www.sublimetext.com/) and on a Mac hit Cmd + Option + F in order to do a regular expression find and replace of all entries of 'crawl-data' with 's3://commoncrawl/crawl-data'.
+Notice the addition of *s3://commoncrawl/* before the path. An easy way to make this change is to download a text editor like [Sublime Text](https://www.sublimetext.com/) and on a Mac hit Cmd + Option + F in order to do a regular expression find and replace of all entries of *crawl-data* with *s3://commoncrawl/crawl-data*.
 
-After this my dataset is ready to be processed by my Spark job.
+Now the Common Crawl dataset is ready to be processed by my Spark job.
 
 # Step 2 - Classification Model
 
-Before I get into the Spark job creation I will now need to create a high accuracy model that can determine whether a webpage is a business or now. I've broken this taks down into four steps:
+Before I get into the Spark job creation I will need to create a model that can determine whether a webpage is a business or not. I've broken this task down into four steps:
 
 1. Training Data
-
 2. Natural Language Processing
-
 3. Modeling
-
 4. Model Selection
+
+**Training Data**
+The training data that I will be using will come from the sklearn.fetch_20newsgroups dataset. This dataset is included as part of the scikit-learn library and includes a pre-labeled dataset of raw text that has been classified as being a member of 20 different topics.
+
+<img src="../images/post4/20topics.png" alt="WARC" title="WARC" width="600" height="650" />
 
 # Conclusion
 
