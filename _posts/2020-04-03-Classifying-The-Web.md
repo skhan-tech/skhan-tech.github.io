@@ -26,10 +26,7 @@ The ultimate goal here is to use a classifier to produce a curated list of busin
 # Approach
 The approach I will be taking here is threefold:
 
-1. **Dataset** 
-
-<img src="../images/common-crawl.png" alt="Common Crawl"
-	title="Common Crawl" width="200" height="75" />
+1. **Dataset: ** <img src="../images/common-crawl.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
 
 [Common Crawl](http://www.commoncrawl.org) is an open dataset of archive data from the web. This data is refreshed monthly 
 
