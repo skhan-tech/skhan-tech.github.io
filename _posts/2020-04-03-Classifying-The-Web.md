@@ -131,6 +131,7 @@ What Linear SVC attempts to do is draw a line of best fit which seperates catego
 
 After completing this excercise my model produces pretty high accuracy, precision and recall score as seen below:
 
+| Metric    | Score    |
 |-----------|----------|
 | Accuracy  | 0.803638 |
 | Precision | 0.805141 |
