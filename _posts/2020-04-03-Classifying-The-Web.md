@@ -38,7 +38,7 @@ The approach I will be taking here is threefold:
 
   [scikit-learn](https://scikit-learn.org/) is a simple and powerful library built on Python's numpy and pandas frameworks. This library provides great machine learning capabilites. I will be focused on classification models since my goal will be to determine whether a website is a business or not. The model that I develop here will be created on a subset of my data and will eventually be used on a larger dataset of Common Crawl data.
 
-**3) Big Data**
+**3) Big Data Processing**
 
   <img src="../images/post4/spark-logo.png" alt="Spark" title="Spark" width="200" height="75" /><img src="../images/post4/amazon-emr.png" alt="EMR" title="EMR" width="200" height="75" /><img src="../images/post4/amazon-s3.png" alt="S3" title="S3" width="200" height="75" />
 
