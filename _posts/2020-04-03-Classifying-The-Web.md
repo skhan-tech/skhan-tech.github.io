@@ -184,10 +184,15 @@ The approach here involves three major technical components:
 2. Amazon S3 - used to store and retrieve the Common Crawl web archive data and Spark output
 3. Amazon EMR - a cloud-based platform that hosts Spark jobs that run on Hadoop.
 
+After going through all the setup and scripting I attempted to run my Spark job on a 100 node cluster but was rejected because of an Amazom EMR instance limit constraint. I was eventually able to request a limit increase from Amazon support but not in time for this analysis. I was able to run a 4 node Spark cluster for about two days at a cost of $50. This is a relatively cheap price to process such a large amount of information! With my new 100+ instance limit it would take approximately 1.92 hours and about $30 to process this same amount of data; a significant decrease in time and cost!
+
 For more details on the exact steps involved here, please refer to the README.md file in my GitHub repository.
 
 # Results
 
+So how is the web 
+
+<img src="../images/post4/results.png" alt="results" title="results" width="700" height="375" />
 
 # Conclusion
 
