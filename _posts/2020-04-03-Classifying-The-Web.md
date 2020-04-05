@@ -190,12 +190,16 @@ For more details on the exact steps involved here, please refer to the README.md
 
 # Results
 
-So how is the web 
+So how is the web categorized? Turns out the web is used to do a lot of business. As a matter of fact, the majority of the web is used for commerce. Almost 25.1% of pages were classified as being business or e-commerce related. Extrapolating this percentage out we get a rough estimate of 650 million web pages within the Common Crawl archive are potentially businesses!
 
 <img src="../images/post4/results.png" alt="results" title="results" width="700" height="375" />
 
-# Conclusion
+# Final Thoughts
 
-**Final Thoughts**
+A few follow-up items here for future development: 
 
-**Code** - All python code for this project can be found in my GitHub respository: [GitHub](https://github.com/skhan-tech/BusinessClassifier)
+- Business Identification: A follow-up item is to create a custom dataset that contains 100k business and non-business to train a more updated version of my model. The fetch_20newsgroups dataset is a bit dated and may not capture newer business terminology.
+- Business Categorization: Another item here is to classify the businesses identified into distinct types of businesses like banks and grocery stores using both keyword assignment as well as industry classifiers such as SIC, NAICS and NACE codes.
+- Business Contact Data: Start to scrape anything resembling an e-mail, phone or address on each web page along with business name.
+
+**Code** - Thanks for making it this far... all Python code for this project can be found in my GitHub respository: [GitHub](https://github.com/skhan-tech/BusinessClassifier)
