@@ -176,7 +176,7 @@ One final step here is to not test my model against some sample data from Common
 
 Now that I have a model that works and a dataset that is prepped I need to determine an efficient approach to running my model against the Common Crawl data. For the purposes of this excercise I will be taking a 1% random sample of the 260 terabyte Common Crawl file from Februrary 2020. This sample will contain about 2.6 terabytes of information on 25 million web pages. Based on the Central Limit Theorem, this should be a very representative sample of the overall population.
 
-<img src="../images/post4/cc_sample.png" alt="sample" title="sample" width="260" height="326" />
+<img src="../images/post4/cc_sample.png" alt="sample" title="sample" width="230" height="326" />
 
 The approach here involves three major technical components:
 
