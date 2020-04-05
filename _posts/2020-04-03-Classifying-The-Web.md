@@ -13,7 +13,7 @@
     - Based on the above analysis and roughly speaking, for every 11 people in the world there is one business.
 
 # Background
-In this excercise I will be examining the use of web archive data to produce valuable insights and data assets for Business-to-Business (B2B) marketers. B2B marketers are looking for accurate business information in order to precisely target certain kinds of businesses. There are traditional methods of using directories and business registries but the most up-to-date information on a business can usually be found on its website. Therefore, knowing whether a website is a business website or not is a valuable first step for marketers to have up-to-date and highly accurate information on the audiences they are targeting. In this blog post, I will be walking through the steps required to produce a dataset that can put data scientists on a path to extracting this valuable information for their marketing teams. 
+In this exercise I will be examining the use of web archive data to produce valuable insights and data assets for Business-to-Business (B2B) marketers. B2B marketers are looking for accurate business information in order to precisely target certain kinds of businesses. There are traditional methods of using directories and business registries but the most up-to-date information on a business can usually be found on its website. Therefore, knowing whether a website is a business website or not is a valuable first step for marketers to have up-to-date and highly accurate information on the audiences they are targeting. In this blog post, I will be walking through the steps required to produce a dataset that can put data scientists on a path to extracting this valuable information for their marketing teams. 
 
 # Problem Statement
   - **Is it possible to use data from the web to identify businesses?**
@@ -21,7 +21,7 @@ In this excercise I will be examining the use of web archive data to produce val
     I wanted to develop a machine learning model that can look at the raw text of a web page and determine whether it is a business or not. 
    
 # Goal
-The ultimate goal here is to use a classification model to produce a curated list of business websites that can then be further categorized based on keywords. These further categorizations will, for instance, classify a business as being a bank or a grocery store. One example use-case here would be a company that manufactures cardboard boxes for pizza delivery. This sort of company will mainly sell to pizza parlors. Their marketing team would need an accurate and holistic dataset of pizza parlors in their region or country to effectively market to this audince. This sort of information is key in effective B2B marketing. A final goal would be to pull all relevant contact information such as e-mail, phone and address so marketers can then communicate with each business.
+The ultimate goal here is to use a classification model to produce a curated list of business websites that can then be further categorized based on keywords. These further categorizations will, for instance, classify a business as being a bank or a grocery store. One example use-case here would be a company that manufactures cardboard boxes for pizza delivery. This sort of company will mainly sell to pizza parlors. Their marketing team would need an accurate and holistic dataset of pizza parlors in their region or country to effectively market to this audience. This sort of information is key in effective B2B marketing. A final goal would be to pull all relevant contact information such as e-mail, phone and address so marketers can then communicate with each business.
 
 # Approach
 The approach I will be taking here is threefold:
@@ -30,13 +30,13 @@ The approach I will be taking here is threefold:
 
 <img src="../images/post4/common-crawl.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
 
-[Common Crawl](http://www.commoncrawl.org) is an open repository of web crawl data. This data is refreshed monthly with a history that goes back to 2011. Each month contains nearly 260 terabytes of information. To put this number in perspective, if you were to print out all this monthly information you would have a stack of papers about 16,000 miles tall. That is enough to wrap more than half way around the circumfernce of the Earth. All of the data in CommonCrawl, from 2011 to the present day,  would take you to the moon and back over 6 times!
+[Common Crawl](http://www.commoncrawl.org) is an open repository of web crawl data. This data is refreshed monthly with a history that goes back to 2011. Each month contains nearly 260 terabytes of information. To put this number in perspective, if you were to print out all this monthly information you would have a stack of papers about 16,000 miles tall. That is enough to wrap more than half way around the circumference of the Earth. All of the data in CommonCrawl, from 2011 to the present day,  would take you to the moon and back over 6 times!
 
 **2) Classification**
 
 <img src="../images/post4/scikit_learn.png" alt="scikit" title="scikit" width="200" height="75" />
 
-[scikit-learn](https://scikit-learn.org/) is a simple and powerful library built on Python's numpy and pandas frameworks. This library provides great machine learning capabilites. I will be focused on classification models since my goal will be to determine whether a website is a business or not. The model that I develop here will be created on a subset of my data and will eventually be used on a larger dataset of Common Crawl data.
+[scikit-learn](https://scikit-learn.org/) is a simple and powerful library built on Python's numpy and pandas frameworks. This library provides great machine learning capabilities. I will be focused on classification models since my goal will be to determine whether a website is a business or not. The model that I develop here will be created on a subset of my data and will eventually be used on a larger dataset of Common Crawl data.
 
 **3) Big Data Processing**
 
@@ -49,14 +49,14 @@ The last item here is to run my classification model against a random sample of 
 Common Crawl crawls the web and freely provides its archived datasets to the public. Web archives consist of petabytes of data collected since 2011. The archived data comes in three distinct file formats:
 
 1. WARC - this is a web archive file that contains the raw data collected from each web page that was crawled
-2. WAT - metadata extracted from a WARC file which shows information like the HTTP request, reponse and associated metadata (e.g. server type, IP address & cookie information)
+2. WAT - metadata extracted from a WARC file which shows information like the HTTP request, response and associated metadata (e.g. server type, IP address & cookie information)
 3. WET - plain text extracted from the WARC file. This includes the payload of the webpage and some basic metadata like the URI.
     
 Here is a view of an actual WARC file:
 
   <img src="../images/post4/WARC_File.png" alt="WARC" title="WARC" width="600" height="450" />
 
-Since I will be focusing my analysis on the latest extract of Common Crawl I will be using this [link](https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2020-10/wet.paths.gz). This refernced file contains the February 2020 WET plain text extract pointers in Amazon S3. The nice thing here is that I do not need to download the full 260 terabytes since AWS hosts Common Crawl data and allows users public read-only access. This wet.paths.gz file contains a gzip listing of paths to the actual crawl data.
+Since I will be focusing my analysis on the latest extract of Common Crawl I will be using this [link](https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2020-10/wet.paths.gz). This referenced file contains the February 2020 WET plain text extract pointers in Amazon S3. The nice thing here is that I do not need to download the full 260 terabytes since AWS hosts Common Crawl data and allows users public read-only access. This wet.paths.gz file contains a gzip listing of paths to the actual crawl data.
 
 **Note:**
 I will share my full source code at the end of this post but one thing to note here is that the Common Crawl pointer files do not include the fully-qualified S3 paths. You will need to modify the downloaded wet.paths.gz file by changing an entry like this:
@@ -94,7 +94,7 @@ The image below shows the pre-labeled topic descriptions and the sklearn topic n
 
 a. In lieu of going through the laborious task of creating my own pre-labeled dataset of sample articles mapped to topics this dataset is already pre-labeled for me and 
 
-b. luckily this dataset actually includes e-commerce or business-related text already. The item highlighted in white below *E-Commerce* or *misc.forsale* containts newsgroup comments and articles about businesses. 
+b. luckily this dataset actually includes e-commerce or business-related text already. The item highlighted in white below *E-Commerce* or *misc.forsale* contains newsgroup comments and articles about businesses. 
 
 <img src="../images/post4/20topics.png" alt="WARC" title="WARC" width="425" height="500" />
 
@@ -112,26 +112,26 @@ Multiplying these two terms will give me a value for each word in each article t
 
 **Modeling**
 
-Modeling is actually a pretty easy part of this entire excercise. scikit-learn contains models that often take just a few lines to run. I analyzed a few different classification models:
+Modeling is actually a pretty easy part of this entire exercise. scikit-learn contains models that often take just a few lines to run. I analyzed a few different classification models:
 
-1. **Multinomial Naive Bayes:** This model is a variation on the basic Naive Bayes model which works by classifying our input record by calculating conditional probabilities for word importance using Bayesian inference. The multinomial part of this model simply allows us to have more than just a binomial (i.e. binary) distribution for our classifier. So for instance, I have 20 categories above that need to be classified. This model will allow us to create a model that seperates all 20 categories using conditional probabilities for words.
+1. **Multinomial Naive Bayes:** This model is a variation on the basic Naive Bayes model which works by classifying our input record by calculating conditional probabilities for word importance using Bayesian inference. The multinomial part of this model simply allows us to have more than just a binomial (i.e. binary) distribution for our classifier. So for instance, I have 20 categories above that need to be classified. This model will allow us to create a model that separates all 20 categories using conditional probabilities for words.
 2. **Decision Tree Classifier:** Consists of a large number of individual decision trees that operate as an ensemble.
 3. **Random Forest Classifier:** A variation on the Decision Tree algorithm except this approach uses a voting technique to determine which trees are best to use.
 4. **Linear Support Vector Classifier:** Support Vector Machines or in this case Support Vector Classifiers are a type of supervised machine learning model that attempt to find a hyperplane in n-dimensional space that distinctly classifies data points.
 
 **Model Selection**
 
-After running these models against my pre-labeled training data and producing a model it was time to use an out-of-sample test dataset that I set aside in order to calculate my model accuray. After analyzing the model accuracy scores the Linear SVC model came out on top.
+After running these models against my pre-labeled training data and producing a model it was time to use an out-of-sample test dataset that I set aside in order to calculate my model accuracy. After analyzing the model accuracy scores the Linear SVC model came out on top.
 
 In the Linear SVC approach each data point is first plotted in n-dimensional space. Since I have 130k+ features let's work with a smaller dataset of just a few terms to analyze how Linear SVC works. The image below is a view of random data plotted in two dimensions. Assume the purple dots represent business-related terms like: sell, price and offer and the yellow represents terms used in baseball like: strike, homerun and batter. The x-axis in this case would represent my TF-IDF values and the y would be each word. The clusters would then represent topics like e-commerce and baseball.
 
 <img src="../images/post4/svc1.png" alt="SVC" title="SVC" width="400" height="300" />
 
-What Linear SVC does is it draws a line of best fit with the largest margin possible (also called a support vector, hence the name) which seperates categories as being part of one class or the other. This is the core concept of how a support vector classifier works. The image below is a view of this line along with its margin being drawn.
+What Linear SVC does is it draws a line of best fit with the largest margin possible (also called a support vector, hence the name) which separates categories as being part of one class or the other. This is the core concept of how a support vector classifier works. The image below is a view of this line along with its margin being drawn.
 
 <img src="../images/post4/svc2.png" alt="SVC2" title="SVC2" width="400" height="300" />
 
-After completing this excercise my model produces pretty high accuracy, precision and recall score as seen below:
+After completing this exercise my model produces pretty high accuracy, precision and recall score as seen below:
 
 | Metric    | Score    |
 |-----------|----------|
@@ -168,13 +168,13 @@ However, I can't merely rely on these metrics. The other way to determine whethe
 
 **Sanity Testing**
 
-One final step here is to not test my model against some sample data from Common Crawl. I took a few random business-related websites and ran them through my model. The first website below was for a manufacture in China that my model classified correctly. The second was a business in Cincinatti, Ohio that was selling tickets to a play which was also classified correctly. The last one however was a mobile phone review site which was incorrectly classified as a business. It is expected to get some false positives in a dataset like this but overall the model is doing a pretty good job.
+One final step here is to not test my model against some sample data from Common Crawl. I took a few random business-related websites and ran them through my model. The first website below was for a manufacture in China that my model classified correctly. The second was a business in Cincinnati, Ohio that was selling tickets to a play which was also classified correctly. The last one however was a mobile phone review site which was incorrectly classified as a business. It is expected to get some false positives in a dataset like this but overall the model is doing a pretty good job.
 
 <img src="../images/post4/svc_test.png" alt="test" title="test" width="1000" height="350" />
 
 # Step 3 - Big Data Processing
 
-Now that I have a model that works and a dataset that is prepped I need to determine an efficient approach to running my model against the Common Crawl data. For the purposes of this excercise I will be taking a 1% random sample of the 260 terabyte Common Crawl file from Februrary 2020. This sample will contain about 2.6 terabytes of information on 25 million web pages. Based on the Central Limit Theorem, this should be a very representative sample of the overall population.
+Now that I have a model that works and a dataset that is prepped I need to determine an efficient approach to running my model against the Common Crawl data. For the purposes of this exercise I will be taking a 1% random sample of the 260 terabyte Common Crawl file from February 2020. This sample will contain about 2.6 terabytes of information on 25 million web pages. Based on the Central Limit Theorem, this should be a very representative sample of the overall population.
 
 <img src="../images/post4/cc_sample.png" alt="sample" title="sample" width="230" height="326" />
 
@@ -202,4 +202,4 @@ A few follow-up items here for future development:
 - Business Categorization: Another item here is to classify the businesses identified into distinct types of businesses like banks and grocery stores using both keyword assignment as well as industry classifiers such as SIC, NAICS and NACE codes.
 - Business Contact Data: Start to scrape anything resembling an e-mail, phone or address on each web page along with business name.
 
-**Code** - Thanks for making it this far... all Python code for this project can be found in my GitHub respository: [GitHub](https://github.com/skhan-tech/BusinessClassifier)
+**Code** - Thanks for making it this far... all Python code for this project can be found in my GitHub repository: [GitHub](https://github.com/skhan-tech/BusinessClassifier)
