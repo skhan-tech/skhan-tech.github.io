@@ -168,7 +168,7 @@ However, I can't merely rely on these metrics. The other way to determine whethe
 
 **Sanity Testing**
 
-<img src="../images/post4/svc_test.png" alt="test" title="test" width="1000" height="600" />
+<img src="../images/post4/svc_test.png" alt="test" title="test" width="1000" height="250" />
 
 # Conclusion
 
