@@ -168,7 +168,7 @@ However, I can't merely rely on these metrics. The other way to determine whethe
 
 **Sanity Testing**
 
-One final step here is to test my model against some sample data from Common Crawl. I took a few random business-related websites and ran them through my model. The first website below was for a manufacture in China that my model classified correctly. The second was a business in Cincinnati, Ohio that was selling tickets to a play which was also classified correctly. The last one however was a mobile phone review site which was incorrectly classified as a business. It is expected to get some false positives in a dataset like this but overall the model is doing a pretty good job.
+One final step here is to test my model against some sample data from Common Crawl. I took a few random business-related websites and ran them through my model. The first website below was for a manufacturer in China that my model classified correctly. The second was a business in Cincinnati, Ohio that was selling tickets to a play which was also classified correctly. The last one however was a mobile phone review site which was incorrectly classified as a business. It is expected to get some false positives in a dataset like this but overall the model is doing a pretty good job.
 
 <img src="../images/post4/svc_test.png" alt="test" title="test" width="1000" height="350" />
 
@@ -186,7 +186,7 @@ The approach here involves three major technical components:
 
 After going through all the setup and scripting I attempted to run my Spark job on a 100 node cluster but was rejected because of an Amazom EMR instance limit constraint. I was eventually able to request a limit increase from Amazon support but not in time for this analysis. I was able to run a 4 node Spark cluster for about two days at a cost of $50. This is a relatively cheap price to process such a large amount of information! With my new 100+ instance limit it would take approximately 1.92 hours and about $30 to process this same amount of data; a significant decrease in time and cost!
 
-For more details on the exact steps involved here, please refer to the README.md file in my GitHub repository.
+For more details on the exact steps involved here, please refer to the *README.md* file in my GitHub repository.
 
 # Results
 
