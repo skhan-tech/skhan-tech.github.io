@@ -168,7 +168,7 @@ However, I can't merely rely on these metrics. The other way to determine whethe
 
 **Sanity Testing**
 
-One final step here is to not test my model against some sample data from Common Crawl. I took a few random business-related websites and ran them through my model. The first website below was for a manufacture in China that my model classified correctly. The second was a business in Cincinnati, Ohio that was selling tickets to a play which was also classified correctly. The last one however was a mobile phone review site which was incorrectly classified as a business. It is expected to get some false positives in a dataset like this but overall the model is doing a pretty good job.
+One final step here is to test my model against some sample data from Common Crawl. I took a few random business-related websites and ran them through my model. The first website below was for a manufacture in China that my model classified correctly. The second was a business in Cincinnati, Ohio that was selling tickets to a play which was also classified correctly. The last one however was a mobile phone review site which was incorrectly classified as a business. It is expected to get some false positives in a dataset like this but overall the model is doing a pretty good job.
 
 <img src="../images/post4/svc_test.png" alt="test" title="test" width="1000" height="350" />
 
