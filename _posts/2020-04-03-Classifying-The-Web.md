@@ -34,13 +34,13 @@ The approach I will be taking here is threefold:
 
 **2) Classification**
 
-<img src="../images/post4/scikit_learn.png" alt="scikit" title="scikit" width="200" height="75" />
+<img src="{{ site.url }}/images/post4/scikit_learn.png" alt="scikit" title="scikit" width="200" height="75" />
 
 [scikit-learn](https://scikit-learn.org/) is a simple and powerful library built on Python's numpy and pandas frameworks. This library provides great machine learning capabilities. I will be focused on classification models since my goal will be to determine whether a website is a business or not. The model that I develop here will be created on a subset of my data and will eventually be used on a larger dataset of Common Crawl data.
 
 **3) Big Data Processing**
 
-<img src="../images/post4/spark-aws.png" alt="S3" title="S3" width="400" height="150" />
+<img src="{{ site.url }}/images/post4/spark-aws.png" alt="S3" title="S3" width="400" height="150" />
   
 The last item here is to run my classification model against a random sample of Common Crawl data. Since this is such a large dataset, I will need to use technology that allows me to parallelize the task and work efficiently to extract the classifications I'm looking for. I will be using [Apache Spark](https://spark.apache.org/) which is a highly efficient data processing tools that uses Directed Acyclic Graphs (DAG) to process data and stores the output in Resilient Distributed Datasets (RDD). I will also be using the Amazon Web Services (AWS) cloud, specifically AWS Elastic Map Reduce (EMR) and AWS Simple-Storage-Solution (S3) in order to run my Spark job and analyze Common Crawl data.
 
@@ -54,7 +54,7 @@ Common Crawl crawls the web and freely provides its archived datasets to the pub
     
 Here is a view of an actual WARC file:
 
-  <img src="../images/post4/WARC_File.png" alt="WARC" title="WARC" width="600" height="450" />
+  <img src="{{ site.url }}/images/post4/WARC_File.png" alt="WARC" title="WARC" width="600" height="450" />
 
 Since I will be focusing my analysis on the latest extract of Common Crawl I will be using this [link](https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2020-10/wet.paths.gz). This referenced file contains the February 2020 WET plain text extract pointers in Amazon S3. The nice thing here is that I do not need to download the full 260 terabytes since AWS hosts Common Crawl data and allows users public read-only access. This wet.paths.gz file contains a gzip listing of paths to the actual crawl data.
 
@@ -96,7 +96,7 @@ a. In lieu of going through the laborious task of creating my own pre-labeled da
 
 b. luckily this dataset actually includes e-commerce or business-related text already. The item highlighted in white below *E-Commerce* or *misc.forsale* contains newsgroup comments and articles about businesses. 
 
-<img src="../images/post4/20topics.png" alt="WARC" title="WARC" width="425" height="500" />
+<img src="{{ site.url }}/images/post4/20topics.png" alt="WARC" title="WARC" width="425" height="500" />
 
 The fetch_20newsgroupds data set contains 11,314 documents with 130,107 unique words.
 
@@ -125,11 +125,11 @@ After running these models against my pre-labeled training data and producing a 
 
 In the Linear SVC approach each data point is first plotted in n-dimensional space. Since I have 130k+ features let's work with a smaller dataset of just a few terms to analyze how Linear SVC works. The image below is a view of random data plotted in two dimensions. Assume the purple dots represent business-related terms like: sell, price and offer and the yellow represents terms used in baseball like: strike, homerun and batter. The x-axis in this case would represent my TF-IDF values and the y would be each word. The clusters would then represent topics like e-commerce and baseball.
 
-<img src="../images/post4/svc1.png" alt="SVC" title="SVC" width="400" height="300" />
+<img src="{{ site.url }}/images/post4/svc1.png" alt="SVC" title="SVC" width="400" height="300" />
 
 What Linear SVC does is it draws a line of best fit with the largest margin possible (also called a support vector, hence the name) which separates categories as being part of one class or the other. This is the core concept of how a support vector classifier works. The image below is a view of this line along with its margin being drawn.
 
-<img src="../images/post4/svc2.png" alt="SVC2" title="SVC2" width="400" height="300" />
+<img src="{{ site.url }}/images/post4/svc2.png" alt="SVC2" title="SVC2" width="400" height="300" />
 
 After completing this exercise my model produces pretty high accuracy, precision and recall score as seen below:
 
@@ -170,13 +170,13 @@ However, I can't merely rely on these metrics. The other way to determine whethe
 
 One final step here is to test my model against some sample data from Common Crawl. I took a few random business-related websites and ran them through my model. The first website below was for a manufacturer in China that my model classified correctly. The second was a business in Cincinnati, Ohio that was selling tickets to a play which was also classified correctly. The last one however was a mobile phone review site which was incorrectly classified as a business. It is expected to get some false positives in a dataset like this but overall the model is doing a pretty good job.
 
-<img src="../images/post4/svc_test.png" alt="test" title="test" width="1000" height="350" />
+<img src="{{ site.url }}/images/post4/svc_test.png" alt="test" title="test" width="1000" height="350" />
 
 # Step 3 - Big Data Processing
 
 Now that I have a model that works and a dataset that is prepped I need to determine an efficient approach to running my model against the Common Crawl data. For the purposes of this exercise I will be taking a 1% random sample of the 260 terabyte Common Crawl file from February 2020. This sample will contain about 2.6 terabytes of information on 25 million web pages. Based on the Central Limit Theorem, this should be a very representative sample of the overall population.
 
-<img src="../images/post4/cc_sample.png" alt="sample" title="sample" width="230" height="326" />
+<img src="{{ site.url }}/images/post4/cc_sample.png" alt="sample" title="sample" width="230" height="326" />
 
 The approach here involves three major technical components:
 
@@ -192,7 +192,7 @@ For more details on the exact steps involved here, please refer to the *README.m
 
 So how is the web categorized? Turns out the web is used to do a lot of business. As a matter of fact, the majority of the web is used for commerce. Almost 25.1% of pages were classified as being business or e-commerce related. Extrapolating this percentage out we get a rough estimate of 650 million web pages within the Common Crawl archive are potentially businesses!
 
-<img src="../images/post4/results.png" alt="results" title="results" width="700" height="375" />
+<img src="{{ site.url }}/images/post4/results.png" alt="results" title="results" width="700" height="375" />
 
 # Final Thoughts
 
