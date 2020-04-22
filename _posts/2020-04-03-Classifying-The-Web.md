@@ -28,7 +28,7 @@ The approach I will be taking here is threefold:
 
 **1) Dataset** 
 
-<img src="../images/post4/common-crawl.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
+<img src="{{ site.url }}/images/post4/common-crawl.png" alt="Common Crawl" title="Common Crawl" width="200" height="75" />
 
 [Common Crawl](http://www.commoncrawl.org) is an open repository of web crawl data. This data is refreshed monthly with a history that goes back to 2011. Each month contains nearly 260 terabytes of information. To put this number in perspective, if you were to print out all this monthly information you would have a stack of papers about 16,000 miles tall. That is enough to wrap more than half way around the circumference of the Earth. All of the data in CommonCrawl, from 2011 to the present day,  would take you to the moon and back over 6 times!
 
