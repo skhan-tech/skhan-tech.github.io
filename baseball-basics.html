@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚾ Baseball Basics Academy ⚾</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+  :root {
+    --neon-green: #39ff14;
+    --neon-blue: #00f0ff;
+    --neon-pink: #ff6ec7;
+    --neon-yellow: #fff700;
+    --neon-orange: #ff9f1c;
+    --neon-red: #ff3131;
+    --dark-bg: #0a0a2e;
+    --darker-bg: #050519;
+    --card-bg: rgba(15,15,60,0.9);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Press Start 2P', monospace;
+    background: var(--dark-bg);
+    color: #fff;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* Scanline overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,0.15) 0px,
+      rgba(0,0,0,0.15) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Stars background */
+  .stars {
+    position: fixed;
+    top:0;left:0;right:0;bottom:0;
+    z-index:0;
+    overflow:hidden;
+  }
+  .star {
+    position:absolute;
+    width:2px;height:2px;
+    background:#fff;
+    border-radius:50%;
+    animation: twinkle 2s infinite alternate;
+  }
+  @keyframes twinkle {
+    0% { opacity:0.3; }
+    100% { opacity:1; }
+  }
+
+  /* Main container */
+  .game-container {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* XP / Progress bar */
+  .progress-bar-container {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 40px;
+    background: var(--darker-bg);
+    border-bottom: 3px solid var(--neon-green);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    padding: 0 20px;
+  }
+  .progress-bar-container.active { display: flex; }
+  .progress-label {
+    font-size: 8px;
+    color: var(--neon-green);
+    margin-right: 10px;
+    white-space: nowrap;
+  }
+  .progress-track {
+    flex: 1;
+    height: 16px;
+    background: #111;
+    border: 2px solid var(--neon-green);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-green), var(--neon-blue));
+    width: 0%;
+    transition: width 0.8s ease;
+  }
+  .progress-pct {
+    font-size: 8px;
+    color: var(--neon-blue);
+    margin-left: 10px;
+    min-width: 40px;
+  }
+
+  /* Screens */
+  .screen {
+    display: none;
+    animation: fadeIn 0.5s ease;
+    padding-top: 50px;
+  }
+  .screen.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity:0; transform: translateY(20px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+
+  /* Title screen */
+  .title-screen {
+    text-align: center;
+    padding-top: 80px !important;
+  }
+  .title-main {
+    font-size: 28px;
+    color: var(--neon-yellow);
+    text-shadow: 0 0 20px var(--neon-yellow), 0 0 40px var(--neon-orange);
+    margin-bottom: 10px;
+    animation: glow 2s infinite alternate;
+  }
+  @keyframes glow {
+    from { text-shadow: 0 0 20px var(--neon-yellow), 0 0 40px var(--neon-orange); }
+    to { text-shadow: 0 0 30px var(--neon-yellow), 0 0 60px var(--neon-orange), 0 0 80px var(--neon-red); }
+  }
+  .title-sub {
+    font-size: 12px;
+    color: var(--neon-blue);
+    margin-bottom: 40px;
+  }
+  .baseball-art {
+    font-size: 80px;
+    margin: 30px 0;
+    animation: bounce 1s infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+  .start-btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 16px;
+    padding: 15px 40px;
+    background: transparent;
+    color: var(--neon-green);
+    border: 3px solid var(--neon-green);
+    cursor: pointer;
+    animation: blink 1s infinite;
+    transition: all 0.3s;
+  }
+  .start-btn:hover {
+    background: var(--neon-green);
+    color: var(--dark-bg);
+    animation: none;
+  }
+  @keyframes blink {
+    0%,100% { opacity:1; }
+    50% { opacity:0.3; }
+  }
+
+  /* Level headers */
+  .level-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 3px solid var(--neon-pink);
+    background: rgba(255,110,199,0.1);
+    position: relative;
+  }
+  .level-num {
+    font-size: 10px;
+    color: var(--neon-pink);
+    letter-spacing: 4px;
+  }
+  .level-title {
+    font-size: 18px;
+    color: var(--neon-yellow);
+    margin-top: 8px;
+    text-shadow: 0 0 10px var(--neon-yellow);
+  }
+
+  /* Content cards */
+  .info-card {
+    background: var(--card-bg);
+    border: 2px solid var(--neon-blue);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+    line-height: 2;
+    font-size: 10px;
+  }
+  .info-card h3 {
+    color: var(--neon-green);
+    font-size: 12px;
+    margin-bottom: 12px;
+    text-shadow: 0 0 8px var(--neon-green);
+  }
+  .info-card p, .info-card li {
+    color: #ccc;
+    font-size: 9px;
+    line-height: 2.2;
+  }
+  .info-card ul { list-style: none; padding-left: 10px; }
+  .info-card li::before {
+    content: '▸ ';
+    color: var(--neon-pink);
+  }
+  .highlight {
+    color: var(--neon-yellow);
+    text-shadow: 0 0 5px var(--neon-yellow);
+  }
+  .highlight-green {
+    color: var(--neon-green);
+    text-shadow: 0 0 5px var(--neon-green);
+  }
+  .highlight-pink {
+    color: var(--neon-pink);
+    text-shadow: 0 0 5px var(--neon-pink);
+  }
+  .highlight-blue {
+    color: var(--neon-blue);
+    text-shadow: 0 0 5px var(--neon-blue);
+  }
+
+  /* Versus display */
+  .vs-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+  }
+  .vs-box {
+    flex: 1;
+    min-width: 250px;
+    background: var(--card-bg);
+    border: 3px solid;
+    padding: 20px;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .vs-box:hover {
+    transform: scale(1.05);
+  }
+  .vs-box.defense {
+    border-color: var(--neon-blue);
+  }
+  .vs-box.defense:hover {
+    box-shadow: 0 0 30px rgba(0,240,255,0.4);
+  }
+  .vs-box.offense {
+    border-color: var(--neon-orange);
+  }
+  .vs-box.offense:hover {
+    box-shadow: 0 0 30px rgba(255,159,28,0.4);
+  }
+  .vs-icon { font-size: 50px; margin-bottom: 10px; }
+  .vs-label { font-size: 14px; margin-bottom: 8px; }
+  .vs-text { font-size: 8px; color: #aaa; line-height: 2; }
+  .vs-divider {
+    font-size: 24px;
+    color: var(--neon-red);
+    text-shadow: 0 0 20px var(--neon-red);
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+  }
+
+  /* Baseball Diamond SVG */
+  .diamond-container {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    margin: 20px auto;
+  }
+  .diamond-svg {
+    width: 100%;
+    height: auto;
+  }
+  .position-dot {
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .position-dot:hover {
+    filter: brightness(1.5) drop-shadow(0 0 10px currentColor);
+    transform-origin: center;
+  }
+  .pos-tooltip {
+    display: none;
+    position: absolute;
+    background: var(--darker-bg);
+    border: 2px solid var(--neon-green);
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 8px;
+    color: #fff;
+    max-width: 220px;
+    z-index: 50;
+    line-height: 2;
+    pointer-events: none;
+  }
+  .pos-tooltip.show { display: block; }
+  .pos-tooltip .pos-name {
+    color: var(--neon-yellow);
+    font-size: 10px;
+    margin-bottom: 6px;
+  }
+  .pos-tooltip .pos-number {
+    color: var(--neon-pink);
+    font-size: 8px;
+  }
+
+  /* Scenario cards */
+  .scenario {
+    background: var(--card-bg);
+    border-left: 4px solid var(--neon-orange);
+    padding: 15px 20px;
+    margin: 15px 0;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .scenario:hover {
+    border-left-color: var(--neon-yellow);
+    background: rgba(25,25,70,0.9);
+  }
+  .scenario-q {
+    font-size: 9px;
+    color: var(--neon-orange);
+    margin-bottom: 8px;
+  }
+  .scenario-a {
+    font-size: 9px;
+    color: #aaa;
+    line-height: 2.2;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.3s;
+  }
+  .scenario.open .scenario-a {
+    max-height: 500px;
+    padding-top: 10px;
+  }
+  .scenario-hint {
+    font-size: 7px;
+    color: #555;
+    margin-top: 4px;
+  }
+
+  /* Nav buttons */
+  .nav-btns {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 40px 0 30px;
+    flex-wrap: wrap;
+  }
+  .nav-btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    padding: 12px 30px;
+    background: transparent;
+    border: 2px solid var(--neon-green);
+    color: var(--neon-green);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .nav-btn:hover {
+    background: var(--neon-green);
+    color: var(--dark-bg);
+  }
+  .nav-btn.back {
+    border-color: var(--neon-pink);
+    color: var(--neon-pink);
+  }
+  .nav-btn.back:hover {
+    background: var(--neon-pink);
+    color: var(--dark-bg);
+  }
+
+  /* Quiz */
+  .quiz-question {
+    background: var(--card-bg);
+    border: 2px solid var(--neon-blue);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+  }
+  .quiz-num {
+    font-size: 8px;
+    color: var(--neon-pink);
+    margin-bottom: 8px;
+  }
+  .quiz-text {
+    font-size: 10px;
+    color: var(--neon-yellow);
+    margin-bottom: 15px;
+    line-height: 2;
+  }
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .quiz-opt {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    padding: 10px 15px;
+    background: rgba(0,0,0,0.3);
+    border: 2px solid #333;
+    color: #ccc;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s;
+    line-height: 1.8;
+  }
+  .quiz-opt:hover:not(.locked) {
+    border-color: var(--neon-blue);
+    color: #fff;
+  }
+  .quiz-opt.selected {
+    border-color: var(--neon-blue);
+    background: rgba(0,240,255,0.15);
+    color: var(--neon-blue);
+  }
+  .quiz-opt.correct {
+    border-color: var(--neon-green) !important;
+    background: rgba(57,255,20,0.2) !important;
+    color: var(--neon-green) !important;
+  }
+  .quiz-opt.wrong {
+    border-color: var(--neon-red) !important;
+    background: rgba(255,49,49,0.15) !important;
+    color: var(--neon-red) !important;
+  }
+  .quiz-opt.locked { cursor: default; }
+  .quiz-explain {
+    margin-top: 12px;
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
+    border-left: 3px solid var(--neon-green);
+    font-size: 8px;
+    color: #aaa;
+    line-height: 2;
+    display: none;
+  }
+  .quiz-explain.show { display: block; }
+
+  /* Results */
+  .results-card {
+    text-align: center;
+    background: var(--card-bg);
+    border: 3px solid var(--neon-yellow);
+    padding: 30px;
+    margin: 30px 0;
+    border-radius: 4px;
+  }
+  .results-grade {
+    font-size: 60px;
+    margin: 20px 0;
+    animation: glow 1.5s infinite alternate;
+  }
+  .results-grade.grade-a { color: var(--neon-green); text-shadow: 0 0 30px var(--neon-green); }
+  .results-grade.grade-b { color: var(--neon-blue); text-shadow: 0 0 30px var(--neon-blue); }
+  .results-grade.grade-c { color: var(--neon-yellow); text-shadow: 0 0 30px var(--neon-yellow); }
+  .results-grade.grade-d { color: var(--neon-orange); text-shadow: 0 0 30px var(--neon-orange); }
+  .results-grade.grade-f { color: var(--neon-red); text-shadow: 0 0 30px var(--neon-red); }
+  .results-pct {
+    font-size: 14px;
+    color: var(--neon-blue);
+    margin-bottom: 15px;
+  }
+  .results-msg {
+    font-size: 9px;
+    color: #ccc;
+    line-height: 2;
+  }
+
+  /* Batting order visual */
+  .batting-lineup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 15px 0;
+  }
+  .batter-slot {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: rgba(0,0,0,0.3);
+    border-left: 3px solid var(--neon-orange);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .batter-slot:hover {
+    background: rgba(255,159,28,0.1);
+    border-left-color: var(--neon-yellow);
+  }
+  .batter-num {
+    color: var(--neon-orange);
+    font-size: 10px;
+    min-width: 25px;
+  }
+  .batter-emoji { font-size: 18px; }
+  .batter-info {
+    font-size: 8px;
+    color: #aaa;
+    line-height: 1.8;
+  }
+  .batter-role {
+    color: var(--neon-yellow);
+    font-size: 7px;
+  }
+
+  /* Animated base runner */
+  .base-path-demo {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    margin: 20px auto;
+  }
+  .runner-dot {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--neon-green);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--neon-green);
+    animation: runBases 4s infinite;
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+  }
+  @keyframes runBases {
+    0% { bottom: 10px; left: 130px; }
+    25% { bottom: 130px; left: 250px; }
+    50% { bottom: 250px; left: 130px; }
+    75% { bottom: 130px; left: 10px; }
+    100% { bottom: 10px; left: 130px; }
+  }
+
+  /* Flip cards for rules */
+  .rule-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+  }
+  .rule-card {
+    perspective: 600px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .rule-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+  .rule-card.flipped .rule-card-inner {
+    transform: rotateY(180deg);
+  }
+  .rule-front, .rule-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border: 2px solid var(--neon-pink);
+    border-radius: 4px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .rule-front {
+    background: var(--card-bg);
+  }
+  .rule-front-icon { font-size: 36px; margin-bottom: 10px; }
+  .rule-front-text { font-size: 9px; color: var(--neon-pink); line-height: 1.8; }
+  .rule-back {
+    background: rgba(30,15,50,0.95);
+    transform: rotateY(180deg);
+    border-color: var(--neon-green);
+  }
+  .rule-back-text {
+    font-size: 7px;
+    color: #ccc;
+    line-height: 2;
+  }
+  .tap-hint {
+    font-size: 7px;
+    color: #444;
+    margin-top: 8px;
+  }
+
+  /* Pixel baseball characters */
+  .pixel-char {
+    display: inline-block;
+    font-size: 40px;
+    margin: 5px;
+    animation: bob 2s infinite ease-in-out;
+  }
+  .pixel-char:nth-child(2) { animation-delay: 0.3s; }
+  .pixel-char:nth-child(3) { animation-delay: 0.6s; }
+  @keyframes bob {
+    0%,100% { transform:translateY(0); }
+    50% { transform:translateY(-8px); }
+  }
+
+  /* Power-up style tips */
+  .power-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: rgba(255,255,0,0.05);
+    border: 2px dashed var(--neon-yellow);
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 4px;
+  }
+  .power-tip-icon { font-size: 24px; flex-shrink: 0; }
+  .power-tip-text { font-size: 8px; color: var(--neon-yellow); line-height: 2; }
+
+  /* Section divider */
+  .section-divider {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 8px;
+    color: #333;
+    letter-spacing: 6px;
+  }
+
+  /* Footer */
+  .game-footer {
+    text-align: center;
+    padding: 30px;
+    font-size: 7px;
+    color: #333;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .title-main { font-size: 18px; }
+    .level-title { font-size: 14px; }
+    .vs-container { flex-direction: column; }
+    .vs-divider { transform: rotate(90deg); }
+    .rule-cards { grid-template-columns: 1fr; }
+  }
+
+  /* Interactive position labels on field */
+  .field-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    fill: #fff;
+    text-anchor: middle;
+    pointer-events: none;
+  }
+
+  /* Tab content for batting */
+  .tab-row {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    padding: 8px 12px;
+    background: transparent;
+    border: 2px solid #333;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .tab-btn.active {
+    border-color: var(--neon-orange);
+    color: var(--neon-orange);
+    background: rgba(255,159,28,0.1);
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Confetti */
+  .confetti-container {
+    position: fixed;
+    top:0;left:0;right:0;bottom:0;
+    pointer-events:none;
+    z-index:9998;
+    overflow:hidden;
+  }
+  .confetti-piece {
+    position:absolute;
+    width:8px;
+    height:8px;
+    top:-10px;
+    animation: confettiFall 3s linear forwards;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity:1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity:0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Stars background -->
+<div class="stars" id="stars"></div>
+
+<!-- Progress bar -->
+<div class="progress-bar-container" id="progressBar">
+  <span class="progress-label">LVL PROGRESS</span>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <span class="progress-pct" id="progressPct">0%</span>
+</div>
+
+<div class="game-container">
+
+<!-- ==================== TITLE SCREEN ==================== -->
+<div class="screen active" id="screen-title">
+  <div class="title-screen">
+    <div class="baseball-art">⚾</div>
+    <div class="title-main">BASEBALL BASICS</div>
+    <div class="title-main" style="font-size:16px; margin-bottom: 20px;">ACADEMY</div>
+    <div class="title-sub">— COACH'S TRAINING PROGRAM —</div>
+    <div style="margin:20px 0;">
+      <span class="pixel-char">🧢</span>
+      <span class="pixel-char">⚾</span>
+      <span class="pixel-char">🏟️</span>
+    </div>
+    <p style="font-size:8px; color:#666; margin:20px 0; line-height:2;">
+      Learn the game. Know the rules.<br>Become a baseball legend.
+    </p>
+    <button class="start-btn" onclick="startGame()">▶ START GAME ◀</button>
+    <p style="font-size:7px; color:#333; margin-top:30px;">4 LEVELS + FINAL QUIZ</p>
+  </div>
+</div>
+
+<!-- ==================== LEVEL 1: DEFENSE vs OFFENSE ==================== -->
+<div class="screen" id="screen-level1">
+  <div class="level-header">
+    <div class="level-num">— LEVEL 1 —</div>
+    <div class="level-title">⚔️ DEFENSE vs OFFENSE ⚔️</div>
+  </div>
+
+  <div class="info-card">
+    <h3>🎮 THE BIG IDEA</h3>
+    <p>Baseball has <span class="highlight">two sides</span> — just like two teams in a video game! One team is trying to <span class="highlight-green">STOP</span> the other team, and the other team is trying to <span class="highlight-pink">SCORE</span>.</p>
+  </div>
+
+  <div class="vs-container">
+    <div class="vs-box defense" onclick="this.classList.toggle('expanded')">
+      <div class="vs-icon">🛡️</div>
+      <div class="vs-label" style="color:var(--neon-blue)">DEFENSE</div>
+      <div class="vs-text">
+        The team in the <span class="highlight-blue">FIELD</span>.<br>
+        They throw, catch, and try to get the other team OUT.<br><br>
+        🧤 9 players spread across the field<br>
+        🎯 Goal: Get 3 outs to end the inning
+      </div>
+    </div>
+    <div class="vs-divider">⚡VS⚡</div>
+    <div class="vs-box offense" onclick="this.classList.toggle('expanded')">
+      <div class="vs-icon">⚔️</div>
+      <div class="vs-label" style="color:var(--neon-orange)">OFFENSE</div>
+      <div class="vs-text">
+        The team that is <span style="color:var(--neon-orange)">BATTING</span>.<br>
+        They hit the ball and run the bases to score!<br><br>
+        🏏 One batter at a time<br>
+        🎯 Goal: Score as many RUNS as possible
+      </div>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <h3>🔄 THEY TAKE TURNS!</h3>
+    <p>Each team gets a turn on offense and a turn on defense. When your team is on the field with gloves — that's <span class="highlight-blue">DEFENSE</span>. When your team is up to bat — that's <span style="color:var(--neon-orange)">OFFENSE</span>.</p>
+    <br>
+    <p>One time through for BOTH teams = <span class="highlight">1 INNING</span></p>
+    <p>A game has <span class="highlight">6 INNINGS</span> in Little League!</p>
+  </div>
+
+  <div class="power-tip">
+    <div class="power-tip-icon">💡</div>
+    <div class="power-tip-text">EASY WAY TO REMEMBER: Defense = "De-FENCE" = you're guarding the fence (the field). Offense = "Oh! FENCE!" = you're trying to hit it OVER the fence!</div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="nav-btn" onclick="goTo('screen-level2')">NEXT LEVEL ▸▸</button>
+  </div>
+</div>
+
+<!-- ==================== LEVEL 2: DEFENSIVE POSITIONS ==================== -->
+<div class="screen" id="screen-level2">
+  <div class="level-header">
+    <div class="level-num">— LEVEL 2 —</div>
+    <div class="level-title">🗺️ THE FIELD & POSITIONS 🗺️</div>
+  </div>
+
+  <div class="info-card">
+    <h3>👆 TAP A POSITION TO LEARN ABOUT IT!</h3>
+    <p>There are <span class="highlight">9 players</span> on defense. Each has a <span class="highlight-pink">number</span> and a <span class="highlight-green">job</span>. Tap any position on the field below!</p>
+  </div>
+
+  <div class="diamond-container">
+    <div class="pos-tooltip" id="posTooltip"></div>
+    <svg class="diamond-svg" viewBox="0 0 600 550" xmlns="http://www.w3.org/2000/svg">
+      <!-- Grass -->
+      <rect x="0" y="0" width="600" height="550" fill="#1a472a" rx="8"/>
+
+      <!-- Outfield arc -->
+      <path d="M 30,320 Q 300,20 570,320" fill="none" stroke="#2d6b3f" stroke-width="3" stroke-dasharray="8,4"/>
+
+      <!-- Infield diamond -->
+      <polygon points="300,440 450,310 300,180 150,310" fill="none" stroke="var(--neon-green)" stroke-width="2" opacity="0.5"/>
+
+      <!-- Base paths -->
+      <line x1="300" y1="440" x2="450" y2="310" stroke="#8B7355" stroke-width="6" opacity="0.4"/>
+      <line x1="450" y1="310" x2="300" y2="180" stroke="#8B7355" stroke-width="6" opacity="0.4"/>
+      <line x1="300" y1="180" x2="150" y2="310" stroke="#8B7355" stroke-width="6" opacity="0.4"/>
+      <line x1="150" y1="310" x2="300" y2="440" stroke="#8B7355" stroke-width="6" opacity="0.4"/>
+
+      <!-- Pitcher's mound -->
+      <circle cx="300" cy="320" r="16" fill="#8B7355" opacity="0.6"/>
+
+      <!-- Bases -->
+      <rect x="290" y="430" width="20" height="20" fill="#fff" transform="rotate(45,300,440)" opacity="0.9"/> <!-- Home -->
+      <rect x="440" y="300" width="18" height="18" fill="#fff" transform="rotate(45,449,309)" opacity="0.9"/> <!-- 1st -->
+      <rect x="291" y="171" width="18" height="18" fill="#fff" transform="rotate(45,300,180)" opacity="0.9"/> <!-- 2nd -->
+      <rect x="141" y="301" width="18" height="18" fill="#fff" transform="rotate(45,150,310)" opacity="0.9"/> <!-- 3rd -->
+
+      <!-- Position dots (clickable) -->
+      <!-- 1: Pitcher -->
+      <circle class="position-dot" cx="300" cy="320" r="14" fill="var(--neon-pink)" opacity="0.9"
+        data-name="PITCHER" data-num="#1" data-desc="Stands on the mound in the middle of the field. Throws the ball to the catcher. The pitcher starts every play! They try to throw strikes to get batters out." data-emoji="🫡"/>
+      <text class="field-label" x="300" y="355" font-size="8">P</text>
+
+      <!-- 2: Catcher -->
+      <circle class="position-dot" cx="300" cy="475" r="14" fill="var(--neon-blue)" opacity="0.9"
+        data-name="CATCHER" data-num="#2" data-desc="Crouches behind home plate. Catches the pitcher's throws. Wears special gear (mask, chest protector, shin guards). Also guards home plate and throws out runners trying to steal!" data-emoji="🧤"/>
+      <text class="field-label" x="300" y="500" font-size="8">C</text>
+
+      <!-- 3: First Baseman -->
+      <circle class="position-dot" cx="460" cy="300" r="14" fill="var(--neon-orange)" opacity="0.9"
+        data-name="FIRST BASEMAN" data-num="#3" data-desc="Stands near first base. Catches throws from other fielders to get runners out at first. Needs to be good at catching! When a ground ball is hit, other players throw it to first base to beat the runner." data-emoji="🥇"/>
+      <text class="field-label" x="490" y="295" font-size="8">1B</text>
+
+      <!-- 4: Second Baseman -->
+      <circle class="position-dot" cx="395" cy="240" r="14" fill="var(--neon-yellow)" opacity="0.9"
+        data-name="SECOND BASEMAN" data-num="#4" data-desc="Plays between first and second base. Covers second base on some plays. Helps turn double plays (getting TWO outs on one hit!)." data-emoji="✌️"/>
+      <text class="field-label" x="430" y="235" font-size="8">2B</text>
+
+      <!-- 5: Third Baseman -->
+      <circle class="position-dot" cx="150" cy="295" r="14" fill="var(--neon-green)" opacity="0.9"
+        data-name="THIRD BASEMAN" data-num="#5" data-desc="Guards third base. The ball comes FAST to this position! Called the 'Hot Corner' because batters hit hard shots down the third base line. Needs quick reflexes!" data-emoji="🔥"/>
+      <text class="field-label" x="115" y="290" font-size="8">3B</text>
+
+      <!-- 6: Shortstop -->
+      <circle class="position-dot" cx="210" cy="240" r="14" fill="var(--neon-blue)" opacity="0.9"
+        data-name="SHORTSTOP" data-num="#6" data-desc="Plays between second and third base. Often the BEST fielder on the team! Covers a lot of ground and makes tough throws to first base. A super important position!" data-emoji="⭐"/>
+      <text class="field-label" x="175" y="235" font-size="8">SS</text>
+
+      <!-- 7: Left Fielder -->
+      <circle class="position-dot" cx="120" cy="150" r="14" fill="var(--neon-pink)" opacity="0.9"
+        data-name="LEFT FIELDER" data-num="#7" data-desc="Plays in the outfield on the LEFT side (from the catcher's view). Catches fly balls and picks up ground balls that get past the infield. Throws the ball back to the infield." data-emoji="👈"/>
+      <text class="field-label" x="75" y="145" font-size="8">LF</text>
+
+      <!-- 8: Center Fielder -->
+      <circle class="position-dot" cx="300" cy="95" r="14" fill="var(--neon-green)" opacity="0.9"
+        data-name="CENTER FIELDER" data-num="#8" data-desc="Plays in the MIDDLE of the outfield. Usually the fastest outfielder! Covers the most ground and backs up left field AND right field. The captain of the outfield!" data-emoji="👑"/>
+      <text class="field-label" x="300" y="78" font-size="8">CF</text>
+
+      <!-- 9: Right Fielder -->
+      <circle class="position-dot" cx="480" cy="150" r="14" fill="var(--neon-orange)" opacity="0.9"
+        data-name="RIGHT FIELDER" data-num="#9" data-desc="Plays in the outfield on the RIGHT side. Needs a strong arm because the throw from right field to third base is the LONGEST throw in the outfield!" data-emoji="💪"/>
+      <text class="field-label" x="520" y="145" font-size="8">RF</text>
+    </svg>
+  </div>
+
+  <div class="info-card">
+    <h3>📊 POSITION NUMBERS CHEAT SHEET</h3>
+    <ul>
+      <li><span class="highlight-pink">#1</span> Pitcher (P) — Throws the ball</li>
+      <li><span class="highlight-blue">#2</span> Catcher (C) — Catches behind home plate</li>
+      <li><span style="color:var(--neon-orange)">#3</span> First Baseman (1B) — Guards first base</li>
+      <li><span class="highlight">#4</span> Second Baseman (2B) — Between 1st and 2nd</li>
+      <li><span class="highlight-green">#5</span> Third Baseman (3B) — The Hot Corner 🔥</li>
+      <li><span class="highlight-blue">#6</span> Shortstop (SS) — The star fielder ⭐</li>
+      <li><span class="highlight-pink">#7</span> Left Fielder (LF) — Left outfield</li>
+      <li><span class="highlight-green">#8</span> Center Fielder (CF) — Middle outfield 👑</li>
+      <li><span style="color:var(--neon-orange)">#9</span> Right Fielder (RF) — Right outfield 💪</li>
+    </ul>
+  </div>
+
+  <div class="power-tip">
+    <div class="power-tip-icon">🎮</div>
+    <div class="power-tip-text">PRO TIP: The INFIELD (P, C, 1B, 2B, 3B, SS) plays close to the bases. The OUTFIELD (LF, CF, RF) plays on the grass far away. Think of it like the infield is your close-range squad and the outfield is your long-range squad!</div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="nav-btn back" onclick="goTo('screen-level1')">◂◂ BACK</button>
+    <button class="nav-btn" onclick="goTo('screen-level3')">NEXT LEVEL ▸▸</button>
+  </div>
+</div>
+
+<!-- ==================== LEVEL 3: OFFENSE & BATTING ==================== -->
+<div class="screen" id="screen-level3">
+  <div class="level-header">
+    <div class="level-num">— LEVEL 3 —</div>
+    <div class="level-title">⚔️ OFFENSE & BATTING ⚔️</div>
+  </div>
+
+  <div class="info-card">
+    <h3>🏏 WHAT IS OFFENSE?</h3>
+    <p>When your team is on <span style="color:var(--neon-orange)">OFFENSE</span>, you are trying to <span class="highlight">SCORE RUNS</span>! You score a run by hitting the ball and running around ALL the bases — first, second, third, and back to home plate!</p>
+  </div>
+
+  <div class="info-card">
+    <h3>🔄 HOW BATTING WORKS</h3>
+    <p>Your team has a <span class="highlight">BATTING ORDER</span> — a list that says who bats first, second, third, and so on. You MUST bat in this order, every single time. No skipping!</p>
+    <br>
+    <p>The pitcher throws the ball. The batter tries to hit it. Here's what can happen:</p>
+    <ul>
+      <li><span class="highlight-green">STRIKE</span> — You swing and miss, OR the ball goes over the plate and you don't swing. 3 strikes = YOU'RE OUT!</li>
+      <li><span class="highlight-blue">BALL</span> — The pitch is outside the strike zone and you don't swing. 4 balls = FREE WALK to first base!</li>
+      <li><span class="highlight-pink">FOUL BALL</span> — You hit the ball but it goes outside the lines. Counts as a strike (but can't strike you out on its own unless you bunt).</li>
+      <li><span class="highlight">HIT!</span> — You smack the ball into the field! RUN!! 🏃💨</li>
+    </ul>
+  </div>
+
+  <!-- Animated base running -->
+  <div class="info-card" style="text-align:center;">
+    <h3>🏃 RUN THE BASES!</h3>
+    <p style="margin-bottom:15px;">After you hit the ball, you run counterclockwise around the bases:</p>
+    <div class="base-path-demo">
+      <svg viewBox="0 0 280 280" style="width:100%;height:100%;">
+        <polygon points="140,260 260,140 140,20 20,140" fill="none" stroke="var(--neon-green)" stroke-width="2" opacity="0.4"/>
+        <rect x="130" y="248" width="20" height="20" fill="var(--neon-yellow)" transform="rotate(45,140,258)" opacity="0.8"/>
+        <rect x="248" y="130" width="16" height="16" fill="#fff" transform="rotate(45,256,138)" opacity="0.8"/>
+        <rect x="132" y="10" width="16" height="16" fill="#fff" transform="rotate(45,140,18)" opacity="0.8"/>
+        <rect x="12" y="132" width="16" height="16" fill="#fff" transform="rotate(45,20,140)" opacity="0.8"/>
+        <text x="140" y="280" text-anchor="middle" fill="var(--neon-yellow)" font-family="'Press Start 2P'" font-size="7">HOME</text>
+        <text x="270" y="143" text-anchor="start" fill="#fff" font-family="'Press Start 2P'" font-size="7">1ST</text>
+        <text x="140" y="10" text-anchor="middle" fill="#fff" font-family="'Press Start 2P'" font-size="7">2ND</text>
+        <text x="2" y="158" text-anchor="start" fill="#fff" font-family="'Press Start 2P'" font-size="7">3RD</text>
+      </svg>
+      <div class="runner-dot">🏃</div>
+    </div>
+    <p style="font-size:8px; color:var(--neon-green);">Touch ALL 4 bases to score a RUN! ✅</p>
+  </div>
+
+  <div class="info-card">
+    <h3>💥 TYPES OF HITS</h3>
+    <ul>
+      <li><span class="highlight-green">SINGLE</span> — You make it to 1st base</li>
+      <li><span class="highlight-blue">DOUBLE</span> — You make it to 2nd base</li>
+      <li><span class="highlight-pink">TRIPLE</span> — You make it to 3rd base</li>
+      <li><span class="highlight">HOME RUN</span> — You hit it over the fence and run ALL the bases! 🎆 Every runner on base scores too!</li>
+    </ul>
+  </div>
+
+  <div class="power-tip">
+    <div class="power-tip-icon">⭐</div>
+    <div class="power-tip-text">REMEMBER: You can also reach base by getting HIT BY A PITCH (ouch!) or if the catcher messes up a pitch (passed ball/wild pitch). The goal is always the same — GET ON BASE and then GET HOME!</div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="nav-btn back" onclick="goTo('screen-level2')">◂◂ BACK</button>
+    <button class="nav-btn" onclick="goTo('screen-level4')">NEXT LEVEL ▸▸</button>
+  </div>
+</div>
+
+<!-- ==================== LEVEL 4: RULES OF THE GAME ==================== -->
+<div class="screen" id="screen-level4">
+  <div class="level-header">
+    <div class="level-num">— LEVEL 4 —</div>
+    <div class="level-title">📜 RULES OF THE GAME 📜</div>
+  </div>
+
+  <div class="info-card">
+    <h3>👆 TAP EACH CARD TO FLIP IT AND LEARN THE RULE!</h3>
+  </div>
+
+  <div class="rule-cards">
+    <div class="rule-card" onclick="this.classList.toggle('flipped')">
+      <div class="rule-card-inner">
+        <div class="rule-front">
+          <div class="rule-front-icon">🤯</div>
+          <div class="rule-front-text">DROPPED<br>THIRD STRIKE</div>
+          <div class="tap-hint">[ TAP ME ]</div>
+        </div>
+        <div class="rule-back">
+          <div class="rule-back-text">If you swing at strike three and the CATCHER DROPS THE BALL, it's still in play! You can RUN TO FIRST BASE! The catcher has to throw you out at first. So don't just stand there — RUN! 🏃💨</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card" onclick="this.classList.toggle('flipped')">
+      <div class="rule-card-inner">
+        <div class="rule-front">
+          <div class="rule-front-icon">⚡</div>
+          <div class="rule-front-text">FORCE<br>PLAY</div>
+          <div class="tap-hint">[ TAP ME ]</div>
+        </div>
+        <div class="rule-back">
+          <div class="rule-back-text">A FORCE happens when a runner HAS to run to the next base because the batter hit the ball. The fielder just has to touch the base with the ball — no tag needed! Example: runner on 1st, ball is hit → runner MUST go to 2nd.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card" onclick="this.classList.toggle('flipped')">
+      <div class="rule-card-inner">
+        <div class="rule-front">
+          <div class="rule-front-icon">✋</div>
+          <div class="rule-front-text">DEAD<br>BALL</div>
+          <div class="tap-hint">[ TAP ME ]</div>
+        </div>
+        <div class="rule-back">
+          <div class="rule-back-text">When the umpire calls "TIME" or the ball goes out of play (like into the dugout), the ball is DEAD. No one can run or be tagged out. Everything pauses until the umpire says "PLAY!" again.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card" onclick="this.classList.toggle('flipped')">
+      <div class="rule-card-inner">
+        <div class="rule-front">
+          <div class="rule-front-icon">🏷️</div>
+          <div class="rule-front-text">TAG<br>PLAY</div>
+          <div class="tap-hint">[ TAP ME ]</div>
+        </div>
+        <div class="rule-back">
+          <div class="rule-back-text">When a runner is NOT forced (doesn't HAVE to run), the fielder must TAG the runner with the ball or glove (with ball in it) to get them out. Just touching the base isn't enough — you gotta tag 'em!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card" onclick="this.classList.toggle('flipped')">
+      <div class="rule-card-inner">
+        <div class="rule-front">
+          <div class="rule-front-icon">✈️</div>
+          <div class="rule-front-text">FLY<br>BALL OUT</div>
+          <div class="tap-hint">[ TAP ME ]</div>
+        </div>
+        <div class="rule-back">
+          <div class="rule-back-text">If a fielder catches the ball in the air BEFORE it hits the ground, the batter is OUT! But if runners are on base, they can "tag up" — wait on their base until the ball is caught, THEN run to the next base.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card" onclick="this.classList.toggle('flipped')">
+      <div class="rule-card-inner">
+        <div class="rule-front">
+          <div class="rule-front-icon">🧊</div>
+          <div class="rule-front-text">PITCHER HAS<br>THE BALL</div>
+          <div class="tap-hint">[ TAP ME ]</div>
+        </div>
+        <div class="rule-back">
+          <div class="rule-back-text">When the pitcher has the ball on the mound, runners should STOP and stay on their base. If you try to run when the pitcher has the ball and is on the rubber, you might get called back or tagged out!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider">● ● ● ● ● ● ● ●</div>
+
+  <div class="info-card">
+    <h3>🎯 FORCE PLAY SCENARIOS</h3>
+    <p style="margin-bottom:12px;">Let's look at different situations so you REALLY understand force plays. <span class="highlight">Tap each one!</span></p>
+  </div>
+
+  <div class="scenario" onclick="this.classList.toggle('open')">
+    <div class="scenario-q">🔵 SCENARIO 1: Runner on 1st, ground ball hit to shortstop</div>
+    <div class="scenario-a">
+      <p>The runner on 1st <span class="highlight">MUST</span> run to 2nd (because the batter is running to 1st and pushing them forward). The shortstop can throw to 2nd base — the fielder just touches the base. That's a <span class="highlight-green">FORCE OUT</span>! If they're quick, they can throw to 1st too for a <span class="highlight-pink">DOUBLE PLAY</span> (two outs!).</p>
+    </div>
+    <div class="scenario-hint">▸ tap to reveal</div>
+  </div>
+
+  <div class="scenario" onclick="this.classList.toggle('open')">
+    <div class="scenario-q">🔵 SCENARIO 2: Runners on 1st and 2nd, ground ball hit</div>
+    <div class="scenario-a">
+      <p>ALL runners must advance! The runner on 2nd is FORCED to 3rd, the runner on 1st is forced to 2nd, and the batter goes to 1st. Any base can be a force out here — the fielder just needs to touch the base before the runner gets there.</p>
+    </div>
+    <div class="scenario-hint">▸ tap to reveal</div>
+  </div>
+
+  <div class="scenario" onclick="this.classList.toggle('open')">
+    <div class="scenario-q">🔵 SCENARIO 3: Runner on 2nd ONLY, ground ball hit</div>
+    <div class="scenario-a">
+      <p>The runner on 2nd does <span class="highlight-pink">NOT</span> have to run! No one is behind them pushing them forward. The batter is forced to run to 1st (that's always a force). But the runner on 2nd can choose to stay. If they DO run, they must be <span class="highlight-pink">TAGGED</span> — not a force!</p>
+    </div>
+    <div class="scenario-hint">▸ tap to reveal</div>
+  </div>
+
+  <div class="scenario" onclick="this.classList.toggle('open')">
+    <div class="scenario-q">🔵 SCENARIO 4: Bases loaded (runners on 1st, 2nd, AND 3rd)</div>
+    <div class="scenario-a">
+      <p>EVERY runner is forced! The fielder can step on ANY base for a force out. This is the easiest force play situation because every base is a force. Home plate too — the catcher can just step on home plate to get the runner from 3rd out!</p>
+    </div>
+    <div class="scenario-hint">▸ tap to reveal</div>
+  </div>
+
+  <div class="power-tip">
+    <div class="power-tip-icon">🧠</div>
+    <div class="power-tip-text">THE GOLDEN RULE OF FORCE PLAYS: A runner is forced ONLY when every base behind them (toward home) is occupied AND the batter is running. Think of it like a traffic jam — you HAVE to move if someone is pushing from behind!</div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="nav-btn back" onclick="goTo('screen-level3')">◂◂ BACK</button>
+    <button class="nav-btn" onclick="goTo('screen-quiz'); startQuiz();" style="border-color:var(--neon-yellow); color:var(--neon-yellow);">🏆 TAKE THE QUIZ! 🏆</button>
+  </div>
+</div>
+
+<!-- ==================== QUIZ SCREEN ==================== -->
+<div class="screen" id="screen-quiz">
+  <div class="level-header">
+    <div class="level-num">— FINAL CHALLENGE —</div>
+    <div class="level-title">🏆 BASEBALL QUIZ 🏆</div>
+  </div>
+
+  <div class="info-card">
+    <h3>📝 10 QUESTIONS — SHOW WHAT YOU KNOW!</h3>
+    <p>Answer all 10 questions, then see your grade! You got this! 💪</p>
+    <div style="margin-top:15px;">
+      <label style="font-size:9px; color:var(--neon-green); display:block; margin-bottom:8px;">ENTER YOUR NAME, PLAYER:</label>
+      <input type="text" id="playerName" placeholder="YOUR NAME HERE" maxlength="30" style="font-family:'Press Start 2P',monospace; font-size:10px; padding:10px 15px; background:rgba(0,0,0,0.5); border:2px solid var(--neon-green); color:var(--neon-green); width:100%; max-width:350px; outline:none;" />
+    </div>
+  </div>
+
+  <div id="quizContainer"></div>
+
+  <div class="nav-btns" id="quizSubmitArea" style="display:none;">
+    <button class="nav-btn" onclick="gradeQuiz()" style="border-color:var(--neon-yellow); color:var(--neon-yellow); font-size:12px; padding:15px 40px;">⚡ GRADE MY QUIZ ⚡</button>
+  </div>
+
+  <div id="quizResults" style="display:none;"></div>
+
+  <div class="nav-btns" id="quizRetryArea" style="display:none;">
+    <button class="nav-btn back" onclick="goTo('screen-level1')">◂◂ REVIEW LEVELS</button>
+    <button class="nav-btn" onclick="downloadScoreCard()" style="border-color:var(--neon-yellow); color:var(--neon-yellow);">📥 DOWNLOAD SCORE</button>
+    <button class="nav-btn" onclick="goTo('screen-quiz'); startQuiz();">🔄 TRY AGAIN</button>
+  </div>
+</div>
+
+</div><!-- end game-container -->
+
+<div class="game-footer">
+  ⚾ BASEBALL BASICS ACADEMY ⚾<br>
+  COACH'S TRAINING PROGRAM — 2026 SEASON
+</div>
+
+<script>
+// ============ STARS ============
+(function createStars(){
+  const c = document.getElementById('stars');
+  for(let i=0;i<120;i++){
+    const s = document.createElement('div');
+    s.className='star';
+    s.style.left=Math.random()*100+'%';
+    s.style.top=Math.random()*100+'%';
+    s.style.animationDelay=Math.random()*3+'s';
+    s.style.width=s.style.height=(1+Math.random()*2)+'px';
+    c.appendChild(s);
+  }
+})();
+
+// ============ NAVIGATION ============
+const screens = ['screen-title','screen-level1','screen-level2','screen-level3','screen-level4','screen-quiz'];
+const progressMap = {
+  'screen-title':0, 'screen-level1':20, 'screen-level2':40,
+  'screen-level3':60, 'screen-level4':80, 'screen-quiz':100
+};
+
+function goTo(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+  // Update progress
+  const pct = progressMap[id]||0;
+  document.getElementById('progressFill').style.width = pct+'%';
+  document.getElementById('progressPct').textContent = pct+'%';
+}
+
+function startGame(){
+  document.getElementById('progressBar').classList.add('active');
+  goTo('screen-level1');
+}
+
+// ============ FIELD POSITION TOOLTIPS ============
+document.querySelectorAll('.position-dot').forEach(dot=>{
+  dot.addEventListener('click', function(e){
+    const tooltip = document.getElementById('posTooltip');
+    const name = this.dataset.name;
+    const num = this.dataset.num;
+    const desc = this.dataset.desc;
+    const emoji = this.dataset.emoji;
+    tooltip.innerHTML = `<div class="pos-name">${emoji} ${name}</div><div class="pos-number">${num}</div><br>${desc}`;
+    tooltip.classList.add('show');
+
+    // Position tooltip
+    const container = document.querySelector('.diamond-container');
+    const rect = container.getBoundingClientRect();
+    const cx = parseFloat(this.getAttribute('cx'));
+    const cy = parseFloat(this.getAttribute('cy'));
+    const svgEl = document.querySelector('.diamond-svg');
+    const svgRect = svgEl.getBoundingClientRect();
+    const scaleX = svgRect.width / 600;
+    const scaleY = svgRect.height / 550;
+
+    let left = cx * scaleX + 20;
+    let top = cy * scaleY - 20;
+    if(left + 220 > rect.width) left = cx * scaleX - 230;
+    if(top < 0) top = 10;
+
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = top + 'px';
+
+    // Auto-hide after 5s
+    setTimeout(()=>tooltip.classList.remove('show'),5000);
+  });
+});
+
+// Hide tooltip when clicking elsewhere
+document.addEventListener('click',function(e){
+  if(!e.target.classList.contains('position-dot')){
+    document.getElementById('posTooltip').classList.remove('show');
+  }
+});
+
+// ============ QUIZ QUESTION BANK (40 questions) ============
+const questionBank = [
+  // Defense vs Offense (10)
+  {q:"When your team is in the FIELD with gloves, you are playing…", opts:["Defense","Offense","Timeout","Halftime"], correct:0, explain:"When you're in the field with gloves, you're on DEFENSE — trying to get the other team out!"},
+  {q:"When your team is up to BAT, you are playing…", opts:["Offense","Defense","Neutral","Pitcher"], correct:0, explain:"Batting = Offense! You're trying to score runs."},
+  {q:"How many outs does a team need to get to end the other team's turn at bat?", opts:["3 outs","2 outs","4 outs","5 outs"], correct:0, explain:"3 outs and the inning half is over! Then the teams switch."},
+  {q:"How many innings are in a Little League game?", opts:["6 innings","9 innings","4 innings","7 innings"], correct:0, explain:"Little League plays 6 innings. Major League plays 9!"},
+  {q:"What is ONE INNING?", opts:["Both teams bat and field once each","One team bats","Just the first half","The whole game"], correct:0, explain:"One inning = both teams get a turn batting AND a turn fielding."},
+  // Positions (10)
+  {q:"How many players are on the field for the DEFENSIVE team?", opts:["9","10","8","11"], correct:0, explain:"9 players on defense: P, C, 1B, 2B, 3B, SS, LF, CF, RF."},
+  {q:"What position number is the PITCHER?", opts:["#1","#2","#5","#9"], correct:0, explain:"The pitcher is position #1 — they start every play!"},
+  {q:"Which position is called the 'Hot Corner'?", opts:["Third Baseman","Shortstop","First Baseman","Catcher"], correct:0, explain:"Third base is the Hot Corner because hard-hit balls come fast down the line! 🔥"},
+  {q:"Who is usually the BEST fielder on the team?", opts:["Shortstop","Pitcher","Right Fielder","First Baseman"], correct:0, explain:"The shortstop is often the best athlete — they cover tons of ground between 2nd and 3rd!"},
+  {q:"Which OUTFIELD position covers the most ground?", opts:["Center Fielder","Left Fielder","Right Fielder","Shortstop"], correct:0, explain:"Center field is the biggest area — the CF backs up both left and right field!"},
+  {q:"What special gear does the CATCHER wear?", opts:["Mask, chest protector, shin guards","Just a helmet","Shoulder pads","Nothing special"], correct:0, explain:"The catcher wears a mask, chest protector, and shin guards because pitches come fast!"},
+  {q:"Which outfielder needs the STRONGEST arm?", opts:["Right Fielder","Left Fielder","Center Fielder","Pitcher"], correct:0, explain:"The right fielder has the longest throw — from right field all the way to third base!"},
+  // Batting & Offense (8)
+  {q:"How many STRIKES until you're out?", opts:["3 strikes","2 strikes","4 strikes","5 strikes"], correct:0, explain:"3 strikes and you're out! That's one of the most famous rules in baseball."},
+  {q:"How many BALLS until you get a free walk to first base?", opts:["4 balls","3 balls","5 balls","2 balls"], correct:0, explain:"4 balls = a walk! You get to go to first base for free."},
+  {q:"If you hit the ball over the outfield FENCE, it's a…", opts:["Home Run","Triple","Foul Ball","Double"], correct:0, explain:"Over the fence = HOME RUN! You and everyone on base gets to score! 🎆"},
+  {q:"What is it called when you hit the ball and make it to 2nd base?", opts:["A Double","A Single","A Triple","A Home Run"], correct:0, explain:"Single = 1st, Double = 2nd, Triple = 3rd, Home Run = all the way around!"},
+  {q:"What order do you run the bases?", opts:["1st → 2nd → 3rd → Home","Home → 3rd → 2nd → 1st","1st → 3rd → 2nd → Home","Any order you want"], correct:0, explain:"You MUST run counterclockwise: 1st, 2nd, 3rd, Home. No shortcuts!"},
+  {q:"Does a foul ball count as a strike?", opts:["Yes, but it can't be strike 3 (unless bunted)","No, it doesn't count","Yes, even for strike 3","Only sometimes"], correct:0, explain:"A foul ball counts as a strike, but it can't be your third strike (unless you bunted it foul)."},
+  {q:"What happens if you get hit by a pitch?", opts:["You go to first base","You're out","Nothing, replay the pitch","You get two bases"], correct:0, explain:"If the pitch hits you, you get a free trip to first base! (But it might sting a bit!)"},
+  {q:"In what order does your team bat?", opts:["A set batting order that never changes","Whoever wants to go","Random each inning","The coach picks each time"], correct:0, explain:"The batting order is set before the game and stays the same the whole game!"},
+  // Rules (12)
+  {q:"If the catcher DROPS the ball on strike 3, what should you do?", opts:["RUN to first base!","Just walk back to the dugout","Stay in the batter's box","Wait for the umpire"], correct:0, explain:"If the catcher drops strike 3, the ball is LIVE! Run to first — make them throw you out!"},
+  {q:"What is a FORCE PLAY?", opts:["When a runner MUST advance because the batter hit the ball","When you tag a runner","When the ball goes foul","When the pitcher throws hard"], correct:0, explain:"A force play is when a runner HAS to move to the next base because someone behind them is pushing forward."},
+  {q:"Runner on 1st, ground ball hit. Is the runner forced to go to 2nd?", opts:["YES — it's a force play","NO — they can stay","Only if they want to","Only on fly balls"], correct:0, explain:"YES! The batter is running to 1st, which pushes the runner to 2nd. That's a force!"},
+  {q:"Runner on 2nd ONLY, ground ball hit. Is the runner forced to go to 3rd?", opts:["NO — no one is pushing them","YES — always a force","Only with 2 outs","Only in the last inning"], correct:0, explain:"NO force! There's no runner on 1st pushing them. They can stay at 2nd if they want."},
+  {q:"What does it mean when the umpire calls the ball DEAD?", opts:["Play stops — no one can run or be tagged out","The ball popped","The game is over","The ball went over the fence"], correct:0, explain:"Dead ball = everything stops. No running, no tagging, until the umpire says 'Play!'"},
+  {q:"On a FORCE play, how does the fielder get the runner out?", opts:["Touch the base with the ball","Tag the runner","Throw the ball at them","Yell 'OUT!'"], correct:0, explain:"On a force play, just step on the base with the ball before the runner gets there. No tag needed!"},
+  {q:"When there is NO force, how does the fielder get the runner out?", opts:["TAG the runner with the ball","Touch the base","Throw the ball at them","Ask the umpire"], correct:0, explain:"With no force, you must TAG the runner — touch them with the ball or glove (with ball in it)."},
+  {q:"If a fielder catches a fly ball, what happens?", opts:["The batter is OUT","The batter gets to run","Nothing, play continues","It's a foul ball"], correct:0, explain:"Catch a fly ball before it bounces = the batter is OUT! That's true for fair AND foul territory."},
+  {q:"What does 'TAG UP' mean?", opts:["Runners wait on their base until a fly ball is caught, then can run","Runners tag the base before batting","The fielder tags the runner","The umpire tags the ball"], correct:0, explain:"Tag up means a runner stays on their base until a fly ball is caught, THEN they can try to advance."},
+  {q:"When the pitcher has the ball on the mound, should runners try to run?", opts:["NO — stay on your base","YES — always run","Only to home plate","Only on Tuesdays"], correct:0, explain:"When the pitcher has the ball on the mound, runners should stay put on their base!"},
+  {q:"Bases loaded, ground ball hit. Can the catcher step on home plate for a force out?", opts:["YES — every base is a force","NO — home is never a force","Only with 2 outs","Only in the last inning"], correct:0, explain:"With bases loaded, EVERY base is a force — including home plate! The catcher just needs to step on it."},
+  {q:"What is a DOUBLE PLAY?", opts:["Getting 2 outs on one play","Hitting the ball twice","Two players batting at once","Scoring 2 runs at once"], correct:0, explain:"A double play is when the defense gets TWO outs on a single play — like throwing to 2nd then 1st!"},
+];
+
+let selectedQuestions = [];
+let userAnswers = [];
+
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+function startQuiz(){
+  // Pick 10 random questions ensuring topic coverage
+  const defense = questionBank.filter((_,i)=>i<5);
+  const positions = questionBank.filter((_,i)=>i>=5&&i<12);
+  const batting = questionBank.filter((_,i)=>i>=12&&i<20);
+  const rules = questionBank.filter((_,i)=>i>=20);
+
+  // Pick 2 defense, 2 positions, 2 batting, 4 rules
+  let picked = [
+    ...shuffle([...defense]).slice(0,2),
+    ...shuffle([...positions]).slice(0,2),
+    ...shuffle([...batting]).slice(0,2),
+    ...shuffle([...rules]).slice(0,4)
+  ];
+  selectedQuestions = shuffle(picked);
+  userAnswers = new Array(10).fill(-1);
+
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+
+  selectedQuestions.forEach((q,i)=>{
+    // Shuffle options while tracking correct
+    const optIdxs = [0,1,2,3];
+    shuffle(optIdxs);
+    const correctShuffled = optIdxs.indexOf(q.correct);
+
+    const div = document.createElement('div');
+    div.className = 'quiz-question';
+    div.id = 'qq-'+i;
+    div.dataset.correct = correctShuffled;
+    div.dataset.explain = q.explain;
+
+    let optsHtml = '';
+    const labels = ['A','B','C','D'];
+    optIdxs.forEach((origIdx,j)=>{
+      optsHtml += `<button class="quiz-opt" data-qi="${i}" data-oi="${j}" onclick="selectAnswer(${i},${j})">${labels[j]}) ${q.opts[origIdx]}</button>`;
+    });
+
+    div.innerHTML = `
+      <div class="quiz-num">QUESTION ${i+1} OF 10</div>
+      <div class="quiz-text">${q.q}</div>
+      <div class="quiz-options">${optsHtml}</div>
+      <div class="quiz-explain" id="explain-${i}"></div>
+    `;
+    container.appendChild(div);
+  });
+
+  document.getElementById('quizSubmitArea').style.display='flex';
+  document.getElementById('quizResults').style.display='none';
+  document.getElementById('quizRetryArea').style.display='none';
+}
+
+function selectAnswer(qi, oi){
+  const qq = document.getElementById('qq-'+qi);
+  if(qq.classList.contains('graded')) return;
+  userAnswers[qi] = oi;
+  qq.querySelectorAll('.quiz-opt').forEach(btn=>{
+    btn.classList.remove('selected');
+    if(parseInt(btn.dataset.oi)===oi) btn.classList.add('selected');
+  });
+  // Show submit if all answered
+  if(userAnswers.every(a=>a>=0)){
+    document.getElementById('quizSubmitArea').querySelector('.nav-btn').style.animation='blink 0.8s infinite';
+  }
+}
+
+function gradeQuiz(){
+  let score = 0;
+  selectedQuestions.forEach((_,i)=>{
+    const qq = document.getElementById('qq-'+i);
+    const correct = parseInt(qq.dataset.correct);
+    qq.classList.add('graded');
+    qq.querySelectorAll('.quiz-opt').forEach(btn=>{
+      btn.classList.add('locked');
+      const oi = parseInt(btn.dataset.oi);
+      if(oi===correct) btn.classList.add('correct');
+      if(oi===userAnswers[i] && oi!==correct) btn.classList.add('wrong');
+    });
+    // Show explanation
+    const explainEl = document.getElementById('explain-'+i);
+    explainEl.textContent = qq.dataset.explain;
+    explainEl.classList.add('show');
+    if(userAnswers[i]===correct) score++;
+  });
+
+  const pct = Math.round((score/10)*100);
+  let grade, gradeClass, msg;
+  if(pct>=90){ grade='A'; gradeClass='grade-a'; msg="🏆 ALL-STAR! You really know your baseball! Coach is PROUD! 🏆"; }
+  else if(pct>=80){ grade='B'; gradeClass='grade-b'; msg="⭐ GREAT JOB! You know your stuff! A little more practice and you'll be an All-Star!"; }
+  else if(pct>=70){ grade='C'; gradeClass='grade-c'; msg="👍 NICE EFFORT! You're getting there! Review the levels and try again!"; }
+  else if(pct>=60){ grade='D'; gradeClass='grade-d'; msg="📚 KEEP STUDYING! Go back through the levels — you'll get it!"; }
+  else { grade='F'; gradeClass='grade-f'; msg="💪 DON'T GIVE UP! Every great player started somewhere. Review and try again!"; }
+
+  if(pct===100){ msg="🎆 PERFECT GAME!! 10 for 10!! You're a baseball GENIUS!! 🎆"; launchConfetti(); }
+
+  const resultsDiv = document.getElementById('quizResults');
+  resultsDiv.style.display='block';
+  resultsDiv.innerHTML = `
+    <div class="results-card">
+      <div style="font-size:12px; color:var(--neon-pink);">YOUR SCORE</div>
+      <div class="results-grade ${gradeClass}">${grade}</div>
+      <div class="results-pct">${score}/10 — ${pct}%</div>
+      <div class="results-msg">${msg}</div>
+    </div>
+  `;
+
+  document.getElementById('quizSubmitArea').style.display='none';
+  document.getElementById('quizRetryArea').style.display='flex';
+
+  resultsDiv.scrollIntoView({behavior:'smooth'});
+}
+
+// ============ DOWNLOAD SCORE CARD ============
+function downloadScoreCard(){
+  const name = document.getElementById('playerName').value.trim() || 'PLAYER';
+  const canvas = document.createElement('canvas');
+  canvas.width = 600;
+  canvas.height = 440;
+  const ctx = canvas.getContext('2d');
+
+  // Background
+  ctx.fillStyle = '#0a0a2e';
+  ctx.fillRect(0,0,600,440);
+
+  // Border
+  ctx.strokeStyle = '#39ff14';
+  ctx.lineWidth = 4;
+  ctx.strokeRect(10,10,580,420);
+  ctx.strokeStyle = '#ff6ec7';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(18,18,564,404);
+
+  // Scanlines
+  ctx.fillStyle = 'rgba(0,0,0,0.1)';
+  for(let y=0;y<440;y+=3){ ctx.fillRect(0,y,600,1); }
+
+  // Header
+  ctx.font = '18px "Press Start 2P", monospace';
+  ctx.fillStyle = '#fff700';
+  ctx.textAlign = 'center';
+  ctx.shadowColor = '#ff9f1c';
+  ctx.shadowBlur = 15;
+  ctx.fillText('⚾ BASEBALL BASICS ⚾', 300, 60);
+  ctx.font = '12px "Press Start 2P", monospace';
+  ctx.fillStyle = '#00f0ff';
+  ctx.shadowColor = '#00f0ff';
+  ctx.shadowBlur = 10;
+  ctx.fillText('OFFICIAL SCORE CARD', 300, 85);
+
+  // Divider
+  ctx.shadowBlur = 0;
+  ctx.strokeStyle = '#333';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4,4]);
+  ctx.beginPath(); ctx.moveTo(40,100); ctx.lineTo(560,100); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Player name
+  ctx.font = '11px "Press Start 2P", monospace';
+  ctx.fillStyle = '#ff6ec7';
+  ctx.shadowColor = '#ff6ec7';
+  ctx.shadowBlur = 8;
+  ctx.fillText('PLAYER', 300, 130);
+  ctx.font = '16px "Press Start 2P", monospace';
+  ctx.fillStyle = '#fff';
+  ctx.shadowBlur = 0;
+  ctx.fillText(name.toUpperCase(), 300, 158);
+
+  // Date
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  ctx.font = '8px "Press Start 2P", monospace';
+  ctx.fillStyle = '#666';
+  ctx.fillText(dateStr, 300, 180);
+
+  // Compute grade again
+  let score = 0;
+  selectedQuestions.forEach((_,i)=>{
+    const qq = document.getElementById('qq-'+i);
+    if(userAnswers[i]===parseInt(qq.dataset.correct)) score++;
+  });
+  const pct = Math.round((score/10)*100);
+  let grade, gradeColor;
+  if(pct>=90){ grade='A'; gradeColor='#39ff14'; }
+  else if(pct>=80){ grade='B'; gradeColor='#00f0ff'; }
+  else if(pct>=70){ grade='C'; gradeColor='#fff700'; }
+  else if(pct>=60){ grade='D'; gradeColor='#ff9f1c'; }
+  else { grade='F'; gradeColor='#ff3131'; }
+
+  // Grade display
+  ctx.font = '72px "Press Start 2P", monospace';
+  ctx.fillStyle = gradeColor;
+  ctx.shadowColor = gradeColor;
+  ctx.shadowBlur = 25;
+  ctx.fillText(grade, 300, 275);
+
+  // Score line
+  ctx.shadowBlur = 0;
+  ctx.font = '14px "Press Start 2P", monospace';
+  ctx.fillStyle = '#00f0ff';
+  ctx.fillText(score + ' / 10  —  ' + pct + '%', 300, 310);
+
+  // Question breakdown
+  ctx.font = '9px "Press Start 2P", monospace';
+  let breakdown = '';
+  selectedQuestions.forEach((_,i)=>{
+    const qq = document.getElementById('qq-'+i);
+    breakdown += userAnswers[i]===parseInt(qq.dataset.correct) ? '✅' : '❌';
+    if(i<9) breakdown += ' ';
+  });
+  ctx.fillStyle = '#aaa';
+  ctx.fillText(breakdown, 300, 340);
+  ctx.font = '6px "Press Start 2P", monospace';
+  ctx.fillStyle = '#444';
+  ctx.fillText('Q1  Q2  Q3  Q4  Q5  Q6  Q7  Q8  Q9 Q10', 300, 358);
+
+  // Footer
+  ctx.font = '7px "Press Start 2P", monospace';
+  ctx.fillStyle = '#333';
+  ctx.fillText('BASEBALL BASICS ACADEMY — COACH\'S TRAINING PROGRAM', 300, 400);
+  const timeStr = now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+  ctx.fillText('Completed: ' + dateStr + ' at ' + timeStr, 300, 415);
+
+  // Download
+  const link = document.createElement('a');
+  link.download = 'Baseball-Score-' + name.replace(/\s+/g,'-') + '.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+function launchConfetti(){
+  const container = document.createElement('div');
+  container.className='confetti-container';
+  document.body.appendChild(container);
+  const colors = ['var(--neon-green)','var(--neon-blue)','var(--neon-pink)','var(--neon-yellow)','var(--neon-orange)','#fff'];
+  for(let i=0;i<60;i++){
+    const piece = document.createElement('div');
+    piece.className='confetti-piece';
+    piece.style.left=Math.random()*100+'%';
+    piece.style.background=colors[Math.floor(Math.random()*colors.length)];
+    piece.style.animationDelay=Math.random()*2+'s';
+    piece.style.animationDuration=(2+Math.random()*2)+'s';
+    container.appendChild(piece);
+  }
+  setTimeout(()=>container.remove(),5000);
+}
+</script>
+</body>
+</html>
